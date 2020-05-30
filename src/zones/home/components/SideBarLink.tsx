@@ -8,7 +8,7 @@ const SideBarLinkContainer = styled(motion.a)`
   align-items: center;
   height: 3rem;
   width: 100%;
-`
+`;
 
 interface Props {
   /** The text desired to show for the given link */
@@ -27,4 +27,4 @@ export const SideBarLink = (props: Props) => {
       </SideBarLinkContainer>
     </Link>
   );
-}
+};

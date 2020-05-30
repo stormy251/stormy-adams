@@ -13,6 +13,6 @@ const TempLayout = (props: Props) => {
       {children}
     </div>
   );
-}
+};
 
 export default TempLayout;
