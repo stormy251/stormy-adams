@@ -1,33 +1,51 @@
-import React from 'react';
-import styled from 'styled-components';
-import {colors} from 'lib/theme';
-import {SideBarLink} from 'zones/home/components/SideBarLink';
-
-const AVATAR_SIZE = '80%';
+import React from "react";
+import styled from "styled-components";
+import { colors } from "lib/theme";
+import { SideBarLink } from "zones/home/components/SideBarLink";
 
 const SideBarContainer = styled.div`
   box-sizing: border-box;
-  background-color: ${colors.blueGrey.lighten5};
+  display: grid;
+  grid-template-rows: 1fr 5fr;
   width: 100%;
   height: 100%;
 `;
 
-const AvatarSVG = styled.svg`
-  color: ${colors.blueGrey.lighten3};
+const Avatar = styled.div`
+  border-radius: 50%;
+  background-color: ${colors.blueGrey.lighten3};
   margin: 2rem auto;
-  width: ${AVATAR_SIZE};
+  height: calc(300px * 0.8);
+  width: calc(300px * 0.8);
+`;
+
+const SideBarLinkContainer = styled.div`
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 3rem);
+  grid-gap: 2rem;
 `;
 
 export const SideBar = () => {
   return (
     <SideBarContainer>
-      <AvatarSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path fill="none" d="M0 0h24v24H0z"/>
-        <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-      </AvatarSVG>
-      <SideBarLink text="About" urlPath="/about"/>
-      <SideBarLink text="Work" urlPath="/work"/>
-      <SideBarLink text="Contact" urlPath="/contact"/>
+      <Avatar />
+      <SideBarLinkContainer>
+        <SideBarLink
+          activeColor={colors.blue.base}
+          text="About"
+          urlPath="/about"
+        />
+        <SideBarLink
+          activeColor={colors.pink.base}
+          text="Work"
+          urlPath="/work"
+        />
+        <SideBarLink
+          activeColor={colors.green.base}
+          text="Contact"
+          urlPath="/contact"
+        />
+      </SideBarLinkContainer>
     </SideBarContainer>
   );
 };

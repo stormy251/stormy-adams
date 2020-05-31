@@ -1,16 +1,13 @@
-import React from 'react';
-import {ZonePage} from 'lib/types/ZonePage';
-import HomeZone from 'zones/home';
-import Typography from 'zones/app/components/Typography';
-import {colors} from 'lib/theme';
+import React from "react";
+import { ZonePage } from "lib/types/ZonePage";
+import HomeZone from "zones/home";
+import Typography from "zones/app/components/Typography";
+import { colors } from "lib/theme";
 
 // About page
 const AboutPage: ZonePage = () => {
   return (
-    <Typography
-      type="Display"
-      color={colors.blueGrey.darken3}
-    >
+    <Typography type="Display" color={colors.white}>
       About Page
     </Typography>
   );

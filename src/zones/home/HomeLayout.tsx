@@ -1,23 +1,29 @@
-import React, {ReactNode} from 'react';
-import {motion, AnimatePresence} from 'framer-motion';
-import {colors} from 'lib/theme';
-import {fadeVariants, ANIMATE_VARIANT_NAME, INITIAL_VARIANT_NAME, EXIT_VARIANT_NAME} from 'lib/framer-motion/motion-variants';
-import styled from 'styled-components';
-import {SideBar} from 'zones/home/components/SideBar';
-
-const SIDE_BAR_WIDTH = '300px';
+import React, { ReactNode } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { colors } from "lib/theme";
+import {
+  fadeVariants,
+  ANIMATE_VARIANT_NAME,
+  INITIAL_VARIANT_NAME,
+  EXIT_VARIANT_NAME,
+} from "lib/framer-motion/motion-variants";
+import styled from "styled-components";
+import { SideBar } from "zones/home/components/SideBar";
 
 const LayoutContainer = styled.main`
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: ${SIDE_BAR_WIDTH} 1fr;
+  grid-template-columns: 300px 1fr;
   height: 100%;
   width: 100%;
 `;
 
 const PageContentContainer = styled(motion.div)`
+  box-sizing: border-box;
+  padding: 2rem;
   height: 100%;
   width: 100%;
-  background-color: ${colors.blueGrey.lighten4};
+  background-color: ${colors.blueGrey.darken1};
 `;
 
 interface Props {
@@ -28,14 +34,12 @@ interface Props {
 }
 
 const HomeLayout = (props: Props) => {
-  const {children, transitionKey} = props;
+  const { children, transitionKey } = props;
 
   return (
     <LayoutContainer>
-      <SideBar/>
-      <AnimatePresence
-        exitBeforeEnter
-      >
+      <SideBar />
+      <AnimatePresence exitBeforeEnter>
         <PageContentContainer
           key={transitionKey}
           variants={fadeVariants}
