@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { colors } from "lib/theme";
-import { SideBarLink } from "zones/home/components/SideBarLink";
+import React from 'react';
+import styled from 'styled-components';
+import {colors} from 'lib/theme';
+import {SideBarLink} from 'zones/home/components/SideBarLink';
 
 const SideBarContainer = styled.div`
   box-sizing: border-box;
