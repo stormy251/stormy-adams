@@ -49,7 +49,7 @@ const AppLayout = (props: Props) => {
         <AppContainer
           variants={parentVariants}
           key={layoutKey}
-          initial="hidden"
+          initial={false}
           animate="visible"
           exit="hidden"
         >

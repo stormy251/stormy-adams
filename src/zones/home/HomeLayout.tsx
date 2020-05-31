@@ -17,7 +17,7 @@ const LayoutContainer = styled.main`
 const PageContentContainer = styled(motion.div)`
   height: 100%;
   width: 100%;
-  background-color: ${colors.blueGrey.base};
+  background-color: ${colors.blueGrey.lighten4};
 `;
 
 interface Props {
