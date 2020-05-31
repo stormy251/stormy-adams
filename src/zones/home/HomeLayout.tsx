@@ -1,16 +1,17 @@
-import React, {ReactNode} from 'react';
-import {motion, AnimatePresence} from 'framer-motion';
-import {colors} from 'lib/theme';
+import React, { ReactNode } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { colors } from "lib/theme";
 import {
   fadeVariants,
   ANIMATE_VARIANT_NAME,
   INITIAL_VARIANT_NAME,
-  EXIT_VARIANT_NAME
-} from 'lib/framer-motion/motion-variants';
-import styled from 'styled-components';
-import {SideBar} from 'zones/home/components/SideBar';
+  EXIT_VARIANT_NAME,
+} from "lib/framer-motion/motion-variants";
+import styled from "styled-components";
+import { SideBar } from "zones/home/components/SideBar";
 
 const LayoutContainer = styled.main`
+  background-color: ${colors.blueGrey.base};
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -34,7 +35,7 @@ interface Props {
 }
 
 const HomeLayout = (props: Props) => {
-  const {children, transitionKey} = props;
+  const { children, transitionKey } = props;
 
   return (
     <LayoutContainer>
