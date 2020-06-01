@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import styled from 'styled-components';
-import {motion} from 'framer-motion';
-import Link from 'next/link';
-import {colors} from 'lib/theme';
-import {useRouter} from 'next/router';
-import Typography from 'zones/app/components/Typography';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { colors } from "lib/theme";
+import { useRouter } from "next/router";
+import Typography from "zones/app/components/Typography";
 
 const SideBarLinkContainer = styled(motion.a)`
   display: grid;
@@ -24,18 +24,18 @@ interface ActiveIndicatorProps {
 
 const activeIndicatorVariants = {
   active: {
-    width: '40%'
+    width: "40%",
   },
   inActive: {
-    width: '0'
-  }
+    width: "0",
+  },
 };
 
 const ActiveIndicatorContainer = styled(motion.span)<ActiveIndicatorProps>`
   display: flex;
   width: 0%;
   height: 100%;
-  background-color: ${({color}) => color || colors.red.base};
+  background-color: ${({ color }) => color || colors.red.base};
 `;
 
 interface Props {
@@ -49,7 +49,7 @@ interface Props {
 
 export const SideBarLink = (props: Props) => {
   const router = useRouter();
-  const {text, urlPath, activeColor} = props;
+  const { text, urlPath, activeColor } = props;
   const isActive = router.asPath === urlPath;
 
   return (
@@ -59,11 +59,9 @@ export const SideBarLink = (props: Props) => {
           color={activeColor}
           isActive={isActive}
           variants={activeIndicatorVariants}
-          animate={isActive ? 'active' : 'inActive'}
+          animate={isActive ? "active" : "inActive"}
         />
-        <Typography type="Hero" color={colors.white}>
-          {text}
-        </Typography>
+        <Typography type="Hero">{text}</Typography>
       </SideBarLinkContainer>
     </Link>
   );

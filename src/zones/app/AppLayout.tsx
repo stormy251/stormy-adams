@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import styled from "styled-components";
-import { ModalContextProvider } from "./contexts/ModalContext";
-import ModalOutlet from "./components/ModalOutlet";
+import React, {ReactNode} from 'react';
+import {AnimatePresence, motion} from 'framer-motion';
+import styled from 'styled-components';
+import {ModalContextProvider} from './contexts/ModalContext';
+import ModalOutlet from './components/ModalOutlet';
 
 interface Props {
   /** Must be a single React node, it cannot contain a React fragment */
@@ -15,15 +15,15 @@ const parentVariants = {
   visible: {
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
+      delayChildren: 0.3
+    }
   },
   hidden: {
     transition: {
       staggerChildren: 0.1,
-      staggerDirection: -1,
-    },
-  },
+      staggerDirection: -1
+    }
+  }
 };
 
 const AppContainer = styled(motion.div)`
@@ -39,7 +39,7 @@ const AppContainer = styled(motion.div)`
  * as well as facilitating a predictable pattern for global services such as modals/notifications/etc...
  */
 const AppLayout = (props: Props) => {
-  const { children, layoutKey } = props;
+  const {children, layoutKey} = props;
 
   return (
     <ModalContextProvider>

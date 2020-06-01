@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import {colors} from 'lib/theme';
-import {SideBarLink} from 'zones/home/components/SideBarLink';
+import React from "react";
+import styled from "styled-components";
+import { colors } from "lib/theme";
+import { SideBarLink } from "zones/home/components/SideBarLink";
 
 const SideBarContainer = styled.div`
   box-sizing: border-box;
@@ -31,17 +31,17 @@ export const SideBar = () => {
       <Avatar />
       <SideBarLinkContainer>
         <SideBarLink
-          activeColor={colors.blue.base}
+          activeColor={colors.blueGrey.base}
           text="About"
           urlPath="/about"
         />
         <SideBarLink
-          activeColor={colors.pink.base}
+          activeColor={colors.blueGrey.base}
           text="Work"
           urlPath="/work"
         />
         <SideBarLink
-          activeColor={colors.green.base}
+          activeColor={colors.blueGrey.base}
           text="Contact"
           urlPath="/contact"
         />

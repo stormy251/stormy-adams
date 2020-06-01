@@ -11,7 +11,6 @@ import styled from "styled-components";
 import { SideBar } from "zones/home/components/SideBar";
 
 const LayoutContainer = styled.main`
-  background-color: ${colors.blueGrey.base};
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -24,7 +23,6 @@ const PageContentContainer = styled(motion.div)`
   padding: 2rem;
   height: 100%;
   width: 100%;
-  background-color: ${colors.blueGrey.darken1};
 `;
 
 interface Props {
