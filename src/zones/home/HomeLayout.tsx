@@ -14,6 +14,7 @@ const LayoutContainer = styled.main`
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 300px 1fr;
+  grid-template-rows: 100%;
   height: 100%;
   width: 100%;
 `;
@@ -23,6 +24,7 @@ const PageContentContainer = styled(motion.div)`
   padding: 2rem;
   height: 100%;
   width: 100%;
+  overflow-y: auto;
 `;
 
 interface Props {
