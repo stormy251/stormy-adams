@@ -1,9 +1,9 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import {ZonePage} from 'lib/types/ZonePage';
 import Typography from 'zones/app/components/Typography';
 import {colors} from 'lib/theme';
 import FreedomRoboticsZone from 'zones/freedomRobotics';
-import {freedomRoboticsAPIService, freedomRoboticsVehicleAPIService} from 'lib/freedom-robotics/freedom-robotics-init';
+import {FRDeviceFetcher, FRDeviceDataFetcher} from 'lib/freedom-robotics-service';
 
 interface Props {
   /** Device data from the freedomRobotics API */
@@ -12,45 +12,30 @@ interface Props {
 
 // Demo page for freedom-robotics API driven visualizations
 const FreedomRoboticsPage: ZonePage = (props: Props) => {
-
   const {freedomRoboticsData} = props;
-  console.log('freedomRoboticsData:', freedomRoboticsData);
-  const {
-    name,
-    platform,
-    type,
-    created,
-    device
-  } = freedomRoboticsData;
+  const {name, platform, device} = freedomRoboticsData;
+
+  const getDeviceData = async () => {
+    const testData = await FRDeviceDataFetcher();
+    console.log('testData:', testData);
+  };
+
+  setTimeout(() => {
+    return getDeviceData();
+  }, 1000);
 
   return (
     <>
-      <Typography
-        type="Display"
-        color={colors.blueGrey.darken3}
-        marginBottom={'1rem'}
-      >
+      <Typography type="Display" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
         Freedom Robotics Demo
       </Typography>
-      <Typography
-        type="Title"
-        color={colors.blueGrey.darken3}
-        marginBottom={'1rem'}
-      >
+      <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
         Device ID: {device}
       </Typography>
-      <Typography
-        type="Subtitle"
-        color={colors.blueGrey.darken3}
-        marginBottom={'1rem'}
-      >
+      <Typography type="Subtitle" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
         Device Name: {name}
       </Typography>
-      <Typography
-        type="Subtitle"
-        color={colors.blueGrey.darken3}
-        marginBottom={'1rem'}
-      >
+      <Typography type="Subtitle" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
         Platform: {platform}
       </Typography>
     </>
@@ -60,7 +45,8 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
 FreedomRoboticsPage.zone = FreedomRoboticsZone;
 
 export async function getStaticProps () {
-  const data = await freedomRoboticsAPIService();
+  const data = await FRDeviceFetcher();
+
   return {
     props: {
       freedomRoboticsData: data
