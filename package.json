@@ -5,7 +5,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "deploy": "now",
+    "deploy": "vercel",
     "lint": "eslint --fix --ext .tsx --ext .ts src",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -33,10 +33,10 @@
     "framer-motion": "1.11.0",
     "isomorphic-unfetch": "3.0.0",
     "next": "latest",
-    "now": "latest",
     "react": "16.12.0",
     "react-dom": "16.13.1",
-    "styled-components": "5.1.1"
+    "styled-components": "5.1.1",
+    "vercel": "19.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.8.4",

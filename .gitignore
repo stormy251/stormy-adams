@@ -20,7 +20,7 @@
 
 # misc
 .DS_Store
-.env*
+.env.local
 
 # debug
 npm-debug.log*
@@ -29,3 +29,5 @@ yarn-error.log*
 
 # now deployment
 .now
+
+.vercel
