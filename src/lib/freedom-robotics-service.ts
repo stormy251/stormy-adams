@@ -32,8 +32,35 @@ export const FRDeviceFetcher = async () => {
   }
 };
 
+// This will return the values from the last 1 min
 export const FRDeviceDataFetcher = async () => {
-  const deviceDataURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/data?utc_start=-1m&utc_end=now&one_message_per_topic=true`;
+  const deviceDataURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/data`;
+
+  const apiResponse = await fetch(deviceDataURL, {
+    method: 'GET',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      mc_token: freedomRoboticsConfig.token,
+      mc_secret: freedomRoboticsConfig.secret
+    })
+  });
+  const {status, ok} = apiResponse;
+  const apiBodyResponse = await apiResponse.json();
+
+  // Happy path, all is well and we should issue the API's response to the requesting function.
+  if (status === 200 && ok === true) {
+    return apiBodyResponse;
+  } else {
+    throw new Error('Error occurred with request to the device info API');
+  }
+};
+
+// This will take a given start time and end time, ** in terms of UTC seconds ** and return the data for the given window
+export const FRDeviceDataWindowFetcher = async (
+  startTime = '1591437600',
+  endTime = '1591437720'
+) => {
+  const deviceDataURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/data?utc_start=${startTime}&utc_end=${endTime}`;
 
   const apiResponse = await fetch(deviceDataURL, {
     method: 'GET',

@@ -3,27 +3,31 @@ import {ZonePage} from 'lib/types/ZonePage';
 import Typography from 'zones/app/components/Typography';
 import {colors} from 'lib/theme';
 import FreedomRoboticsZone from 'zones/freedomRobotics';
-import {FRDeviceFetcher, FRDeviceDataFetcher} from 'lib/freedom-robotics-service';
+import {FRDeviceFetcher, FRDeviceDataWindowFetcher} from 'lib/freedom-robotics-service';
 import styled from 'styled-components';
 
 const VizContainer = styled.div`
   padding: 1rem;
 `;
 
-interface Props {
-  /** Device data from the freedomRobotics API */
-  freedomRoboticsData: any;
-}
-
 // Demo page for freedom-robotics API driven visualizations
-const FreedomRoboticsPage: ZonePage = (props: Props) => {
-  const {freedomRoboticsData} = props;
-  const {name, device, type} = freedomRoboticsData;
+const FreedomRoboticsPage: ZonePage = () => {
+  const [currentDeviceInfo, setCurrentDeviceInfo] = useState({
+    name: '',
+    device: '',
+    type: ''
+  });
   const [currentGPSData, setCurrentGPSData] = useState([]);
   const [currentSonarCloudData, setCurrentSonarCloudData] = useState([]);
 
+  const getDeviceInfo = async () => {
+    const data = await FRDeviceFetcher();
+    setCurrentDeviceInfo(data);
+  };
+
   const getDeviceData = async () => {
-    const deviceData = await FRDeviceDataFetcher();
+    const deviceData = await FRDeviceDataWindowFetcher();
+    console.log('deviceData:', deviceData);
     const vehicleGPSData = deviceData.filter((topicData) => {
       return topicData.topic === '/vehicle/gps/fix';
     });
@@ -53,6 +57,7 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
   };
 
   useEffect(() => {
+    getDeviceInfo();
     getDeviceData();
   }, []);
 
@@ -62,13 +67,13 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
         Freedom Robotics Demo
       </Typography>
       <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
-        Device ID: {device}
+        Device ID: {currentDeviceInfo.device}
       </Typography>
       <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
-        Device Name: {name}
+        Device Name: {currentDeviceInfo.name}
       </Typography>
       <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
-        Device Type: {type}
+        Device Type: {currentDeviceInfo.type}
       </Typography>
       <VizContainer>
         <div>
@@ -89,16 +94,6 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
 };
 
 FreedomRoboticsPage.zone = FreedomRoboticsZone;
-
-export async function getStaticProps () {
-  const data = await FRDeviceFetcher();
-
-  return {
-    props: {
-      freedomRoboticsData: data
-    }
-  };
-}
 
 // Default export is a requirement for nextjs to know this is the export for the page.
 export default FreedomRoboticsPage;
