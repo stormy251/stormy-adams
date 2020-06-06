@@ -11,17 +11,16 @@ export const freedomRoboticsConfig = {
 };
 
 export const FRDeviceFetcher = async () => {
-  const apiResponse = await fetch(
-    `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}`,
-    {
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        mc_token: freedomRoboticsConfig.token,
-        mc_secret: freedomRoboticsConfig.secret
-      })
-    }
-  );
+  const deviceURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}`;
+
+  const apiResponse = await fetch(deviceURL, {
+    method: 'GET',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      mc_token: freedomRoboticsConfig.token,
+      mc_secret: freedomRoboticsConfig.secret
+    })
+  });
   const {status, ok} = apiResponse;
   const apiBodyResponse = await apiResponse.json();
 
@@ -34,17 +33,37 @@ export const FRDeviceFetcher = async () => {
 };
 
 export const FRDeviceDataFetcher = async () => {
-  const apiResponse = await fetch(
-    `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/data`,
-    {
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        mc_token: freedomRoboticsConfig.token,
-        mc_secret: freedomRoboticsConfig.secret
-      })
-    }
-  );
+  const deviceDataURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/data`;
+
+  const apiResponse = await fetch(deviceDataURL, {
+    method: 'GET',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      mc_token: freedomRoboticsConfig.token,
+      mc_secret: freedomRoboticsConfig.secret
+    })
+  });
+  const {status, ok} = apiResponse;
+  const apiBodyResponse = await apiResponse.json();
+
+  // Happy path, all is well and we should issue the API's response to the requesting function.
+  if (status === 200 && ok === true) {
+    return apiBodyResponse;
+  } else {
+    throw new Error('Error occurred with request to the device info API');
+  }
+};
+
+export const FRDeviceImageFetcher = async () => {
+  const deviceDataURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/videos?pre_signed=true`;
+
+  const apiResponse = await fetch(deviceDataURL, {
+    method: 'GET',
+    headers: new Headers({
+      mc_token: freedomRoboticsConfig.token,
+      mc_secret: freedomRoboticsConfig.secret
+    })
+  });
   const {status, ok} = apiResponse;
   const apiBodyResponse = await apiResponse.json();
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ZonePage} from 'lib/types/ZonePage';
 import Typography from 'zones/app/components/Typography';
 import {colors} from 'lib/theme';
@@ -13,16 +13,17 @@ interface Props {
 // Demo page for freedom-robotics API driven visualizations
 const FreedomRoboticsPage: ZonePage = (props: Props) => {
   const {freedomRoboticsData} = props;
-  const {name, platform, device} = freedomRoboticsData;
+  const {name, platform, device, type} = freedomRoboticsData;
 
   const getDeviceData = async () => {
-    const testData = await FRDeviceDataFetcher();
-    console.log('testData:', testData);
+    const deviceData = await FRDeviceDataFetcher();
+    console.log('freedomRoboticsData:', freedomRoboticsData);
+    console.log('deviceData:', deviceData);
   };
 
-  setTimeout(() => {
-    return getDeviceData();
-  }, 1000);
+  useEffect(() => {
+    getDeviceData();
+  }, []);
 
   return (
     <>
@@ -32,8 +33,11 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
       <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
         Device ID: {device}
       </Typography>
-      <Typography type="Subtitle" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
+      <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
         Device Name: {name}
+      </Typography>
+      <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
+        Device Type: {type}
       </Typography>
       <Typography type="Subtitle" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
         Platform: {platform}
@@ -44,7 +48,7 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
 
 FreedomRoboticsPage.zone = FreedomRoboticsZone;
 
-export async function getStaticProps () {
+export async function getStaticProps() {
   const data = await FRDeviceFetcher();
 
   return {
