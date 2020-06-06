@@ -59,8 +59,8 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
 
 FreedomRoboticsPage.zone = FreedomRoboticsZone;
 
-export async function getStaticProps() {
-  let data = await freedomRoboticsAPIService();
+export async function getStaticProps () {
+  const data = await freedomRoboticsAPIService();
   return {
     props: {
       freedomRoboticsData: data

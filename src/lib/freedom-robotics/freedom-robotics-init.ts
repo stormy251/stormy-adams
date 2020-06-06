@@ -25,6 +25,6 @@ export const freedomRoboticsAPIService = async () => {
   if (status === 200 && ok === true) {
     return apiBodyResponse;
   } else {
-    throw new Error(`Error occurred with request to the device info API`);
+    throw new Error('Error occurred with request to the device info API');
   }
 };
