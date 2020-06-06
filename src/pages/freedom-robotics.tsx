@@ -23,8 +23,8 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
   const [currentSonarCloudData, setCurrentSonarCloudData] = useState([]);
 
   const getDeviceData = async () => {
-    let deviceData = await FRDeviceDataFetcher();
-    let vehicleGPSData = deviceData.filter((topicData) => {
+    const deviceData = await FRDeviceDataFetcher();
+    const vehicleGPSData = deviceData.filter((topicData) => {
       return topicData.topic === '/vehicle/gps/fix';
     });
     setCurrentGPSData(
@@ -33,7 +33,7 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
         return [altitude, latitude, longitude];
       })
     );
-    let sonarCloudData = deviceData.filter((topicData) => {
+    const sonarCloudData = deviceData.filter((topicData) => {
       return topicData.topic === '/vehicle/sonar_cloud';
     });
     setCurrentSonarCloudData(
@@ -90,7 +90,7 @@ const FreedomRoboticsPage: ZonePage = (props: Props) => {
 
 FreedomRoboticsPage.zone = FreedomRoboticsZone;
 
-export async function getStaticProps() {
+export async function getStaticProps () {
   const data = await FRDeviceFetcher();
 
   return {
