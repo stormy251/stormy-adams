@@ -15,12 +15,9 @@ const NextApp = ({Component, pageProps, router}: Props) => {
   const {LayoutComponent} = Component.zone;
 
   return (
-    <AppLayout
-      layoutKey={LayoutComponent.name}
-      {...pageProps}
-    >
+    <AppLayout layoutKey={LayoutComponent.name} {...pageProps}>
       <LayoutComponent {...pageProps} transitionKey={router.asPath}>
-        <Component {...pageProps}/>
+        <Component {...pageProps} />
       </LayoutComponent>
     </AppLayout>
   );

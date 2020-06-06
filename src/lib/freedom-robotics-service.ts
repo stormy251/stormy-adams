@@ -33,7 +33,7 @@ export const FRDeviceFetcher = async () => {
 };
 
 export const FRDeviceDataFetcher = async () => {
-  const deviceDataURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/data`;
+  const deviceDataURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/data?utc_start=-1m&utc_end=now&one_message_per_topic=true`;
 
   const apiResponse = await fetch(deviceDataURL, {
     method: 'GET',
