@@ -182,7 +182,7 @@ const FreedomRoboticsPage: ZonePage = () => {
           Current Operating Mode:{' '}
           {isRealTime
             ? 'Real Time'
-            : `Historic Snapshot ${new Date(1591437600)} - ${new Date(1591437660)}`}
+            : `Historic Snapshot ${new Date(1591437600000)} - ${new Date(1591437660000)}`}
         </Typography>
         <ButtonContainer>
           <button onClick={() => setIsRealTime(true)}>Real time</button>
