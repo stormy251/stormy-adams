@@ -130,17 +130,20 @@ const FreedomRoboticsPage: ZonePage = () => {
         <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'0.5rem'}>
           Device ID: {currentDeviceInfo.device}
         </Typography>
-        <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'0.5rem'}>
+        <Typography type="Title" color={colors.blueGrey.darken3}>
           Device Name: {currentDeviceInfo.name}
         </Typography>
       </InfoContainer>
       <VizControlBarContainer>
         <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'0.5rem'}>
-          Current Operating Mode: {isRealTime ? 'Real Time' : 'Historic Snapshot'}
+          Current Operating Mode:{' '}
+          {isRealTime
+            ? 'Real Time'
+            : `Historic Snapshot ${new Date(1591437600)} - ${new Date(1591437660)}`}
         </Typography>
         <ButtonContainer>
           <button onClick={() => setIsRealTime(true)}>Real time</button>
-          <button onClick={() => setIsRealTime(false)}>Historic Data</button>
+          <button onClick={() => setIsRealTime(false)}>Historic Snapshot</button>
         </ButtonContainer>
       </VizControlBarContainer>
       <VizGridLayoutContainer>

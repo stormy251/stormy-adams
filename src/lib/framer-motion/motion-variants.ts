@@ -40,13 +40,15 @@ export const fadeVariants = {
   [ANIMATE_VARIANT_NAME]: (baseTimeDelayMultiple = 0) => ({
     opacity: 1,
     transition: {
-      delay: baseTimeDelayMultiple * BASE_TIMING
+      delay: baseTimeDelayMultiple * BASE_TIMING,
+      duration: 0.4
     }
   }),
   [INITIAL_VARIANT_NAME]: (baseTimeDelayMultiple = 0) => ({
     opacity: 0,
     transition: {
-      delay: baseTimeDelayMultiple * BASE_TIMING
+      delay: baseTimeDelayMultiple * BASE_TIMING,
+      duration: 0.4
     }
   })
 };

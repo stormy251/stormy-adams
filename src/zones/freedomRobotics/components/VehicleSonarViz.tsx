@@ -2,6 +2,13 @@ import React, {useState} from 'react';
 import Typography from 'zones/app/components/Typography';
 import {colors} from 'lib/theme';
 import styled from 'styled-components';
+import {AnimatePresence, motion} from 'framer-motion';
+import {
+  ANIMATE_VARIANT_NAME,
+  EXIT_VARIANT_NAME,
+  fadeUpVariants,
+  INITIAL_VARIANT_NAME
+} from 'lib/framer-motion/motion-variants';
 
 const VehicleSonarVizContainer = styled.div`
   box-sizing: border-box;
@@ -14,7 +21,7 @@ const VehicleSonarVizContainer = styled.div`
   grid-gap: 0.5rem;
 `;
 
-const TabularDataContainer = styled.div`
+const TabularDataContainer = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(auto-fill, 1rem);
@@ -42,8 +49,21 @@ const ButtonContainer = styled.div`
   }
 `;
 
+const CenteredContainer = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 100%;
+`;
+
 const BlueBox = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${colors.blue.base};
+  padding: 0.5rem;
   height: 150px;
   width: 150px;
 `;
@@ -83,76 +103,94 @@ const VehicleSonarViz = (props: Props) => {
           )}
         </RightSideContentContainer>
       </SpaceBetweenRow>
-      {isShowingTable ? (
-        <TabularDataContainer>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.yellow.darken4}>
-              Height
-            </Typography>
-            <Typography type="Body" color={colors.yellow.darken4}>
-              {mostRecentDataPoint.height}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.indigo.darken4}>
-              Width
-            </Typography>
-            <Typography type="Body" color={colors.indigo.darken4}>
-              {mostRecentDataPoint.width}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.red.darken4}>
-              Is_bigendian
-            </Typography>
-            <Typography type="Body" color={colors.red.darken4}>
-              {mostRecentDataPoint.is_bigendian ? 'true' : 'false'}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.green.darken4}>
-              Is_dense
-            </Typography>
-            <Typography type="Body" color={colors.green.darken4}>
-              {mostRecentDataPoint.is_dense ? 'true' : 'false'}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.pink.darken4}>
-              Point_step
-            </Typography>
-            <Typography type="Body" color={colors.pink.darken4}>
-              {mostRecentDataPoint.point_step}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.blue.darken4}>
-              Row_step
-            </Typography>
-            <Typography type="Body" color={colors.blue.darken4}>
-              {mostRecentDataPoint.row_step}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.deepPurple.darken4}>
-              Data
-            </Typography>
-            <Typography type="Body" color={colors.deepPurple.darken4}>
-              {mostRecentDataPoint.data}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.deepOrange.darken4}>
-              Time Taken
-            </Typography>
-            <Typography type="Body" color={colors.deepOrange.darken4}>
-              {mostRecentDataPoint.timeStamp}
-            </Typography>
-          </SpaceBetweenRow>
-        </TabularDataContainer>
-      ) : (
-        <BlueBox />
-      )}
+      <AnimatePresence exitBeforeEnter>
+        {isShowingTable ? (
+          <TabularDataContainer
+            variants={fadeUpVariants}
+            initial={INITIAL_VARIANT_NAME}
+            animate={ANIMATE_VARIANT_NAME}
+            exit={EXIT_VARIANT_NAME}
+          >
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.yellow.darken4}>
+                Height
+              </Typography>
+              <Typography type="Body" color={colors.yellow.darken4}>
+                {mostRecentDataPoint.height}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.indigo.darken4}>
+                Width
+              </Typography>
+              <Typography type="Body" color={colors.indigo.darken4}>
+                {mostRecentDataPoint.width}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.red.darken4}>
+                Is_bigendian
+              </Typography>
+              <Typography type="Body" color={colors.red.darken4}>
+                {mostRecentDataPoint.is_bigendian ? 'true' : 'false'}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.green.darken4}>
+                Is_dense
+              </Typography>
+              <Typography type="Body" color={colors.green.darken4}>
+                {mostRecentDataPoint.is_dense ? 'true' : 'false'}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.pink.darken4}>
+                Point_step
+              </Typography>
+              <Typography type="Body" color={colors.pink.darken4}>
+                {mostRecentDataPoint.point_step}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.blue.darken4}>
+                Row_step
+              </Typography>
+              <Typography type="Body" color={colors.blue.darken4}>
+                {mostRecentDataPoint.row_step}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.deepPurple.darken4}>
+                Data
+              </Typography>
+              <Typography type="Body" color={colors.deepPurple.darken4}>
+                {mostRecentDataPoint.data}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.deepOrange.darken4}>
+                Time Taken
+              </Typography>
+              <Typography type="Body" color={colors.deepOrange.darken4}>
+                {mostRecentDataPoint.timeStamp}
+              </Typography>
+            </SpaceBetweenRow>
+          </TabularDataContainer>
+        ) : (
+          <CenteredContainer
+            variants={fadeUpVariants}
+            initial={INITIAL_VARIANT_NAME}
+            animate={ANIMATE_VARIANT_NAME}
+            exit={EXIT_VARIANT_NAME}
+          >
+            <BlueBox>
+              <Typography type="Title" color={colors.white} align="center">
+                Line Viz Here
+              </Typography>
+            </BlueBox>
+          </CenteredContainer>
+        )}
+      </AnimatePresence>
     </VehicleSonarVizContainer>
   );
 };

@@ -2,6 +2,13 @@ import React, {useState} from 'react';
 import Typography from 'zones/app/components/Typography';
 import {colors} from 'lib/theme';
 import styled from 'styled-components';
+import {AnimatePresence, motion} from 'framer-motion';
+import {
+  ANIMATE_VARIANT_NAME,
+  EXIT_VARIANT_NAME,
+  fadeUpVariants,
+  INITIAL_VARIANT_NAME
+} from 'lib/framer-motion/motion-variants';
 
 const VehicleGPSVizContainer = styled.div`
   box-sizing: border-box;
@@ -14,7 +21,7 @@ const VehicleGPSVizContainer = styled.div`
   grid-gap: 0.5rem;
 `;
 
-const TabularDataContainer = styled.div`
+const TabularDataContainer = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(auto-fill, 1rem);
@@ -42,8 +49,21 @@ const ButtonContainer = styled.div`
   }
 `;
 
+const CenteredContainer = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 100%;
+`;
+
 const RedBox = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${colors.red.base};
+  padding: 0.5rem;
   height: 150px;
   width: 150px;
 `;
@@ -83,44 +103,62 @@ const VehicleGPSViz = (props: Props) => {
           )}
         </RightSideContentContainer>
       </SpaceBetweenRow>
-      {isShowingTable ? (
-        <TabularDataContainer>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.yellow.darken4}>
-              Altitude
-            </Typography>
-            <Typography type="Body" color={colors.yellow.darken4}>
-              {mostRecentDataPoint.altitude}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.red.darken4}>
-              Latitude
-            </Typography>
-            <Typography type="Body" color={colors.red.darken4}>
-              {mostRecentDataPoint.latitude}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.deepPurple.darken4}>
-              Longitude
-            </Typography>
-            <Typography type="Body" color={colors.deepPurple.darken4}>
-              {mostRecentDataPoint.longitude}
-            </Typography>
-          </SpaceBetweenRow>
-          <SpaceBetweenRow>
-            <Typography type="Body" color={colors.deepOrange.darken4}>
-              Time Taken
-            </Typography>
-            <Typography type="Body" color={colors.deepOrange.darken4}>
-              {mostRecentDataPoint.timeStamp}
-            </Typography>
-          </SpaceBetweenRow>
-        </TabularDataContainer>
-      ) : (
-        <RedBox />
-      )}
+      <AnimatePresence exitBeforeEnter>
+        {isShowingTable ? (
+          <TabularDataContainer
+            variants={fadeUpVariants}
+            initial={INITIAL_VARIANT_NAME}
+            animate={ANIMATE_VARIANT_NAME}
+            exit={EXIT_VARIANT_NAME}
+          >
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.yellow.darken4}>
+                Altitude
+              </Typography>
+              <Typography type="Body" color={colors.yellow.darken4}>
+                {mostRecentDataPoint.altitude}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.red.darken4}>
+                Latitude
+              </Typography>
+              <Typography type="Body" color={colors.red.darken4}>
+                {mostRecentDataPoint.latitude}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.deepPurple.darken4}>
+                Longitude
+              </Typography>
+              <Typography type="Body" color={colors.deepPurple.darken4}>
+                {mostRecentDataPoint.longitude}
+              </Typography>
+            </SpaceBetweenRow>
+            <SpaceBetweenRow>
+              <Typography type="Body" color={colors.deepOrange.darken4}>
+                Time Taken
+              </Typography>
+              <Typography type="Body" color={colors.deepOrange.darken4}>
+                {mostRecentDataPoint.timeStamp}
+              </Typography>
+            </SpaceBetweenRow>
+          </TabularDataContainer>
+        ) : (
+          <CenteredContainer
+            variants={fadeUpVariants}
+            initial={INITIAL_VARIANT_NAME}
+            animate={ANIMATE_VARIANT_NAME}
+            exit={EXIT_VARIANT_NAME}
+          >
+            <RedBox>
+              <Typography type="Title" color={colors.white} align="center">
+                Google Map Viz Here
+              </Typography>
+            </RedBox>
+          </CenteredContainer>
+        )}
+      </AnimatePresence>
     </VehicleGPSVizContainer>
   );
 };
