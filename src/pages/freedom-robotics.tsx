@@ -3,7 +3,11 @@ import {ZonePage} from 'lib/types/ZonePage';
 import Typography from 'zones/app/components/Typography';
 import {colors} from 'lib/theme';
 import FreedomRoboticsZone from 'zones/freedomRobotics';
-import {FRDeviceFetcher, FRDeviceDataWindowFetcher} from 'lib/freedom-robotics-service';
+import {
+  FRDeviceFetcher,
+  FRDeviceDataWindowFetcher,
+  FRDeviceDataFetcher
+} from 'lib/freedom-robotics-service';
 import styled from 'styled-components';
 import VehicleSonarViz from 'zones/freedomRobotics/components/VehicleSonarViz';
 import VehicleGPSViz from 'zones/freedomRobotics/components/VehicleGPSViz';
@@ -54,6 +58,7 @@ const FreedomRoboticsPage: ZonePage = () => {
   const [currentSonarCloudData, setCurrentSonarCloudData] = useState([]);
   // used to drive the state to either poll the device in real time, or to look at the specified timeslot
   const [isRealTime, setIsRealTime] = useState(true);
+  const pollRateMS = 10000;
 
   /**
    * Extract the Vehicle GPS topic data from the device data, and load it into state
@@ -103,22 +108,60 @@ const FreedomRoboticsPage: ZonePage = () => {
     );
   };
 
-  const getDeviceInfo = async () => {
-    const data = await FRDeviceFetcher();
-    setCurrentDeviceInfo(data);
-  };
-
-  const getDeviceData = async () => {
-    const deviceData = await FRDeviceDataWindowFetcher();
-
+  /**
+   * Responsible for issuing the correct data processing functions to populate the desired visualizations
+   * @param deviceData
+   */
+  const updateVizData = (deviceData) => {
     // These methods will post process the device data into formats well suited for the respective visualization components
     setVehicleGPSData(deviceData);
     setVehicleSonarCloudData(deviceData);
   };
 
+  /**
+   * Responsible for using the correct fetcher to poll the most recent data from the device
+   * @param deviceData
+   */
+  const pollData = async () => {
+    const deviceData = await FRDeviceDataFetcher();
+    updateVizData(deviceData);
+    console.log('Device has been polled');
+  };
+
+  /**
+   * Responsible for using the correct fetcher to poll a set historical dataset
+   * @param deviceData
+   */
+  const pollHistoricData = async () => {
+    const deviceData = await FRDeviceDataWindowFetcher();
+    updateVizData(deviceData);
+  };
+
+  /**
+   * Responsible for using the correct fetcher to poll high level details about the device itself
+   * @param deviceData
+   */
+  const getDeviceInfo = async () => {
+    const data = await FRDeviceFetcher();
+    setCurrentDeviceInfo(data);
+  };
+
+  // This is responsible for switching the data polling structure based on if we are in real time mode or not.
+  useEffect(() => {
+    if (isRealTime) {
+      pollData(); // this first time is just to ensure we don't wait a full 10 seconds prior to loading for the first time
+      const interval = setInterval(() => {
+        pollData();
+      }, pollRateMS);
+      return () => clearInterval(interval);
+    } else {
+      pollHistoricData();
+    }
+  }, [isRealTime]);
+
+  // This will get the basic information about the device
   useEffect(() => {
     getDeviceInfo();
-    getDeviceData();
   }, []);
 
   return (
