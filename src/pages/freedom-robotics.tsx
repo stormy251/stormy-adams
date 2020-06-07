@@ -5,20 +5,103 @@ import {colors} from 'lib/theme';
 import FreedomRoboticsZone from 'zones/freedomRobotics';
 import {FRDeviceFetcher, FRDeviceDataWindowFetcher} from 'lib/freedom-robotics-service';
 import styled from 'styled-components';
+import VehicleSonarViz from 'zones/freedomRobotics/components/VehicleSonarViz';
+import VehicleGPSViz from 'zones/freedomRobotics/components/VehicleGPSViz';
 
-const VizContainer = styled.div`
+const VizGridLayoutContainer = styled.div`
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1.5rem;
   padding: 1rem;
+  width: 100%;
+
+  @media only screen and (max-width: 600px) {
+    grid-template-rows: 1fr 1fr;
+  }
+`;
+
+const InfoContainer = styled.div`
+  box-sizing: border-box;
+  padding-left: 1rem;
+`;
+
+const VizControlBarContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  height: 3.5rem;
+  width: 100%;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  * {
+    margin-right: 0.5rem;
+  }
 `;
 
 // Demo page for freedom-robotics API driven visualizations
 const FreedomRoboticsPage: ZonePage = () => {
   const [currentDeviceInfo, setCurrentDeviceInfo] = useState({
-    name: '',
     device: '',
-    type: ''
+    name: ''
   });
   const [currentGPSData, setCurrentGPSData] = useState([]);
   const [currentSonarCloudData, setCurrentSonarCloudData] = useState([]);
+  // used to drive the state to either poll the device in real time, or to look at the specified timeslot
+  const [isRealTime, setIsRealTime] = useState(true);
+
+  /**
+   * Extract the Vehicle GPS topic data from the device data, and load it into state
+   * @param deviceData
+   */
+  const setVehicleGPSData = (deviceData) => {
+    const vehicleGPSData = deviceData.filter((topicData) => {
+      return topicData.topic === '/vehicle/gps/fix';
+    });
+    setCurrentGPSData(
+      vehicleGPSData.map((topicData) => {
+        const topicDateUTC = topicData.utc_time * 1000; // convert seconds to milliseconds
+        const {altitude, latitude, longitude} = topicData.data;
+        return {
+          altitude,
+          latitude,
+          longitude,
+          timeStamp: new Date(topicDateUTC).toString()
+        };
+      })
+    );
+  };
+
+  /**
+   * Extract the Vehicle Sonar Cloud topic data from the device data, and load it into state
+   * @param deviceData
+   */
+  const setVehicleSonarCloudData = (deviceData) => {
+    const sonarCloudData = deviceData.filter((topicData) => {
+      return topicData.topic === '/vehicle/sonar_cloud';
+    });
+    setCurrentSonarCloudData(
+      sonarCloudData.map((topicData) => {
+        const topicDateUTC = topicData.utc_time * 1000; // convert seconds to milliseconds
+        const {height, width, is_bigendian, is_dense, point_step, row_step, data} = topicData.data;
+        return {
+          height,
+          width,
+          is_bigendian,
+          is_dense,
+          point_step,
+          row_step,
+          data,
+          timeStamp: new Date(topicDateUTC).toString()
+        };
+      })
+    );
+  };
 
   const getDeviceInfo = async () => {
     const data = await FRDeviceFetcher();
@@ -27,33 +110,10 @@ const FreedomRoboticsPage: ZonePage = () => {
 
   const getDeviceData = async () => {
     const deviceData = await FRDeviceDataWindowFetcher();
-    console.log('deviceData:', deviceData);
-    const vehicleGPSData = deviceData.filter((topicData) => {
-      return topicData.topic === '/vehicle/gps/fix';
-    });
-    setCurrentGPSData(
-      vehicleGPSData.map((topicData) => {
-        const {altitude, latitude, longitude} = topicData.data;
-        return [altitude, latitude, longitude];
-      })
-    );
-    const sonarCloudData = deviceData.filter((topicData) => {
-      return topicData.topic === '/vehicle/sonar_cloud';
-    });
-    setCurrentSonarCloudData(
-      sonarCloudData.map((topicData) => {
-        const {height, width, is_bigendian, is_dense, point_step, row_step, data} = topicData.data;
-        return [
-          height,
-          width,
-          is_bigendian.toString(),
-          is_dense.toString(),
-          point_step,
-          row_step,
-          data
-        ];
-      })
-    );
+
+    // These methods will post process the device data into formats well suited for the respective visualization components
+    setVehicleGPSData(deviceData);
+    setVehicleSonarCloudData(deviceData);
   };
 
   useEffect(() => {
@@ -63,32 +123,38 @@ const FreedomRoboticsPage: ZonePage = () => {
 
   return (
     <>
-      <Typography type="Display" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
-        Freedom Robotics Demo
-      </Typography>
-      <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
-        Device ID: {currentDeviceInfo.device}
-      </Typography>
-      <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
-        Device Name: {currentDeviceInfo.name}
-      </Typography>
-      <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
-        Device Type: {currentDeviceInfo.type}
-      </Typography>
-      <VizContainer>
-        <div>
-          <Typography type="Subtitle" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
-            Vehicle GPS Data
-          </Typography>
-          <div>{currentGPSData.toString()}</div>
-        </div>
-        <div>
-          <Typography type="Subtitle" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
-            Vehicle Sonar Data
-          </Typography>
-          <div>{currentSonarCloudData.toString()}</div>
-        </div>
-      </VizContainer>
+      <InfoContainer>
+        <Typography type="Display" color={colors.blueGrey.darken3} marginBottom={'1rem'}>
+          Freedom Robotics Demo
+        </Typography>
+        <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'0.5rem'}>
+          Device ID: {currentDeviceInfo.device}
+        </Typography>
+        <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'0.5rem'}>
+          Device Name: {currentDeviceInfo.name}
+        </Typography>
+      </InfoContainer>
+      <VizControlBarContainer>
+        <Typography type="Title" color={colors.blueGrey.darken3} marginBottom={'0.5rem'}>
+          Current Operating Mode: {isRealTime ? 'Real Time' : 'Historic Snapshot'}
+        </Typography>
+        <ButtonContainer>
+          <button onClick={() => setIsRealTime(true)}>Real time</button>
+          <button onClick={() => setIsRealTime(false)}>Historic Data</button>
+        </ButtonContainer>
+      </VizControlBarContainer>
+      <VizGridLayoutContainer>
+        <VehicleGPSViz
+          mostRecentDataPoint={currentGPSData[currentGPSData.length - 1] || {}}
+          numOfDataPoints={currentGPSData.length}
+          realTime={isRealTime}
+        />
+        <VehicleSonarViz
+          mostRecentDataPoint={currentSonarCloudData[currentSonarCloudData.length - 1] || {}}
+          numOfDataPoints={currentSonarCloudData.length}
+          realTime={isRealTime}
+        />
+      </VizGridLayoutContainer>
     </>
   );
 };

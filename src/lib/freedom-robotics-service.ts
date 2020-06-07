@@ -56,9 +56,10 @@ export const FRDeviceDataFetcher = async () => {
 };
 
 // This will take a given start time and end time, ** in terms of UTC seconds ** and return the data for the given window
+// Defaults to a 2 min timespan 10:00am - 10:02am during the day of 6/6/2020
 export const FRDeviceDataWindowFetcher = async (
   startTime = '1591437600',
-  endTime = '1591437720'
+  endTime = '1591437660'
 ) => {
   const deviceDataURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/data?utc_start=${startTime}&utc_end=${endTime}`;
 
@@ -81,6 +82,7 @@ export const FRDeviceDataWindowFetcher = async (
   }
 };
 
+// The Image fetcher appears to work, however requesting the S3 image seems to require some specific cookie headers.
 export const FRDeviceImageFetcher = async () => {
   const deviceDataURL = `${freedomRoboticsConfig.baseURL}/accounts/${freedomRoboticsConfig.accountId}/devices/${freedomRoboticsConfig.deviceId}/videos?pre_signed=true`;
 
