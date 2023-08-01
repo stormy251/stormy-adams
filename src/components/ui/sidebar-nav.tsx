@@ -5,11 +5,13 @@ import { usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
+import { ReactNode } from 'react';
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
     href: string;
     title: string;
+    icon: ReactNode;
   }[];
 }
 
@@ -28,12 +30,13 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
           className={cn(
             buttonVariants({ variant: 'ghost' }),
             pathname === item.href
-              ? 'bg-muted hover:bg-muted'
-              : 'hover:bg-transparent hover:underline',
-            'justify-start'
+              ? 'bg-gray-200 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-600'
+              : 'hover:bg-gray-200 hover:underline dark:hover:bg-gray-500',
+            'justify-start gap-2'
           )}
         >
-          {item.title}
+          <span>{item.icon}</span>
+          <span>{item.title}</span>
         </Link>
       ))}
     </nav>

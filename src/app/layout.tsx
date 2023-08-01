@@ -4,6 +4,7 @@ import AppThemeProvider from '@/contexts/AppThemeContext';
 import LightDarkModeToggle from '@/components/app/LightDarkModeToggle';
 import SideNavItems from '@/components/app/SideNavItems';
 import Image from 'next/image';
+import CommandMenu from '@/components/app/CommandMenu';
 
 export const metadata: Metadata = {
   title: "Stormy's App Playground",
@@ -56,6 +57,7 @@ export default function RootLayout({
             </aside>
             {children}
           </main>
+          <CommandMenu />
         </AppThemeProvider>
       </body>
     </html>
