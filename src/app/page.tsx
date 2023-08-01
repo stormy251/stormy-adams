@@ -4,7 +4,7 @@ import PageWrapper from '@/components/app/PageWrapper';
 
 export default function ProfilePage() {
   return (
-    <PageWrapper>
+    <PageWrapper titleText='Profile'>
       <section
         data-purpose-id='banner-header'
         className='h-[10rem] w-full bg-slate-200 transition-colors dark:bg-slate-500'

@@ -4,7 +4,7 @@ import PageWrapper from '@/components/app/PageWrapper';
 
 export default function DashboardPage() {
   return (
-    <PageWrapper>
+    <PageWrapper titleText='dashboard'>
       <section
         data-purpose-id='profile-content'
         className='flex w-full grow flex-col px-4 py-4'

@@ -1,10 +1,9 @@
 import './global.css';
 import type { Metadata } from 'next';
-import { Zap } from 'lucide-react';
-import { SidebarNav } from '@/components/ui/sidebar-nav';
 import AppThemeProvider from '@/contexts/AppThemeContext';
-import { useMemo } from 'react';
 import LightDarkModeToggle from '@/components/app/LightDarkModeToggle';
+import SideNavItems from '@/components/app/SideNavItems';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: "Stormy's App Playground",
@@ -16,19 +15,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const sidebarNavItems = useMemo(() => {
-    return [
-      {
-        href: '/',
-        title: 'Profile',
-      },
-      {
-        href: '/dashboard',
-        title: 'Dashboard',
-      },
-    ];
-  }, []);
-
   return (
     <html lang='en' suppressHydrationWarning>
       <head />
@@ -40,22 +26,26 @@ export default function RootLayout({
           >
             <aside
               data-purpose-id='side-bar'
-              className='flex w-[16rem] flex-col border-r border-input px-3 py-4'
+              className='flex w-0 flex-col overflow-hidden border-input bg-primary-foreground opacity-0 transition-all sm:w-[16rem] sm:border-r sm:px-3 sm:py-4 sm:opacity-100'
             >
               <div
                 data-purpose-id='side-bar-header'
-                className='flex items-center gap-1 text-2xl font-bold'
+                className='flex items-center gap-2 text-2xl font-bold'
               >
-                <Zap className='h-[2rem] w-[2rem]' />
-                <h2 className='text-xl font-semibold tracking-tight'>
-                  App Playground
-                </h2>
+                <Image
+                  className='rounded-full'
+                  src='/storm_logo.jpg'
+                  width={36}
+                  height={36}
+                  alt='Stormy profile logo'
+                />
+                <h2 className='text-xl font-bold'>Stormy Adams</h2>
               </div>
               <div
                 data-purpose-id='side-bar-body'
                 className='mt-5 flex grow flex-col'
               >
-                <SidebarNav items={sidebarNavItems} />
+                <SideNavItems />
               </div>
               <div
                 data-purpose-id='side-bar-footer'
