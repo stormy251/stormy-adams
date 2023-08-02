@@ -54,9 +54,30 @@ const CommandMenu = () => {
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading='Set Active Theme'>
-          <CommandItem onSelect={() => setTheme('light')}>Light</CommandItem>
-          <CommandItem onSelect={() => setTheme('dark')}>Dark</CommandItem>
-          <CommandItem onSelect={() => setTheme('system')}>System</CommandItem>
+          <CommandItem
+            onSelect={() => {
+              setTheme('light');
+              setOpen(false);
+            }}
+          >
+            Light
+          </CommandItem>
+          <CommandItem
+            onSelect={() => {
+              setTheme('dark');
+              setOpen(false);
+            }}
+          >
+            Dark
+          </CommandItem>
+          <CommandItem
+            onSelect={() => {
+              setTheme('system');
+              setOpen(false);
+            }}
+          >
+            System
+          </CommandItem>
         </CommandGroup>
       </CommandList>
     </CommandDialog>
