@@ -31,7 +31,7 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
         className='flex h-[3.5rem] items-center justify-between bg-primary-foreground px-3 transition-all sm:h-0 sm:overflow-hidden sm:opacity-0'
       >
         <div
-          data-purpose-id='side-bar-header'
+          data-purpose-id='page-brand-header'
           className='flex items-center gap-2 text-2xl font-bold'
         >
           <Image
@@ -72,7 +72,7 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
           </SheetContent>
         </Sheet>
       </div>
-      {children}
+      <div className='flex h-full grow flex-col overflow-auto'>{children}</div>
     </motion.div>
   );
 };
