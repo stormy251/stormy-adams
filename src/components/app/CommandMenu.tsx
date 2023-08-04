@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   CommandDialog,
   CommandEmpty,
@@ -11,17 +11,18 @@ import {
 } from '@/components/ui/command';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import { useAppContext } from '@/contexts/AppContext';
 
-const CommandMenu = () => {
+const CommandMenu: FC = () => {
   const router = useRouter();
   const { setTheme } = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const { isCommandOpen, setIsCommandOpen } = useAppContext();
 
   // This handles the key handler for trigger on meta, or ctrl keys with k.
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        setOpen((open) => !open);
+        setIsCommandOpen((open) => !open);
         e.stopPropagation();
         e.preventDefault();
       }
@@ -31,7 +32,7 @@ const CommandMenu = () => {
   }, []);
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandDialog open={isCommandOpen} onOpenChange={setIsCommandOpen}>
       <CommandInput placeholder='Type a command or search...' />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
@@ -39,7 +40,7 @@ const CommandMenu = () => {
           <CommandItem
             onSelect={() => {
               router.push('/');
-              setOpen(false);
+              setIsCommandOpen(false);
             }}
           >
             Profile
@@ -47,7 +48,7 @@ const CommandMenu = () => {
           <CommandItem
             onSelect={() => {
               router.push('/playground');
-              setOpen(false);
+              setIsCommandOpen(false);
             }}
           >
             Playground
@@ -57,7 +58,7 @@ const CommandMenu = () => {
           <CommandItem
             onSelect={() => {
               setTheme('light');
-              setOpen(false);
+              setIsCommandOpen(false);
             }}
           >
             Light
@@ -65,7 +66,7 @@ const CommandMenu = () => {
           <CommandItem
             onSelect={() => {
               setTheme('dark');
-              setOpen(false);
+              setIsCommandOpen(false);
             }}
           >
             Dark
@@ -73,7 +74,7 @@ const CommandMenu = () => {
           <CommandItem
             onSelect={() => {
               setTheme('system');
-              setOpen(false);
+              setIsCommandOpen(false);
             }}
           >
             System
