@@ -16,16 +16,23 @@ export default function ProfilePage() {
     <PageWrapper titleText='Profile'>
       <section
         data-purpose-id='banner-header'
-        className='h-[13rem] w-full bg-slate-100 transition-colors dark:bg-slate-800'
+        className='h-[10rem] w-full bg-slate-200 transition-colors dark:bg-slate-800 sm:h-[13rem]'
       />
       <section
         data-purpose-id='profile-content'
-        className='flex w-full grow flex-col overflow-y-auto px-4 py-4 md:container'
+        className='flex w-full grow flex-col px-4 py-4 md:container'
       >
         <div
           data-purpose-id='profile-image-and-contact-container'
-          className='flex flex-col px-3 sm:flex-row sm:items-center sm:px-5'
+          className='-mt-[3rem] flex flex-col gap-4 sm:mt-0 sm:h-[4rem] sm:flex-row sm:items-center'
         >
+          <Image
+            className=' h-[8rem] w-[8rem] rounded-full border-[0.4rem] border-background shadow-md sm:h-[10rem] sm:w-[10rem]'
+            src='/profile.jpg'
+            width={1024}
+            height={1024}
+            alt='Stormy profile logo'
+          />
           <div
             data-purpose-id='name-title-contact-header'
             className='flex h-auto grow flex-col gap-3 md:h-14 md:flex-row md:justify-between'
@@ -35,10 +42,9 @@ export default function ProfilePage() {
                 <h3 className='scroll-m-20 text-2xl font-semibold tracking-tight'>
                   Stormy Adams
                 </h3>
-                <Hand />
               </span>
 
-              <p className='leading-7'>
+              <p className='font-semibold leading-7'>
                 {"I'm a Software Engineer based in San Francisco."}
               </p>
             </div>
@@ -103,20 +109,30 @@ export default function ProfilePage() {
                     <p>LinkedIn</p>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
-              <Button
-                variant='default'
-                onClick={() => {
-                  const emailAddress = 'stormy251251@gmail.com';
-                  const subject = encodeURIComponent('Regarding your profile'); // You can change the subject if you want
-                  const body = encodeURIComponent('Dear Stormy,\n\n'); // You can add an initial email body here if you want
+                <Tooltip delayDuration={250}>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant='default'
+                      onClick={() => {
+                        const emailAddress = 'stormy251251@gmail.com';
+                        const subject = encodeURIComponent(
+                          'Regarding your profile'
+                        ); // You can change the subject if you want
+                        const body = encodeURIComponent('Dear Stormy,\n\n'); // You can add an initial email body here if you want
 
-                  const mailtoLink = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
-                  window.location.href = mailtoLink;
-                }}
-              >
-                <Mail className='mr-2 h-4 w-4' /> Contact Me
-              </Button>
+                        const mailtoLink = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
+                        window.location.href = mailtoLink;
+                      }}
+                    >
+                      <Mail className='mr-2 h-4 w-4' />{' '}
+                      <span className='whitespace-nowrap'>Contact Me</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Send an email</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </div>

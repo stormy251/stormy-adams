@@ -1,6 +1,6 @@
 import {
   ANIMATE_VARIANT_BINDINGS,
-  fadeUpVariants,
+  fadeDownVariants,
 } from '@/lib/framer-motion/motion-variants';
 import { motion } from 'framer-motion';
 import { Menu } from 'lucide-react';
@@ -21,7 +21,7 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
 }) => {
   return (
     <motion.div
-      variants={fadeUpVariants}
+      variants={fadeDownVariants}
       {...ANIMATE_VARIANT_BINDINGS}
       data-purpose-id='page-wrapper'
       className='flex h-full grow flex-col'
@@ -30,20 +30,23 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
         data-purpose-id='mobile-top-header'
         className='flex h-[3.5rem] items-center justify-between bg-primary-foreground px-3 transition-all sm:h-0 sm:overflow-hidden sm:opacity-0'
       >
-        <div
-          data-purpose-id='page-brand-header'
-          className='flex items-center gap-2 text-2xl font-bold'
-        >
-          <Image
-            className='rounded-full'
-            src='/storm_logo.jpg'
-            width={36}
-            height={36}
-            alt='Stormy profile logo'
-          />
-          <h2 className='text-xl font-semibold capitalize'>{titleText}</h2>
-        </div>
         <Sheet>
+          <div
+            data-purpose-id='page-brand-header'
+            className='flex items-center gap-2 text-2xl font-bold'
+          >
+            <SheetTrigger asChild>
+              <Image
+                className='rounded-full'
+                src='/storm_logo.jpg'
+                width={36}
+                height={36}
+                alt='Stormy profile logo'
+              />
+            </SheetTrigger>
+
+            <h2 className='text-xl font-semibold capitalize'>{titleText}</h2>
+          </div>
           <SheetTrigger asChild>
             <Button variant='ghost' size='icon'>
               <Menu />
