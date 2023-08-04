@@ -2,7 +2,13 @@
 
 import PageWrapper from '@/components/app/PageWrapper';
 import { Button } from '@/components/ui/button';
-import { Hand, Linkedin, Mail, Twitter } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { Github, Hand, Linkedin, Mail, Twitter } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ProfilePage() {
@@ -37,27 +43,67 @@ export default function ProfilePage() {
               </p>
             </div>
             <div className='flex items-center gap-3'>
-              <Button
-                size='icon'
-                variant='outline'
-                onClick={() => {
-                  window.open('https://twitter.com/stormos251', '_blank');
-                }}
-              >
-                <Twitter color='#128fdc' fill='#128fdc' className='h-4 w-4' />
-              </Button>
-              <Button
-                size='icon'
-                variant='outline'
-                onClick={() => {
-                  window.open(
-                    'https://www.linkedin.com/in/stormy-adams-67a0b653/',
-                    '_blank'
-                  );
-                }}
-              >
-                <Linkedin color='#0A66C2' fill='#0A66C2' className='h-4 w-4' />
-              </Button>
+              <TooltipProvider>
+                <Tooltip delayDuration={250}>
+                  <TooltipTrigger asChild>
+                    <Button
+                      size='icon'
+                      variant='outline'
+                      onClick={() => {
+                        window.open('https://twitter.com/stormos251', '_blank');
+                      }}
+                    >
+                      <Twitter
+                        color='#128fdc'
+                        fill='#128fdc'
+                        className='h-4 w-4'
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Twitter</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip delayDuration={250}>
+                  <TooltipTrigger asChild>
+                    <Button
+                      size='icon'
+                      variant='outline'
+                      onClick={() => {
+                        window.open('https://github.com/stormy251', '_blank');
+                      }}
+                    >
+                      <Github className='h-4 w-4' />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Github</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip delayDuration={250}>
+                  <TooltipTrigger asChild>
+                    <Button
+                      size='icon'
+                      variant='outline'
+                      onClick={() => {
+                        window.open(
+                          'https://www.linkedin.com/in/stormy-adams-67a0b653/',
+                          '_blank'
+                        );
+                      }}
+                    >
+                      <Linkedin
+                        color='#0A66C2'
+                        fill='#0A66C2'
+                        className='h-4 w-4'
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>LinkedIn</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
               <Button
                 variant='default'
                 onClick={() => {
