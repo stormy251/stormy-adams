@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react';
 import { SidebarNav } from '@/components/ui/sidebar-nav';
-import { LayoutDashboard, UserSquare } from 'lucide-react';
+import { Smile, UserSquare } from 'lucide-react';
 
 const SideNavItems: FC = () => {
   const sidebarNavItems = useMemo(() => {
@@ -11,9 +11,9 @@ const SideNavItems: FC = () => {
         icon: <UserSquare />,
       },
       {
-        href: '/dashboard',
-        title: 'Dashboard',
-        icon: <LayoutDashboard />,
+        href: '/playground',
+        title: 'Playground',
+        icon: <Smile />,
       },
     ];
   }, []);
