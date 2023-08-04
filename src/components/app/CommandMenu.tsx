@@ -46,11 +46,11 @@ const CommandMenu = () => {
           </CommandItem>
           <CommandItem
             onSelect={() => {
-              router.push('/dashboard');
+              router.push('/playground');
               setOpen(false);
             }}
           >
-            Dashboard
+            Playground
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading='Set Active Theme'>
