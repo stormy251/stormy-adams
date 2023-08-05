@@ -1,3 +1,5 @@
+'use client';
+
 import {
   ANIMATE_VARIANT_BINDINGS,
   fadeDownVariants,
@@ -28,7 +30,7 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
     >
       <div
         data-purpose-id='mobile-top-header'
-        className='flex h-[3.5rem] items-center justify-between bg-primary-foreground px-3 transition-all sm:h-0 sm:overflow-hidden sm:opacity-0'
+        className='flex h-[3.5rem] min-h-[3.5rem] items-center justify-between bg-primary-foreground px-3 transition-all sm:h-0 sm:min-h-0 sm:overflow-hidden sm:opacity-0'
       >
         <Sheet>
           <div
@@ -75,7 +77,9 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
           </SheetContent>
         </Sheet>
       </div>
-      <div className='flex h-full grow flex-col overflow-auto'>{children}</div>
+      <div className='flex h-full w-full grow flex-col overflow-auto'>
+        {children}
+      </div>
     </motion.div>
   );
 };
