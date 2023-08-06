@@ -46,7 +46,7 @@ export default async function ServicesPlaygroundPage() {
             <small className='inline sm:hidden'>(They are not real)</small>
           </div>
           <CircuitBoard
-            className='h-16 w-16 text-gray-300 sm:h-20 sm:w-20'
+            className='h-16 w-16 text-gray-300 dark:text-gray-500 sm:h-20 sm:w-20'
             color='currentColor'
           />
         </div>
