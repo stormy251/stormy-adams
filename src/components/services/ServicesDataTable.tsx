@@ -26,6 +26,12 @@ import {
 } from '@/components/ui/table';
 import { ServicesDataTablePagination } from '@/components/services/ServicesDataTablePagination';
 import { ServicesDataTableToolbar } from '@/components/services/ServicesDataTableToolbar';
+import { motion } from 'framer-motion';
+import {
+  ANIMATE_VARIANT_BINDINGS,
+  SLOW_TIMING,
+  fadeDownVariants,
+} from '@/lib/framer-motion/motion-variants';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -67,7 +73,12 @@ export function ServicesDataTable<TData, TValue>({
   });
 
   return (
-    <div className='space-y-4'>
+    <motion.div
+      variants={fadeDownVariants}
+      transition={{ delay: SLOW_TIMING }}
+      {...ANIMATE_VARIANT_BINDINGS}
+      className='space-y-4'
+    >
       <ServicesDataTableToolbar table={table} />
       <div className='rounded-md border'>
         <Table>
@@ -120,6 +131,6 @@ export function ServicesDataTable<TData, TValue>({
         </Table>
       </div>
       <ServicesDataTablePagination table={table} />
-    </div>
+    </motion.div>
   );
 }

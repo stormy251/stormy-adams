@@ -31,7 +31,7 @@ export default async function ServicesPlaygroundPage() {
     <PageWrapper titleText='Service Playground'>
       <section
         data-purpose-id='banner-header'
-        className='h-[10rem] min-h-[10rem] w-full bg-gradient-to-l from-orange-200 via-violet-300 to-purple-300 transition-colors dark:from-yellow-800 dark:via-violet-900 dark:to-purple-800 sm:h-[13rem] sm:min-h-[13rem]'
+        className='h-[10rem] min-h-[10rem] w-full bg-blue-100 transition-colors dark:bg-neutral-700 sm:h-[13rem] sm:min-h-[13rem]'
       />
       <section
         data-purpose-id='services-content'

@@ -8,6 +8,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import {
+  ANIMATE_VARIANT_BINDINGS,
+  SLOW_TIMING,
+  fadeVariants,
+} from '@/lib/framer-motion/motion-variants';
+import { motion } from 'framer-motion';
 import { Github, Hand, Linkedin, Mail, Twitter } from 'lucide-react';
 import Image from 'next/image';
 
@@ -16,9 +22,12 @@ export default function ProfilePage() {
     <PageWrapper titleText='Profile'>
       <section
         data-purpose-id='banner-header'
-        className='h-[10rem] w-full bg-gradient-to-r from-orange-200 via-violet-300 to-purple-300 transition-colors dark:from-yellow-800 dark:via-violet-900 dark:to-purple-800 sm:h-[13rem]'
+        className='h-[10rem] w-full bg-blue-100 transition-colors dark:bg-gray-800 sm:h-[13rem]'
       />
-      <section
+      <motion.section
+        variants={fadeVariants}
+        transition={{ delay: SLOW_TIMING }}
+        {...ANIMATE_VARIANT_BINDINGS}
         data-purpose-id='profile-content'
         className='flex w-full grow flex-col px-4 py-4 md:container'
       >
@@ -136,7 +145,7 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
     </PageWrapper>
   );
 }
