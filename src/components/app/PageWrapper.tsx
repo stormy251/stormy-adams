@@ -2,7 +2,7 @@
 
 import {
   ANIMATE_VARIANT_BINDINGS,
-  fadeDownVariants,
+  fadeVariants,
 } from '@/lib/framer-motion/motion-variants';
 import { motion } from 'framer-motion';
 import { Menu } from 'lucide-react';
@@ -23,7 +23,7 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
 }) => {
   return (
     <motion.div
-      variants={fadeDownVariants}
+      variants={fadeVariants}
       {...ANIMATE_VARIANT_BINDINGS}
       data-purpose-id='page-wrapper'
       className='flex h-full grow flex-col'

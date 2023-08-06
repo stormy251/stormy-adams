@@ -4,8 +4,10 @@ import { z } from "zod"
 export const serviceSchema = z.object({
   id: z.string(),
   title: z.string(),
+  owner: z.string(),
+  description: z.string(),
   status: z.string(),
-  label: z.string(),
+  tag: z.string(),
   priority: z.string(),
 })
 

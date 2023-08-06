@@ -3,7 +3,7 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 
-import { labels } from '@/features/services/constants/services-data-table-constants';
+import { tags } from '@/features/services/constants/services-data-table-constants';
 import { serviceSchema } from '@/features/services/data/schema';
 import {
   DropdownMenu,
@@ -46,12 +46,12 @@ export function ServicesDataTableRowActions<TData>({
         <DropdownMenuItem>Favorite</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger>Tags</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={service.label}>
-              {labels.map((label) => (
-                <DropdownMenuRadioItem key={label.value} value={label.value}>
-                  {label.label}
+            <DropdownMenuRadioGroup value={service.tag}>
+              {tags.map((tag) => (
+                <DropdownMenuRadioItem key={tag.value} value={tag.value}>
+                  {tag.label}
                 </DropdownMenuRadioItem>
               ))}
             </DropdownMenuRadioGroup>

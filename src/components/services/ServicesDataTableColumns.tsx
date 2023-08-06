@@ -3,7 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import {
-  labels,
+  tags,
   priorities,
   statuses,
 } from '@/features/services/constants/services-data-table-constants';
@@ -52,11 +52,11 @@ export const servicesDataTableColumns: ColumnDef<Service>[] = [
       <ServicesDataTableColumnHeader column={column} title='Title' />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label);
+      const tag = tags.find((tag) => tag.value === row.original.tag);
 
       return (
         <div className='flex space-x-2'>
-          {label && <Badge variant='outline'>{label.label}</Badge>}
+          {tag && <Badge variant='outline'>{tag.label}</Badge>}
           <span className='max-w-[500px] truncate font-medium'>
             {row.getValue('title')}
           </span>

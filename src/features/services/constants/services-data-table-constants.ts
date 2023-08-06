@@ -2,21 +2,17 @@ import {
   ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpIcon,
-  CheckCircledIcon,
-  CircleIcon,
-  CrossCircledIcon,
-  QuestionMarkCircledIcon,
-  StopwatchIcon,
 } from "@radix-ui/react-icons"
+import { Activity, AlertTriangle, PowerOff } from "lucide-react"
 
-export const labels = [
+export const tags = [
   {
-    value: "bug",
-    label: "Bug",
+    value: "chat-service",
+    label: "Chat Service",
   },
   {
-    value: "feature",
-    label: "Feature",
+    value: "notification-service",
+    label: "Notifications Center",
   },
   {
     value: "documentation",
@@ -24,48 +20,37 @@ export const labels = [
   },
 ]
 
-// NOTES TO STORMY: Update the icons, and statuses below to reflect that of an imaginary service status
 export const statuses = [
   {
     value: "offline",
     label: "Offline",
-    icon: QuestionMarkCircledIcon,
+    icon: PowerOff,
   },
   {
-    value: "todo",
-    label: "Todo",
-    icon: CircleIcon,
+    value: "active",
+    label: "Active",
+    icon: Activity,
   },
   {
-    value: "in progress",
-    label: "In Progress",
-    icon: StopwatchIcon,
-  },
-  {
-    value: "done",
-    label: "Done",
-    icon: CheckCircledIcon,
-  },
-  {
-    value: "canceled",
-    label: "Canceled",
-    icon: CrossCircledIcon,
-  },
+    value: "warning",
+    label: "Warning",
+    icon: AlertTriangle,
+  }
 ]
 
 export const priorities = [
   {
-    label: "Low",
+    label: "Tier 3",
     value: "low",
     icon: ArrowDownIcon,
   },
   {
-    label: "Medium",
+    label: "Tier 2",
     value: "medium",
     icon: ArrowRightIcon,
   },
   {
-    label: "High",
+    label: "Tier 1",
     value: "high",
     icon: ArrowUpIcon,
   },
