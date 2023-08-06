@@ -1,9 +1,4 @@
-import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-} from "@radix-ui/react-icons"
-import { Activity, AlertTriangle, PowerOff } from "lucide-react"
+import { Activity, AlertTriangle, Circle, PowerOff, Square, Star } from "lucide-react"
 
 export const tags = [
   {
@@ -42,16 +37,16 @@ export const priorities = [
   {
     label: "Tier 3",
     value: "low",
-    icon: ArrowDownIcon,
+    icon: Square,
   },
   {
     label: "Tier 2",
     value: "medium",
-    icon: ArrowRightIcon,
+    icon: Circle,
   },
   {
     label: "Tier 1",
     value: "high",
-    icon: ArrowUpIcon,
+    icon: Star,
   },
 ]

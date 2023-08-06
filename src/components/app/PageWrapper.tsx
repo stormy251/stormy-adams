@@ -38,16 +38,18 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
             className='flex items-center gap-2 text-2xl font-bold'
           >
             <SheetTrigger asChild>
-              <Image
-                className='rounded-full'
-                src='/storm_logo.jpg'
-                width={36}
-                height={36}
-                alt='Stormy profile logo'
-              />
+              <span className='cursor-pointer'>
+                <Image
+                  className='rounded-full'
+                  src='/storm_logo.jpg'
+                  width={36}
+                  height={36}
+                  alt='Stormy profile logo'
+                />
+              </span>
             </SheetTrigger>
 
-            <h2 className='text-xl font-semibold capitalize'>{titleText}</h2>
+            <h2 className='text-xl font-semibold capitalize'>Stormy Adams</h2>
           </div>
           <SheetTrigger asChild>
             <Button variant='ghost' size='icon'>
@@ -66,6 +68,7 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
                 height={36}
                 alt='Stormy profile logo'
               />
+
               <h2 className='text-xl font-bold tracking-tight'>Stormy Adams</h2>
             </div>
             <div className='flex grow flex-col'>

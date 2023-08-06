@@ -18,6 +18,29 @@ const CommandMenu: FC = () => {
   const { setTheme } = useTheme();
   const { isCommandOpen, setIsCommandOpen } = useAppContext();
 
+  const handleCommandSelect = (command: string) => {
+    switch (command) {
+      case 'profile':
+        router.push('/');
+        break;
+      case 'services':
+        router.push('/services');
+        break;
+      case 'light':
+        setTheme('light');
+        break;
+      case 'dark':
+        setTheme('dark');
+        break;
+      case 'system':
+        setTheme('system');
+        break;
+      default:
+        break;
+    }
+    setIsCommandOpen(false);
+  };
+
   // This handles the key handler for trigger on meta, or ctrl keys with k.
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
@@ -29,7 +52,7 @@ const CommandMenu: FC = () => {
     };
     document.addEventListener('keydown', handleKeydown);
     return () => document.removeEventListener('keydown', handleKeydown);
-  }, []);
+  }, [setIsCommandOpen]);
 
   return (
     <CommandDialog open={isCommandOpen} onOpenChange={setIsCommandOpen}>
@@ -39,42 +62,37 @@ const CommandMenu: FC = () => {
         <CommandGroup heading='Pages'>
           <CommandItem
             onSelect={() => {
-              router.push('/');
-              setIsCommandOpen(false);
+              handleCommandSelect('profile');
             }}
           >
             Profile
           </CommandItem>
           <CommandItem
             onSelect={() => {
-              router.push('/playground');
-              setIsCommandOpen(false);
+              handleCommandSelect('services');
             }}
           >
-            Playground
+            Services
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading='Set Active Theme'>
           <CommandItem
             onSelect={() => {
-              setTheme('light');
-              setIsCommandOpen(false);
+              handleCommandSelect('light');
             }}
           >
             Light
           </CommandItem>
           <CommandItem
             onSelect={() => {
-              setTheme('dark');
-              setIsCommandOpen(false);
+              handleCommandSelect('dark');
             }}
           >
             Dark
           </CommandItem>
           <CommandItem
             onSelect={() => {
-              setTheme('system');
-              setIsCommandOpen(false);
+              handleCommandSelect('system');
             }}
           >
             System

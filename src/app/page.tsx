@@ -11,22 +11,26 @@ import {
 import {
   ANIMATE_VARIANT_BINDINGS,
   SLOW_TIMING,
+  fadeSectionHeightVariants,
   fadeVariants,
 } from '@/lib/framer-motion/motion-variants';
 import { motion } from 'framer-motion';
-import { Github, Hand, Linkedin, Mail, Twitter } from 'lucide-react';
+import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ProfilePage() {
   return (
     <PageWrapper titleText='Profile'>
-      <section
+      <motion.section
+        variants={fadeSectionHeightVariants}
+        transition={{ delay: SLOW_TIMING }}
+        {...ANIMATE_VARIANT_BINDINGS}
         data-purpose-id='banner-header'
         className='h-[10rem] w-full bg-blue-100 transition-colors dark:bg-gray-800 sm:h-[13rem]'
       />
       <motion.section
         variants={fadeVariants}
-        transition={{ delay: SLOW_TIMING }}
+        transition={{ delay: SLOW_TIMING * 2 }}
         {...ANIMATE_VARIANT_BINDINGS}
         data-purpose-id='profile-content'
         className='flex w-full grow flex-col px-4 py-4 md:container'

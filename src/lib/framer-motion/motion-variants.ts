@@ -79,6 +79,25 @@ export const fadeHeightVariants = {
   },
 };
 
+export const fadeSectionHeightVariants = {
+  [ANIMATE_VARIANT_NAME]: {
+    opacity: 1,
+    height: "10rem",
+    overflow: "visible",
+    transition: {
+      duration: SLOW_TIMING * 2,
+    },
+  },
+  [INITIAL_VARIANT_NAME]: {
+    opacity: 0,
+    height: "0",
+    overflow: "hidden",
+    transition: {
+      duration: SLOW_TIMING * 2,
+    },
+  },
+};
+
 export const fadeMenuVariants = {
   [ANIMATE_VARIANT_NAME]: {
     opacity: 1,
