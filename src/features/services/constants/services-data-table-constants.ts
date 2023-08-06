@@ -24,10 +24,11 @@ export const labels = [
   },
 ]
 
+// NOTES TO STORMY: Update the icons, and statuses below to reflect that of an imaginary service status
 export const statuses = [
   {
-    value: "backlog",
-    label: "Backlog",
+    value: "offline",
+    label: "Offline",
     icon: QuestionMarkCircledIcon,
   },
   {

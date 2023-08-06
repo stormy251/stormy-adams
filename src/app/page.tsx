@@ -16,7 +16,7 @@ export default function ProfilePage() {
     <PageWrapper titleText='Profile'>
       <section
         data-purpose-id='banner-header'
-        className='h-[10rem] w-full bg-slate-200 transition-colors dark:bg-slate-800 sm:h-[13rem]'
+        className='h-[10rem] w-full bg-gradient-to-r from-orange-200 via-violet-300 to-purple-300 transition-colors dark:from-yellow-800 dark:via-violet-900 dark:to-purple-800 sm:h-[13rem]'
       />
       <section
         data-purpose-id='profile-content'
@@ -112,7 +112,7 @@ export default function ProfilePage() {
                 <Tooltip delayDuration={250}>
                   <TooltipTrigger asChild>
                     <Button
-                      variant='default'
+                      variant='secondary'
                       onClick={() => {
                         const emailAddress = 'stormy251251@gmail.com';
                         const subject = encodeURIComponent(
