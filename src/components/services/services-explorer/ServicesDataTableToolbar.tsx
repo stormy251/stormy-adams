@@ -9,8 +9,8 @@ import {
 } from '@/features/services/constants/services-data-table-constants';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ServicesDataTableViewOptions } from '@/components/services/ServicesDataTableViewOptions';
-import { ServicesDataTableFacetedFilter } from '@/components/services/ServicesDataTableFacetedFilter';
+import { ServicesDataTableViewOptions } from '@/components/services/services-explorer/ServicesDataTableViewOptions';
+import { ServicesDataTableFacetedFilter } from '@/components/services/services-explorer/ServicesDataTableFacetedFilter';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -30,20 +30,13 @@ export function ServicesDataTableToolbar<TData>({
           onChange={(event) =>
             table.getColumn('title')?.setFilterValue(event.target.value)
           }
-          className='h-12 w-[150px] lg:w-[250px]'
+          className='h-12 w-[250px] lg:w-[250px]'
         />
         {table.getColumn('status') && (
           <ServicesDataTableFacetedFilter
             column={table.getColumn('status')}
             title='Status'
             options={statuses}
-          />
-        )}
-        {table.getColumn('priority') && (
-          <ServicesDataTableFacetedFilter
-            column={table.getColumn('priority')}
-            title='Priority'
-            options={priorities}
           />
         )}
         {isFiltered && (

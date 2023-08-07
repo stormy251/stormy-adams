@@ -7,6 +7,7 @@ import Image from 'next/image';
 import CommandMenu from '@/components/app/CommandMenu';
 import SearchCommandButton from '@/components/app/SearchCommandButton';
 import { AppContextProvider } from '@/contexts/AppContext';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: "Stormy's App Playground",
@@ -62,6 +63,7 @@ export default function RootLayout({
               {children}
             </main>
             <CommandMenu />
+            <Toaster />
           </AppContextProvider>
         </ThemeProvider>
       </body>

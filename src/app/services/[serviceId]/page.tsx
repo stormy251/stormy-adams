@@ -6,6 +6,9 @@ import { z } from 'zod';
 import PageWrapper from '@/components/app/PageWrapper';
 import { Service, serviceSchema } from '@/features/services/data/schema';
 
+import DetailsPageHeader from '@/components/services/details-page/DetailsPageHeader';
+import DetailsPageContent from '@/components/services/details-page/DetailsPageContent';
+
 export const metadata: Metadata = {
   title: 'Services Details',
   description: 'A dashboard showcasing the services profile page.',
@@ -32,8 +35,12 @@ export default async function ServiceDetailPage({
   const service = await getServiceById(params.serviceId);
 
   return (
-    <PageWrapper titleText={`${service.title}`}>
-      <div>My Service: {service.title}</div>
+    <PageWrapper
+      withoutOverflow={true}
+      titleText={`${service.title} Dashboard`}
+    >
+      <DetailsPageHeader service={service} />
+      <DetailsPageContent service={service} />
     </PageWrapper>
   );
 }

@@ -7,8 +7,8 @@ import {
   statuses,
 } from '@/features/services/constants/services-data-table-constants';
 import { Service } from '@/features/services/data/schema';
-import { ServicesDataTableColumnHeader } from '@/components/services/ServicesDataTableColumnHeader';
-import { ServicesDataTableRowActions } from '@/components/services/ServicesDataTableRowActions';
+import { ServicesDataTableColumnHeader } from '@/components/services/services-explorer/ServicesDataTableColumnHeader';
+import { ServicesDataTableRowActions } from '@/components/services/services-explorer/ServicesDataTableRowActions';
 
 export const servicesDataTableColumns: ColumnDef<Service>[] = [
   {

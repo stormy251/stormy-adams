@@ -15,11 +15,12 @@ import Image from 'next/image';
 
 type PageWrapperProps = {
   titleText: string;
+  withoutOverflow?: boolean;
 };
 
 const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
-  titleText,
   children,
+  withoutOverflow,
 }) => {
   return (
     <motion.div
@@ -80,7 +81,11 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
           </SheetContent>
         </Sheet>
       </div>
-      <div className='flex h-full w-full grow flex-col overflow-auto'>
+      <div
+        className={`flex h-full w-full grow flex-col ${
+          withoutOverflow ? 'overflow-hidden' : 'overflow-auto'
+        }`}
+      >
         {children}
       </div>
     </motion.div>

@@ -23,8 +23,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { ServicesDataTablePagination } from '@/components/services/ServicesDataTablePagination';
-import { ServicesDataTableToolbar } from '@/components/services/ServicesDataTableToolbar';
+import { ServicesDataTablePagination } from '@/components/services/services-explorer/ServicesDataTablePagination';
+import { ServicesDataTableToolbar } from '@/components/services/services-explorer/ServicesDataTableToolbar';
 import { motion } from 'framer-motion';
 import {
   ANIMATE_VARIANT_BINDINGS,
@@ -72,7 +72,7 @@ export function ServicesDataTable<TData, TValue>({
   return (
     <motion.div
       variants={fadeDownVariants}
-      transition={{ delay: SLOW_TIMING }}
+      transition={{ delay: SLOW_TIMING * 2 }}
       {...ANIMATE_VARIANT_BINDINGS}
       className='space-y-4'
     >
