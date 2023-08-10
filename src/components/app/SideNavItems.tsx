@@ -2,7 +2,7 @@
 
 import { FC, useMemo } from 'react';
 import { SidebarNav } from '@/components/ui/sidebar-nav';
-import { CircuitBoard, Triangle, UserSquare } from 'lucide-react';
+import { CircuitBoard, Smile, UserSquare } from 'lucide-react';
 import { useParams } from 'next/navigation';
 
 const SideNavItems: FC = () => {
@@ -20,6 +20,11 @@ const SideNavItems: FC = () => {
         alias: `/services/${serviceId}`,
         title: 'Services',
         icon: <CircuitBoard />,
+      },
+      {
+        href: '/playground',
+        title: 'Playground',
+        icon: <Smile />,
       },
     ];
   }, [serviceId]);

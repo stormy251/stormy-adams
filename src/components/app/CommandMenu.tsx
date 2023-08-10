@@ -26,6 +26,9 @@ const CommandMenu: FC = () => {
       case 'services':
         router.push('/services');
         break;
+      case 'playground':
+        router.push('/playground');
+        break;
       case 'light':
         setTheme('light');
         break;
@@ -73,6 +76,13 @@ const CommandMenu: FC = () => {
             }}
           >
             Services
+          </CommandItem>
+          <CommandItem
+            onSelect={() => {
+              handleCommandSelect('playground');
+            }}
+          >
+            Playground
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading='Set Active Theme'>
