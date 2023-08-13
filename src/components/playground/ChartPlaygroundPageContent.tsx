@@ -11,7 +11,9 @@ import {
 } from '@/lib/framer-motion/motion-variants';
 import ChartView from '@/components/playground/charts/ChartView';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { BarChart, LineChart, PieChart } from 'lucide-react';
+import { BarChart } from 'lucide-react';
+import PieChartView from '@/components/playground/charts/PieChartView';
+import LineChartView from '@/components/playground/charts/LineChartView';
 
 const ChartPlaygroundPageContent: FC = () => {
   return (
@@ -20,49 +22,32 @@ const ChartPlaygroundPageContent: FC = () => {
       transition={{ delay: SLOW_TIMING * 2 }}
       {...ANIMATE_VARIANT_BINDINGS}
       data-purpose-id='playground-content'
-      className='flex flex-col gap-6 overflow-auto p-8 pt-10 md:container sm:p-8 sm:pt-6'
+      className='flex flex-col gap-6 overflow-auto'
     >
       <Grid numItemsLg={6} className='mt-6 gap-6'>
         {/* Main section */}
         <Col numColSpanLg={4}>
-          <Card className='h-full'>
-            <ChartView />
-          </Card>
+          <ChartView />
         </Col>
 
         {/* KPI sidebar */}
         <Col numColSpanLg={2}>
-          <div className='space-y-6'>
-            <Card>
-              <Alert>
-                <BarChart className='h-4 w-4' />
-                <AlertTitle>Small Bar chart</AlertTitle>
-                <AlertDescription>
-                  Coming soon! This will be a small bar chart that shows some
-                  demo data
-                </AlertDescription>
-              </Alert>
-            </Card>
-            <Card>
-              <Alert>
-                <LineChart className='h-4 w-4' />
-                <AlertTitle>Small Line chart</AlertTitle>
-                <AlertDescription>
-                  Coming soon! This will be a small line chart that shows some
-                  demo data
-                </AlertDescription>
-              </Alert>
-            </Card>
-            <Card>
-              <Alert>
-                <PieChart className='h-4 w-4' />
-                <AlertTitle>Small pie chart</AlertTitle>
-                <AlertDescription>
-                  Coming soon! This will be a small pie chart that shows some
-                  demo data
-                </AlertDescription>
-              </Alert>
-            </Card>
+          <div className='flex flex-col gap-4 rounded-lg border border-input p-4'>
+            <Alert>
+              <BarChart className='h-4 w-4' />
+              <AlertTitle>Small Bar chart</AlertTitle>
+              <AlertDescription>
+                Coming soon! This will be a small bar chart that shows some demo
+                data
+              </AlertDescription>
+            </Alert>
+            <div className='rounded-lg border border-input p-4'>
+              <LineChartView />
+            </div>
+
+            <div className='rounded-lg border border-input p-4'>
+              <PieChartView />
+            </div>
           </div>
         </Col>
       </Grid>

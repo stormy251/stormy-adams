@@ -76,7 +76,7 @@ export default function ChartView() {
   const selectedKpi = kpiList[selectedIndex];
 
   const areaChartArgs = {
-    className: 'mt-5 h-72',
+    className: 'mt-5 h-[45rem]',
     data: performance,
     index: 'date',
     categories: [selectedKpi],
@@ -95,21 +95,20 @@ export default function ChartView() {
             justifyContent='start'
             alignItems='center'
           >
-            <Title> Service Savings History </Title>
+            <Title> Tabbed chart </Title>
             <Icon
               icon={InformationCircleIcon}
               variant='simple'
-              tooltip='This data is fake, and just meant to be used as a demo'
+              tooltip='This is a simple demo of a tabbed chart view.'
             />
           </Flex>
-          <Text> Testing data, just for a demo. </Text>
         </div>
         <div>
           <TabGroup index={selectedIndex} onIndexChange={setSelectedIndex}>
             <TabList color='gray' variant='solid'>
-              <Tab>Sales</Tab>
-              <Tab>Profit</Tab>
-              <Tab>Customers</Tab>
+              <Tab>Tab 1</Tab>
+              <Tab>Tab 2</Tab>
+              <Tab>Tab 3</Tab>
             </TabList>
           </TabGroup>
         </div>

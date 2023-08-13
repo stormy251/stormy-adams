@@ -31,7 +31,7 @@ const PageWrapper: FC<PageWrapperProps & PropsWithChildren> = ({
     >
       <div
         data-purpose-id='mobile-top-header'
-        className='flex h-[3.5rem] min-h-[3.5rem] items-center justify-between bg-primary-foreground px-3 transition-all sm:h-0 sm:min-h-0 sm:overflow-hidden sm:opacity-0'
+        className='flex h-[3.5rem] min-h-[3.5rem] items-center justify-between border-b border-input bg-primary-foreground px-3 transition-all sm:h-0 sm:min-h-0 sm:overflow-hidden sm:opacity-0'
       >
         <Sheet>
           <div
