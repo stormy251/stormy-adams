@@ -2,7 +2,7 @@
 
 import { FC, useMemo } from 'react';
 import { SidebarNav } from '@/components/ui/sidebar-nav';
-import { CircuitBoard, Smile, UserSquare } from 'lucide-react';
+import { AreaChart, CircuitBoard, Smile, UserSquare } from 'lucide-react';
 import { useParams } from 'next/navigation';
 
 const SideNavItems: FC = () => {
@@ -22,9 +22,9 @@ const SideNavItems: FC = () => {
         icon: <CircuitBoard />,
       },
       {
-        href: '/playground',
-        title: 'Playground',
-        icon: <Smile />,
+        href: '/chart-playground',
+        title: 'Chart Playground',
+        icon: <AreaChart />,
       },
     ];
   }, [serviceId]);

@@ -8,7 +8,7 @@ import {
   fadeDownVariants,
 } from '@/lib/framer-motion/motion-variants';
 
-const PlaygroundPageHeader: FC = () => {
+const ChartPlaygroundPageHeader: FC = () => {
   return (
     <motion.header
       variants={fadeDownVariants}
@@ -17,13 +17,13 @@ const PlaygroundPageHeader: FC = () => {
       data-purpose-id='playground-header'
       className='flex w-full items-center space-y-2 border-b border-t border-input px-8 py-3'
     >
-      <div className='flex items-center gap-4'>
+      <div className='flex items-center gap-4 md:container'>
         <h2 className='text-3xl font-bold capitalize tracking-tight'>
-          Playground
+          ChartPlayground
         </h2>
       </div>
     </motion.header>
   );
 };
 
-export default PlaygroundPageHeader;
+export default ChartPlaygroundPageHeader;
