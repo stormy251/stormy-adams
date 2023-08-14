@@ -9,11 +9,11 @@ import {
   SLOW_TIMING,
   fadeDownVariants,
 } from '@/lib/framer-motion/motion-variants';
-import ChartView from '@/components/playground/charts/ChartView';
+import ChartView from '@/components/chart-playground/charts/ChartView';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { BarChart } from 'lucide-react';
-import PieChartView from '@/components/playground/charts/PieChartView';
-import LineChartView from '@/components/playground/charts/LineChartView';
+import PieChartView from '@/components/chart-playground/charts/PieChartView';
+import LineChartView from '@/components/chart-playground/charts/LineChartView';
 
 const ChartPlaygroundPageContent: FC = () => {
   return (

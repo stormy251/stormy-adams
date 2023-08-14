@@ -26,7 +26,7 @@ export default function ProfilePage() {
         transition={{ delay: SLOW_TIMING }}
         {...ANIMATE_VARIANT_BINDINGS}
         data-purpose-id='banner-header'
-        className='h-[10rem] w-full bg-blue-100 transition-colors dark:bg-gray-800 sm:h-[13rem]'
+        className='h-[10rem] w-full bg-accent transition-colors dark:bg-accent sm:h-[13rem]'
       />
       <motion.section
         variants={fadeVariants}
@@ -125,7 +125,7 @@ export default function ProfilePage() {
                 <Tooltip delayDuration={250}>
                   <TooltipTrigger asChild>
                     <Button
-                      variant='secondary'
+                      variant={'secondary'}
                       onClick={() => {
                         const emailAddress = 'stormy251251@gmail.com';
                         const subject = encodeURIComponent(

@@ -76,7 +76,7 @@ export default function ChartView() {
   const selectedKpi = kpiList[selectedIndex];
 
   const areaChartArgs = {
-    className: 'mt-5 h-[45rem]',
+    className: 'mt-5 h-[25rem] sm:h-[45rem]',
     data: performance,
     index: 'date',
     categories: [selectedKpi],
