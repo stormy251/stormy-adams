@@ -7,7 +7,6 @@ import { ServicesDataTable } from '@/components/services/services-explorer/Servi
 import PageWrapper from '@/components/app/PageWrapper';
 import { serviceSchema } from '@/features/services/data/schema';
 import { servicesDataTableColumns } from '@/components/services/services-explorer/ServicesDataTableColumns';
-import { CircuitBoard } from 'lucide-react';
 import ServicesExplorerHeader from '@/components/services/services-explorer/ServicesExplorerHeader';
 
 export const metadata: Metadata = {

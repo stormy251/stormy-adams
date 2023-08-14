@@ -1,6 +1,7 @@
 'use client';
 
 import PageWrapper from '@/components/app/PageWrapper';
+import ExperienceCard from '@/components/profile/ExperienceCard';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -32,8 +33,8 @@ export default function ProfilePage() {
         variants={fadeVariants}
         transition={{ delay: SLOW_TIMING * 2 }}
         {...ANIMATE_VARIANT_BINDINGS}
-        data-purpose-id='profile-content'
-        className='flex w-full grow flex-col px-4 py-4 md:container'
+        data-purpose-id='profile-content-header'
+        className='flex w-full flex-col px-4 py-4 md:container'
       >
         <div
           data-purpose-id='profile-image-and-contact-container'
@@ -52,13 +53,13 @@ export default function ProfilePage() {
           >
             <div>
               <span className='flex items-center gap-2'>
-                <h3 className='scroll-m-20 text-2xl font-semibold tracking-tight'>
+                <h3 className='scroll-m-20 text-3xl font-bold tracking-tight'>
                   Stormy Adams
                 </h3>
               </span>
 
-              <p className='font-semibold leading-7'>
-                {"I'm a Software Engineer based in San Francisco."}
+              <p className='font-semibold leading-7 text-secondary-foreground'>
+                {"I'm an explorer of knowledge and a creator of things!"}
               </p>
             </div>
             <div className='flex items-center gap-3'>
@@ -149,6 +150,15 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
+      </motion.section>
+      <motion.section
+        variants={fadeVariants}
+        transition={{ delay: SLOW_TIMING * 3 }}
+        {...ANIMATE_VARIANT_BINDINGS}
+        data-purpose-id='profile-content-body'
+        className='mt-6 flex w-full grow flex-col px-4 py-4 md:container sm:mt-14 sm:flex-row'
+      >
+        <ExperienceCard />
       </motion.section>
     </PageWrapper>
   );
