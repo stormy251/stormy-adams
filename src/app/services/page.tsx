@@ -1,13 +1,14 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+
 import { Metadata } from 'next';
 import { z } from 'zod';
 
-import { ServicesDataTable } from '@/components/services/services-explorer/ServicesDataTable';
 import PageWrapper from '@/components/app/PageWrapper';
-import { serviceSchema } from '@/features/services/data/schema';
+import { ServicesDataTable } from '@/components/services/services-explorer/ServicesDataTable';
 import { servicesDataTableColumns } from '@/components/services/services-explorer/ServicesDataTableColumns';
 import ServicesExplorerHeader from '@/components/services/services-explorer/ServicesExplorerHeader';
+import { serviceSchema } from '@/features/services/data/schema';
 
 export const metadata: Metadata = {
   title: 'Services Playground',

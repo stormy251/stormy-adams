@@ -1,9 +1,10 @@
 'use client';
 
 import { FC, useMemo } from 'react';
-import { SidebarNav } from '@/components/ui/sidebar-nav';
-import { AreaChart, CircuitBoard, Smile, UserSquare } from 'lucide-react';
+import { AreaChart, CircuitBoard, UserSquare } from 'lucide-react';
 import { useParams } from 'next/navigation';
+
+import { SidebarNav } from '@/components/ui/sidebar-nav';
 
 const SideNavItems: FC = () => {
   const { serviceId } = useParams();

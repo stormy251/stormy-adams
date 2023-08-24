@@ -1,5 +1,9 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import Image from 'next/image';
+
 import PageWrapper from '@/components/app/PageWrapper';
 import ExperienceCard from '@/components/profile/ExperienceCard';
 import { Button } from '@/components/ui/button';
@@ -11,13 +15,10 @@ import {
 } from '@/components/ui/tooltip';
 import {
   ANIMATE_VARIANT_BINDINGS,
-  SLOW_TIMING,
   fadeSectionHeightVariants,
   fadeVariants,
+  SLOW_TIMING,
 } from '@/lib/framer-motion/motion-variants';
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
-import Image from 'next/image';
 
 export default function ProfilePage() {
   return (

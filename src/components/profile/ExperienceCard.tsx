@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import * as React from 'react';
+import { ArrowLeft } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -7,11 +8,8 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { ArrowDown, ArrowLeft } from 'lucide-react';
 
 const ExperienceCard: FC = () => {
   return (

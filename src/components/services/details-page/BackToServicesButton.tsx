@@ -1,5 +1,9 @@
 'use client';
 
+import { FC } from 'react';
+import { ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -7,9 +11,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ArrowLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { FC } from 'react';
 
 const BackToServicesButton: FC = () => {
   const router = useRouter();

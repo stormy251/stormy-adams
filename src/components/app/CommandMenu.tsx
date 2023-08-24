@@ -1,6 +1,9 @@
 'use client';
 
 import React, { FC, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
+
 import {
   CommandDialog,
   CommandEmpty,
@@ -9,8 +12,6 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import { useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import { useAppContext } from '@/contexts/AppContext';
 
 const CommandMenu: FC = () => {

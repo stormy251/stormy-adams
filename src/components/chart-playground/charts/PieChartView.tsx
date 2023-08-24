@@ -1,5 +1,5 @@
-import { Card, Title, DonutChart } from '@tremor/react';
 import { FC } from 'react';
+import { DonutChart,Title } from '@tremor/react';
 
 const cities = [
   {

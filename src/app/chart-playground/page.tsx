@@ -1,20 +1,15 @@
 import { Metadata } from 'next';
 
 import PageWrapper from '@/components/app/PageWrapper';
-import ChartPlaygroundPageHeader from '@/components/chart-playground/ChartPlaygroundPageHeader';
 import ChartPlaygroundPageContent from '@/components/chart-playground/ChartPlaygroundPageContent';
+import ChartPlaygroundPageHeader from '@/components/chart-playground/ChartPlaygroundPageHeader';
 
 export const metadata: Metadata = {
   title: 'Chart Playground',
   description: 'Some example pages of charts and graphs.',
 };
 
-// Fetching data from API
-async function getSomeData() {}
-
 export default async function ChartPlaygroundPage() {
-  const someData = await getSomeData();
-
   return (
     <PageWrapper titleText='Chart Playground'>
       <section

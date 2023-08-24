@@ -1,18 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { InformationCircleIcon } from '@heroicons/react/solid';
 import {
+  AreaChart,
+  Color,
   Flex,
-  Title,
   Icon,
+  Tab,
   TabGroup,
   TabList,
-  Tab,
-  AreaChart,
-  Text,
-  Color,
+  Title,
 } from '@tremor/react';
-import { useState } from 'react';
 
 const usNumberformatter = (number: number, decimals = 0) =>
   Intl.NumberFormat('us', {

@@ -2,13 +2,12 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 
+import { ServicesDataTableColumnHeader } from '@/components/services/services-explorer/ServicesDataTableColumnHeader';
+import { ServicesDataTableRowActions } from '@/components/services/services-explorer/ServicesDataTableRowActions';
 import {
-  priorities,
   statuses,
 } from '@/features/services/constants/services-data-table-constants';
 import { Service } from '@/features/services/data/schema';
-import { ServicesDataTableColumnHeader } from '@/components/services/services-explorer/ServicesDataTableColumnHeader';
-import { ServicesDataTableRowActions } from '@/components/services/services-explorer/ServicesDataTableRowActions';
 
 export const servicesDataTableColumns: ColumnDef<Service>[] = [
   {

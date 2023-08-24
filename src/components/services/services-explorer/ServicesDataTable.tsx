@@ -1,10 +1,9 @@
 'use client';
 
+import React, { useState } from 'react';
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -12,9 +11,14 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  SortingState,
   useReactTable,
+  VisibilityState,
 } from '@tanstack/react-table';
+import { motion } from 'framer-motion';
 
+import { ServicesDataTablePagination } from '@/components/services/services-explorer/ServicesDataTablePagination';
+import { ServicesDataTableToolbar } from '@/components/services/services-explorer/ServicesDataTableToolbar';
 import {
   Table,
   TableBody,
@@ -23,15 +27,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { ServicesDataTablePagination } from '@/components/services/services-explorer/ServicesDataTablePagination';
-import { ServicesDataTableToolbar } from '@/components/services/services-explorer/ServicesDataTableToolbar';
-import { motion } from 'framer-motion';
 import {
   ANIMATE_VARIANT_BINDINGS,
-  SLOW_TIMING,
   fadeDownVariants,
+  SLOW_TIMING,
 } from '@/lib/framer-motion/motion-variants';
-import React, { useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

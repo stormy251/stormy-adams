@@ -1,12 +1,13 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { FC } from 'react';
+import { Info, Lightbulb } from 'lucide-react';
+
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
-import { Info, Lightbulb } from 'lucide-react';
-import { FC } from 'react';
 
 type ServiceDescriptionHoverCardProps = {
   description: string;

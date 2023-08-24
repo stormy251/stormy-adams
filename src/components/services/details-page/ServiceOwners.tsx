@@ -1,6 +1,7 @@
+import { Github, Link, PersonStanding, Slack, Users } from 'lucide-react';
+
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Github, Link, PersonStanding, Slack, Users } from 'lucide-react';
 
 export function ServiceOwners() {
   return (

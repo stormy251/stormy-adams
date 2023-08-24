@@ -1,4 +1,4 @@
-import { Title, LineChart } from '@tremor/react';
+import { LineChart,Title } from '@tremor/react';
 
 const chartdata = [
   {

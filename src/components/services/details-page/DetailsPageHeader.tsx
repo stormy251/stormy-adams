@@ -1,16 +1,17 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { FC } from 'react';
-import BackToServicesButton from '@/components/services/details-page/BackToServicesButton';
-import { Service } from '@/features/services/data/schema';
-import ServiceDescriptionHoverCard from '@/components/services/details-page/ServiceDescriptionHoverCard';
+import { motion } from 'framer-motion';
+
 import { DateRangePicker } from '@/components/app/DateRangePicker';
+import BackToServicesButton from '@/components/services/details-page/BackToServicesButton';
+import ServiceDescriptionHoverCard from '@/components/services/details-page/ServiceDescriptionHoverCard';
 import SharePageButton from '@/components/services/details-page/SharePageButton';
+import { Service } from '@/features/services/data/schema';
 import {
   ANIMATE_VARIANT_BINDINGS,
-  SLOW_TIMING,
   fadeDownVariants,
+  SLOW_TIMING,
 } from '@/lib/framer-motion/motion-variants';
 
 type DetailsPageHeaderProps = {

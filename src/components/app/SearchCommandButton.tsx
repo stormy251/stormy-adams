@@ -1,10 +1,12 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { Button } from '../ui/button';
-import { isMacBased } from '@/features/app/helpers/os-helpers';
 import { FC } from 'react';
+
 import { useAppContext } from '@/contexts/AppContext';
+import { isMacBased } from '@/features/app/helpers/os-helpers';
+import { cn } from '@/lib/utils';
+
+import { Button } from '../ui/button';
 
 const SearchCommandButton: FC = () => {
   const { setIsCommandOpen } = useAppContext();

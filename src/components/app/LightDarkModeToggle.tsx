@@ -1,20 +1,21 @@
 'use client';
 
 import React, { FC, useEffect, useState } from 'react';
+import { AnimatePresence,motion } from 'framer-motion';
+import { Moon, Sparkles, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   ANIMATE_VARIANT_BINDINGS,
   fadeUpVariants,
 } from '@/lib/framer-motion/motion-variants';
-import { Moon, Sparkles, Sun } from 'lucide-react';
 
 const LightDarkModeToggle: FC = function ModeToggle() {
   const { setTheme, theme } = useTheme();

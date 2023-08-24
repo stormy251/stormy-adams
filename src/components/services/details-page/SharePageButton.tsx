@@ -1,8 +1,9 @@
 'use client';
 
+import { Link, ThumbsUp } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Link, ThumbsUp } from 'lucide-react';
 
 const SharePageButton = () => {
   const { toast } = useToast();

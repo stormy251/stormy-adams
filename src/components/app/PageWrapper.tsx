@@ -1,17 +1,18 @@
 'use client';
 
+import { FC, PropsWithChildren } from 'react';
+import { motion } from 'framer-motion';
+import { Menu } from 'lucide-react';
+import Image from 'next/image';
+
+import LightDarkModeToggle from '@/components/app/LightDarkModeToggle';
+import SideNavItems from '@/components/app/SideNavItems';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   ANIMATE_VARIANT_BINDINGS,
   fadeVariants,
 } from '@/lib/framer-motion/motion-variants';
-import { motion } from 'framer-motion';
-import { Menu } from 'lucide-react';
-import { FC, PropsWithChildren } from 'react';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import SideNavItems from '@/components/app/SideNavItems';
-import LightDarkModeToggle from '@/components/app/LightDarkModeToggle';
-import Image from 'next/image';
 
 type PageWrapperProps = {
   titleText: string;

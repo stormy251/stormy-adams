@@ -1,5 +1,9 @@
 'use client';
 
+import { FC } from 'react';
+import { motion } from 'framer-motion';
+import { AlertTriangle, Check, PartyPopper } from 'lucide-react';
+
 import {
   Card,
   CardContent,
@@ -14,17 +18,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { AlertTriangle, Check, PartyPopper } from 'lucide-react';
-import { DetailOverviewGraph } from './DetailOverviewGraph';
-import { ServiceOwners } from './ServiceOwners';
 import { Service } from '@/features/services/data/schema';
-import { FC } from 'react';
-import { motion } from 'framer-motion';
 import {
   ANIMATE_VARIANT_BINDINGS,
-  SLOW_TIMING,
   fadeDownVariants,
+  SLOW_TIMING,
 } from '@/lib/framer-motion/motion-variants';
+
+import { DetailOverviewGraph } from './DetailOverviewGraph';
+import { ServiceOwners } from './ServiceOwners';
 
 type DetailsPageContentProps = {
   service: Service;

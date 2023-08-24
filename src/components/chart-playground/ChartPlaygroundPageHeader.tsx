@@ -1,13 +1,14 @@
 'use client';
 
-import {
-  ANIMATE_VARIANT_BINDINGS,
-  SLOW_TIMING,
-  fadeDownVariants,
-} from '@/lib/framer-motion/motion-variants';
+import { FC } from 'react';
 import { motion } from 'framer-motion';
 import { AreaChart } from 'lucide-react';
-import { FC } from 'react';
+
+import {
+  ANIMATE_VARIANT_BINDINGS,
+  fadeDownVariants,
+  SLOW_TIMING,
+} from '@/lib/framer-motion/motion-variants';
 
 const ChartPlaygroundPageHeader: FC = () => {
   return (

@@ -1,13 +1,15 @@
-import './global.css';
 import type { Metadata } from 'next';
-import ThemeProvider from '@/contexts/ThemeContext';
-import LightDarkModeToggle from '@/components/app/LightDarkModeToggle';
-import SideNavItems from '@/components/app/SideNavItems';
 import Image from 'next/image';
+
 import CommandMenu from '@/components/app/CommandMenu';
+import LightDarkModeToggle from '@/components/app/LightDarkModeToggle';
 import SearchCommandButton from '@/components/app/SearchCommandButton';
-import { AppContextProvider } from '@/contexts/AppContext';
+import SideNavItems from '@/components/app/SideNavItems';
 import { Toaster } from '@/components/ui/toaster';
+import { AppContextProvider } from '@/contexts/AppContext';
+import ThemeProvider from '@/contexts/ThemeContext';
+
+import './global.css';
 
 export const metadata: Metadata = {
   title: "Stormy's App Playground",

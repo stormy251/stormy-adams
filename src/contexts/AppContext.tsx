@@ -1,13 +1,14 @@
 'use client';
 
-import { ReactSetState } from '@/features/app/types/react-types';
 import React, {
+  createContext,
   FC,
   PropsWithChildren,
-  createContext,
   useContext,
   useState,
 } from 'react';
+
+import { ReactSetState } from '@/features/app/types/react-types';
 
 type AppContext = {
   isCommandOpen: boolean;

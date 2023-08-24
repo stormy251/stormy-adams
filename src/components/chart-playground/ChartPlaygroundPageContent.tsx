@@ -1,19 +1,19 @@
 'use client';
 
 import { FC } from 'react';
+import { Col, Grid } from '@tremor/react';
 import { motion } from 'framer-motion';
-import { Card, Col, Grid } from '@tremor/react';
+import { BarChart } from 'lucide-react';
 
+import ChartView from '@/components/chart-playground/charts/ChartView';
+import LineChartView from '@/components/chart-playground/charts/LineChartView';
+import PieChartView from '@/components/chart-playground/charts/PieChartView';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   ANIMATE_VARIANT_BINDINGS,
-  SLOW_TIMING,
   fadeDownVariants,
+  SLOW_TIMING,
 } from '@/lib/framer-motion/motion-variants';
-import ChartView from '@/components/chart-playground/charts/ChartView';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { BarChart } from 'lucide-react';
-import PieChartView from '@/components/chart-playground/charts/PieChartView';
-import LineChartView from '@/components/chart-playground/charts/LineChartView';
 
 const ChartPlaygroundPageContent: FC = () => {
   return (
