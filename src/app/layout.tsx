@@ -26,7 +26,7 @@ export default function RootLayout({
           <AppContextProvider>
             <main
               data-purpose-id='app-root-layout'
-              className='flex h-[100vh] w-[100vw] overflow-hidden'
+              className='flex h-[100dvh] w-[100dvw] overflow-hidden'
             >
               <AppSideNav />
               {children}
