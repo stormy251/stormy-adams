@@ -30,10 +30,10 @@ export default async function ServicesPlaygroundPage() {
   const services = await getServices();
 
   return (
-    <PageWrapper titleText='Service Playground'>
+    <PageWrapper titleText='Service Playground' withoutOverflow={true}>
       <section
         data-purpose-id='services-explorer-content'
-        className='flex w-full grow flex-col px-4 py-4 md:container'
+        className='flex h-full w-full flex-col px-4 pb-0 pt-4 md:container'
       >
         <ServicesExplorerHeader />
         <ServicesDataTable data={services} columns={servicesDataTableColumns} />

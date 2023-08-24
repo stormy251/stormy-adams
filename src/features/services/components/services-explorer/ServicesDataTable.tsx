@@ -74,10 +74,10 @@ export function ServicesDataTable<TData, TValue>({
       variants={fadeDownVariants}
       transition={{ delay: SLOW_TIMING * 2 }}
       {...ANIMATE_VARIANT_BINDINGS}
-      className='space-y-4'
+      className='flex grow flex-col gap-5 overflow-hidden'
     >
       <ServicesDataTableToolbar table={table} />
-      <div className='rounded-md border'>
+      <div className='flex max-h-[100%] grow overflow-auto rounded-lg border'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

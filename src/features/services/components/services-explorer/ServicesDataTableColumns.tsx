@@ -39,11 +39,11 @@ export const servicesDataTableColumns: ColumnDef<Service>[] = [
       }
 
       return (
-        <div className='flex w-[100px] items-center'>
+        <div className='flex w-min items-center'>
           {status.icon && (
-            <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
+            <status.icon className='h-4 w-4 text-muted-foreground sm:mr-2' />
           )}
-          <span>{status.label}</span>
+          <span className='hidden sm:inline'>{status.label}</span>
         </div>
       );
     },

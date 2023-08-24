@@ -23,7 +23,7 @@ export function ServicesDataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className='flex items-center justify-end px-2'>
+    <div className='flex shrink-0 items-center justify-end rounded-lg rounded-bl-none rounded-br-none border border-input bg-primary-foreground p-2'>
       <div className='flex items-center space-x-6 lg:space-x-8'>
         <div className='flex items-center space-x-2'>
           <p className='text-sm font-medium'>Rows per page</p>
