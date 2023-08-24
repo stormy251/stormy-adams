@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
-import CommandMenu from '@/components/app/CommandMenu';
-import LightDarkModeToggle from '@/components/app/LightDarkModeToggle';
-import SearchCommandButton from '@/components/app/SearchCommandButton';
-import SideNavItems from '@/components/app/SideNavItems';
-import { Toaster } from '@/components/ui/toaster';
-import { AppContextProvider } from '@/contexts/AppContext';
-import ThemeProvider from '@/contexts/ThemeContext';
+import CommandMenu from '@/features/app/components/CommandMenu';
+import LightDarkModeToggle from '@/features/app/components/side-nav/LightDarkModeToggle';
+import SearchCommandButton from '@/features/app/components/side-nav/SearchCommandButton';
+import SideNavItems from '@/features/app/components/side-nav/SideNavItems';
+import { Toaster } from '@/features/app/components/ui/toaster';
+import { AppContextProvider } from '@/features/app/contexts/AppContext';
+import ThemeProvider from '@/features/app/contexts/ThemeContext';
 
 import './global.css';
 

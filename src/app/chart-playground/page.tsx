@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
-import PageWrapper from '@/components/app/PageWrapper';
-import ChartPlaygroundPageContent from '@/components/chart-playground/ChartPlaygroundPageContent';
-import ChartPlaygroundPageHeader from '@/components/chart-playground/ChartPlaygroundPageHeader';
+import PageWrapper from '@/features/app/components/PageWrapper';
+import ChartPlaygroundPageContent from '@/features/chart-playground/components/ChartPlaygroundPageContent';
+import ChartPlaygroundPageHeader from '@/features/chart-playground/components/ChartPlaygroundPageHeader';
 
 export const metadata: Metadata = {
   title: 'Chart Playground',

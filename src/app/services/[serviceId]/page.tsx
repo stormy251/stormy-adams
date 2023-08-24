@@ -4,9 +4,9 @@ import path from 'path';
 import { Metadata } from 'next';
 import { z } from 'zod';
 
-import PageWrapper from '@/components/app/PageWrapper';
-import DetailsPageContent from '@/components/services/details-page/DetailsPageContent';
-import DetailsPageHeader from '@/components/services/details-page/DetailsPageHeader';
+import PageWrapper from '@/features/app/components/PageWrapper';
+import DetailsPageContent from '@/features/services/components/details-page/DetailsPageContent';
+import DetailsPageHeader from '@/features/services/components/details-page/DetailsPageHeader';
 import { Service, serviceSchema } from '@/features/services/data/schema';
 
 export const metadata: Metadata = {

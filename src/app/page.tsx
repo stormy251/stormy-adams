@@ -4,15 +4,15 @@ import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import Image from 'next/image';
 
-import PageWrapper from '@/components/app/PageWrapper';
-import ExperienceCard from '@/components/profile/ExperienceCard';
-import { Button } from '@/components/ui/button';
+import PageWrapper from '@/features/app/components/PageWrapper';
+import { Button } from '@/features/app/components/ui/button';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from '@/features/app/components/ui/tooltip';
+import ExperienceCard from '@/features/profile/components/ExperienceCard';
 import {
   ANIMATE_VARIANT_BINDINGS,
   fadeSectionHeightVariants,

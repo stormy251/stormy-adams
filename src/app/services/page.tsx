@@ -4,10 +4,10 @@ import path from 'path';
 import { Metadata } from 'next';
 import { z } from 'zod';
 
-import PageWrapper from '@/components/app/PageWrapper';
-import { ServicesDataTable } from '@/components/services/services-explorer/ServicesDataTable';
-import { servicesDataTableColumns } from '@/components/services/services-explorer/ServicesDataTableColumns';
-import ServicesExplorerHeader from '@/components/services/services-explorer/ServicesExplorerHeader';
+import PageWrapper from '@/features/app/components/PageWrapper';
+import { ServicesDataTable } from '@/features/services/components/services-explorer/ServicesDataTable';
+import { servicesDataTableColumns } from '@/features/services/components/services-explorer/ServicesDataTableColumns';
+import ServicesExplorerHeader from '@/features/services/components/services-explorer/ServicesExplorerHeader';
 import { serviceSchema } from '@/features/services/data/schema';
 
 export const metadata: Metadata = {
