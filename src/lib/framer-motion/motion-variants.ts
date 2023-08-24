@@ -83,6 +83,7 @@ export const fadeSectionHeightVariants = {
   [ANIMATE_VARIANT_NAME]: {
     opacity: 1,
     height: "10rem",
+    minHeight: "10rem",
     overflow: "visible",
     transition: {
       duration: SLOW_TIMING * 2,
@@ -91,6 +92,7 @@ export const fadeSectionHeightVariants = {
   [INITIAL_VARIANT_NAME]: {
     opacity: 0,
     height: "0",
+    minHeight: "0",
     overflow: "hidden",
     transition: {
       duration: SLOW_TIMING * 2,
