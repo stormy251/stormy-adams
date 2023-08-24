@@ -3,10 +3,10 @@
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
 
-import { ServicesDataTableFacetedFilter } from '@/features/services/components/services-explorer/ServicesDataTableFacetedFilter';
-import { ServicesDataTableViewOptions } from '@/features/services/components/services-explorer/ServicesDataTableViewOptions';
 import { Button } from '@/features/app/components/ui/button';
 import { Input } from '@/features/app/components/ui/input';
+import { ServicesDataTableFacetedFilter } from '@/features/services/components/services-explorer/ServicesDataTableFacetedFilter';
+import { ServicesDataTableViewOptions } from '@/features/services/components/services-explorer/ServicesDataTableViewOptions';
 import { statuses } from '@/features/services/constants/services-data-table-constants';
 
 interface DataTableToolbarProps<TData> {
