@@ -53,6 +53,9 @@ export const servicesDataTableColumns: ColumnDef<Service>[] = [
   },
   {
     id: 'actions',
+    header: ({ column }) => (
+      <ServicesDataTableColumnHeader column={column} title='Action' />
+    ),
     cell: ({ row }) => <ServicesDataTableRowActions row={row} />,
   },
 ];
