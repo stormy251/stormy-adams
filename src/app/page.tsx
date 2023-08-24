@@ -28,7 +28,7 @@ export default function ProfilePage() {
         transition={{ delay: SLOW_TIMING }}
         {...ANIMATE_VARIANT_BINDINGS}
         data-purpose-id='banner-header'
-        className='h-[10rem] w-full bg-accent transition-colors dark:bg-accent sm:h-[13rem]'
+        className='h-[10rem] min-h-[10rem] w-full bg-accent transition-colors dark:bg-accent sm:h-[13rem]'
       />
       <motion.section
         variants={fadeVariants}
