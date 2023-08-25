@@ -21,6 +21,17 @@ export const fadeVariants = {
   },
 };
 
+export const fadeScaleVariants = {
+  [ANIMATE_VARIANT_NAME]: {
+    opacity: 1,
+    scale: 1,
+  },
+  [INITIAL_VARIANT_NAME]: {
+    opacity: 0,
+    scale: 0,
+  },
+};
+
 export const fadeLeftVariants = {
   [ANIMATE_VARIANT_NAME]: {
     opacity: 1,

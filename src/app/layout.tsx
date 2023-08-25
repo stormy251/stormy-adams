@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import CommandMenu from '@/features/app/components/CommandMenu';
+import AppMobileTopNav from '@/features/app/components/mobile-top-nav/AppMobileTopNav';
 import AppSideNav from '@/features/app/components/side-nav/AppSideNav';
 import { Toaster } from '@/features/app/components/ui/toaster';
 import { AppContextProvider } from '@/features/app/contexts/AppContext';
@@ -29,7 +30,10 @@ export default function RootLayout({
               className='flex h-[100dvh] w-[100dvw] overflow-hidden'
             >
               <AppSideNav />
-              {children}
+              <div className='flex h-full grow flex-col'>
+                <AppMobileTopNav />
+                {children}
+              </div>
             </main>
             <CommandMenu />
             <Toaster />

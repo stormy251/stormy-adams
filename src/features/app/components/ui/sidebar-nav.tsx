@@ -1,10 +1,16 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { buttonVariants } from '@/features/app/components/ui/button';
+import { useAppContext } from '@/features/app/contexts/AppContext';
+import {
+  ANIMATE_VARIANT_BINDINGS,
+  fadeScaleVariants,
+} from '@/lib/framer-motion/motion-variants';
 import { cn } from '@/lib/shadcn-ui/utils';
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
@@ -18,8 +24,20 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
+  const { sideNavLabelPing, setSideNavLabelPing } = useAppContext();
+  const [isPingingLabelGroup, setIsPingingLabelGroup] = useState(false);
   const pathname = usePathname();
   const renderedLabels = new Map();
+
+  useEffect(() => {
+    if (sideNavLabelPing !== null) {
+      setIsPingingLabelGroup(true);
+      setTimeout(() => {
+        setIsPingingLabelGroup(false);
+        setSideNavLabelPing(null);
+      }, 5000);
+    }
+  }, [sideNavLabelPing, setSideNavLabelPing]);
 
   return (
     <nav className={cn('mt-2 flex flex-col gap-2', className)} {...props}>
@@ -45,11 +63,26 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
                 pathname === item.href || pathname === item.alias
                   ? 'bg-gray-200 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-600'
                   : 'hover:bg-gray-200 hover:underline dark:hover:bg-gray-600',
-                'justify-start gap-2'
+                'justify-between'
               )}
             >
-              <span>{item.icon}</span>
-              <span>{item.title}</span>
+              <div className='flex items-center gap-2'>
+                <span>{item.icon}</span>
+                <span>{item.title}</span>
+              </div>
+              <AnimatePresence mode='wait'>
+                {isPingingLabelGroup &&
+                  item?.linkGroupLabel === sideNavLabelPing && (
+                    <motion.div
+                      variants={fadeScaleVariants}
+                      {...ANIMATE_VARIANT_BINDINGS}
+                      className='relative flex h-[0.6rem] w-[0.6rem] items-center justify-center'
+                    >
+                      <span className='absolute h-[0.75rem] w-[0.75rem] animate-ping rounded-full bg-primary opacity-75' />
+                      <span className='h-[0.5rem] w-[0.5rem] rounded-full bg-primary' />
+                    </motion.div>
+                  )}
+              </AnimatePresence>
             </Link>
           </React.Fragment>
         );
