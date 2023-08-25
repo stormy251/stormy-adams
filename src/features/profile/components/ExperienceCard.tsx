@@ -25,15 +25,21 @@ const ExperienceCard: FC = () => {
         <Separator orientation='horizontal' className='mb-3 mt-2 h-[1px]' />
         <h4 className=' text-lg font-bold text-muted-foreground'>About me</h4>
         <CardDescription>
-          {
-            "I'm a Software Developer based in San Francisco. I specialize in React, and Nextjs. I'm always striving to grow and learn something new and I don't take myself too seriously."
-          }
+          <span>{"I'm a Full-Stack"}</span>
+          <small className='mx-1'>
+            <b>(Leaning Frontend)</b>
+          </small>
+          <span>
+            {
+              "Software Developer based in San Francisco. I specialize in React, and Nextjs. I'm always striving to grow and learn something new and I don't take myself too seriously."
+            }
+          </span>
         </CardDescription>
       </CardContent>
       <CardFooter className='flex justify-between'>
         <Button variant='outline'>
           <ArrowLeft className='mr-2 h-4 w-4' />
-          Check out some of my work
+          Some mini side projects
         </Button>
       </CardFooter>
     </Card>
