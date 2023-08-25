@@ -39,7 +39,7 @@ const ExperienceCard: FC = () => {
       <CardFooter className='flex justify-between'>
         <Button variant='outline'>
           <ArrowLeft className='mr-2 h-4 w-4' />
-          Some mini side projects
+          Check-out side projects
         </Button>
       </CardFooter>
     </Card>

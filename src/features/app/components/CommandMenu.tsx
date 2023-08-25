@@ -63,7 +63,7 @@ const CommandMenu: FC = () => {
       <CommandInput placeholder='Type a command or search...' />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading='Pages'>
+        <CommandGroup heading='Go to Page'>
           <CommandItem
             onSelect={() => {
               handleCommandSelect('profile');
