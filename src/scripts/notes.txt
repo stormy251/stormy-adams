@@ -1,0 +1,2 @@
+# Generate Supabase types!
+pnpm supabase gen types typescript --project-id 'akftaswxgmjyrbzyzqpt' --schema public > ./src/lib/supabase/types/supabase.ts

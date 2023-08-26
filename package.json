@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "generate-types": "supabase gen types typescript --project-id 'akftaswxgmjyrbzyzqpt' --schema public > ./src/lib/supabase/types/supabase.ts",
     "seed:services": "ts-node --esm --project ./tsconfig.scripts.json ./src/features/services/data/seed.ts"
   },
   "dependencies": {
@@ -48,6 +49,10 @@
     "@headlessui/tailwindcss": "^0.2.0",
     "@heroicons/react": "^1.0.6",
     "@radix-ui/react-icons": "^1.3.0",
+    "@supabase/auth-helpers-nextjs": "^0.7.4",
+    "@supabase/auth-ui-react": "^0.4.2",
+    "@supabase/auth-ui-shared": "^0.1.6",
+    "@supabase/supabase-js": "^2.33.1",
     "@tanstack/react-table": "^8.9.3",
     "@tremor/react": "^3.6.1",
     "date-fns": "^2.30.0",
@@ -60,6 +65,7 @@
     "prettier-plugin-tailwindcss": "^0.4.1",
     "react-day-picker": "^8.8.0",
     "recharts": "^2.7.2",
+    "supabase": ">=1.8.1",
     "ts-node": "^10.9.1",
     "zod": "^3.21.4"
   }
