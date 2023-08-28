@@ -8,16 +8,16 @@ import {
 
 import { Database } from '@/lib/supabase/types/supabase';
 
-type AccountFormProps = { session: Session | null };
+type AccountSettingsFormProps = { session: Session | null };
 
-const AccountForm: FC<AccountFormProps> = ({ session }) => {
+const AccountSettingsForm: FC<AccountSettingsFormProps> = ({ session }) => {
+  const user = session?.user;
   const supabase = createClientComponentClient<Database>();
   const [loading, setLoading] = useState(true);
   const [fullname, setFullname] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [website, setWebsite] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
-  const user = session?.user;
 
   const getProfile = useCallback(async () => {
     try {
@@ -25,7 +25,7 @@ const AccountForm: FC<AccountFormProps> = ({ session }) => {
 
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`full_name, username, website, avatar_url`)
+        .select('*')
         .eq('id', user?.id as String)
         .single();
 
@@ -46,20 +46,19 @@ const AccountForm: FC<AccountFormProps> = ({ session }) => {
     }
   }, [user, supabase]);
 
-  useEffect(() => {
-    getProfile();
-  }, [user, getProfile]);
-
-  async function updateProfile({
-    username,
-    website,
-    avatar_url,
-  }: {
+  type UpdateProfileProps = {
     username: string | null;
     fullname: string | null;
     website: string | null;
     avatar_url: string | null;
-  }) {
+  };
+
+  const updateProfile = async ({
+    username,
+    fullname,
+    website,
+    avatar_url,
+  }: UpdateProfileProps) => {
     try {
       setLoading(true);
 
@@ -78,7 +77,11 @@ const AccountForm: FC<AccountFormProps> = ({ session }) => {
     } finally {
       setLoading(false);
     }
-  }
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, [user, getProfile]);
 
   return (
     <div className='form-widget'>
@@ -137,4 +140,4 @@ const AccountForm: FC<AccountFormProps> = ({ session }) => {
   );
 };
 
-export default AccountForm;
+export default AccountSettingsForm;

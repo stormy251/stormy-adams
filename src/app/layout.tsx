@@ -9,6 +9,8 @@ import ThemeProvider from '@/features/app/contexts/ThemeContext';
 
 import './global.css';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Stormy's App Playground",
   description: 'Meant to showcase, and test out different ideas',

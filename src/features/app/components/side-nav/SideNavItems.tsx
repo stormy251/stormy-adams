@@ -19,7 +19,7 @@ const SideNavItems: FC = () => {
       },
       {
         href: '/services',
-        alias: `/services/${serviceId}`,
+        alias: [`/services/${serviceId}`],
         title: 'Services',
         icon: <CircuitBoard />,
         linkGroupLabel: SideNavGroupLabel.SideProjects,
@@ -31,7 +31,8 @@ const SideNavItems: FC = () => {
         linkGroupLabel: SideNavGroupLabel.SideProjects,
       },
       {
-        href: '/login',
+        href: '/account/settings',
+        alias: ['/login', '/auth/signout'],
         title: 'Auth Playground',
         icon: <Settings />,
         linkGroupLabel: SideNavGroupLabel.SideProjects,
