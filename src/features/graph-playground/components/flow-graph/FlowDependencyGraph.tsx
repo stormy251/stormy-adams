@@ -1,46 +1,162 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useLayoutEffect } from 'react';
 import ReactFlow, {
   addEdge,
   Background,
   BackgroundVariant,
+  Connection,
   Controls,
   MiniMap,
+  Node,
+  Panel,
+  ReactFlowProvider,
   useEdgesState,
   useNodesState,
+  useReactFlow,
 } from 'reactflow';
+import ELK, { ElkExtendedEdge } from 'elkjs/lib/elk.bundled.js';
+import { LayoutOptions } from 'elkjs/lib/elk-api';
+
+import { Button } from '@/features/app/components/ui/button';
+import {
+  EDGES,
+  NODES,
+} from '@/features/graph-playground/data/dummyEdgesAndNodes';
 
 import 'reactflow/dist/style.css';
 
-const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-  { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-];
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+const elk = new ELK();
+
+// Elk has a *huge* amount of options to configure. To see everything you can
+// tweak check out:
+//
+// - https://www.eclipse.org/elk/reference/algorithms.html
+// - https://www.eclipse.org/elk/reference/options.html
+// QUICK REFERENCE: elk.algorithm = [ 'layered', 'stress', 'mrtree', 'radial', 'force', 'disco', 'box', 'fixed', 'random' ]
+const elkOptions = {
+  'elk.algorithm': 'force',
+  'elk.spacing.nodeNode': '30',
+};
+
+const processNodeEdgeLayout = async (
+  nodes: Node[],
+  edges: ElkExtendedEdge[],
+  options?: LayoutOptions
+) => {
+  const isHorizontal = options?.['elk.direction'] === 'RIGHT';
+  const graph = {
+    id: 'root',
+    layoutOptions: options,
+    children: nodes.map((node) => ({
+      ...node,
+      // Adjust the target and source handle positions based on the layout
+      // direction.
+      targetPosition: isHorizontal ? 'left' : 'top',
+      sourcePosition: isHorizontal ? 'right' : 'bottom',
+
+      // Hardcode a width and height for elk to use when processing the layout.
+      width: 150,
+      height: 50,
+    })),
+    edges: edges,
+  };
+
+  try {
+    const processedGraph = await elk.layout(graph);
+    return {
+      nodes: processedGraph.children!.map((node_1) => ({
+        ...node_1,
+        // React Flow expects a position property on the node instead of `x`
+        // and `y` fields.
+        position: { x: node_1.x, y: node_1.y },
+      })),
+
+      edges: processedGraph.edges,
+    };
+  } catch (message) {
+    return console.error(message);
+  }
+};
 
 const FlowDependencyGraph: FC = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState(NODES);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(EDGES);
+  const { fitView } = useReactFlow();
 
   const onConnect = useCallback(
-    (params: any) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
+    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    []
   );
+
+  type onLayoutProps = {
+    direction: 'DOWN' | 'RIGHT';
+    useInitialNodes?: boolean;
+  };
+
+  const onLayout = useCallback(
+    ({ direction, useInitialNodes = false }: onLayoutProps) => {
+      const opts = { 'elk.direction': direction, ...elkOptions };
+      const ns = useInitialNodes ? NODES : nodes;
+      const es = useInitialNodes ? EDGES : edges;
+
+      // @ts-ignore
+      processNodeEdgeLayout(ns, es, opts).then(
+        // @ts-ignore
+        ({ nodes: processedNodes, edges: processedEdges }) => {
+          setNodes(processedNodes);
+          setEdges(processedEdges);
+
+          window.requestAnimationFrame(() => fitView());
+        }
+      );
+    },
+    [nodes, edges]
+  );
+
+  // Calculate the initial layout on mount.
+  useLayoutEffect(() => {
+    onLayout({ direction: 'DOWN', useInitialNodes: true });
+  }, []);
 
   return (
     <div className='flex h-full w-full grow rounded-lg border border-input'>
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        onConnect={onConnect}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
+        maxZoom={50}
+        fitView
+        proOptions={{ hideAttribution: true }}
       >
+        <Panel position='top-right'>
+          <Button
+            variant='outline'
+            className='flex'
+            onClick={() => onLayout({ direction: 'DOWN' })}
+          >
+            vertical layout
+          </Button>
+          <Button
+            variant='outline'
+            className='flex'
+            onClick={() => onLayout({ direction: 'RIGHT' })}
+          >
+            horizontal layout
+          </Button>
+        </Panel>
         <Controls />
-        <MiniMap />
+        <MiniMap zoomable pannable />
         <Background variant={BackgroundVariant.Dots} gap={36} size={1} />
       </ReactFlow>
     </div>
   );
 };
 
-export default FlowDependencyGraph;
+export default function WrappedFlowDependencyGraph() {
+  return (
+    <ReactFlowProvider>
+      <FlowDependencyGraph />
+    </ReactFlowProvider>
+  );
+}
