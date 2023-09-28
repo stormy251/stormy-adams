@@ -25,7 +25,7 @@ const ChartPlaygroundPageContent: FC = () => {
       variants={fadeDownVariants}
       transition={{ delay: SLOW_TIMING * 2 }}
       {...ANIMATE_VARIANT_BINDINGS}
-      data-purpose-id='playground-content'
+      data-purpose-id='chart-playground-content'
       className='flex flex-col gap-6 overflow-auto'
     >
       <Grid numItemsLg={6} className='mt-6 gap-6'>

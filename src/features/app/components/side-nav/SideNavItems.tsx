@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useMemo } from 'react';
-import { AreaChart, CircuitBoard, Settings, UserSquare } from 'lucide-react';
+import {AreaChart, CircuitBoard, Settings, Triangle, UserSquare} from 'lucide-react';
 import { useParams } from 'next/navigation';
 
 import { SidebarNav } from '@/features/app/components/ui/sidebar-nav';
@@ -28,6 +28,12 @@ const SideNavItems: FC = () => {
         href: '/chart-playground',
         title: 'Chart Playground',
         icon: <AreaChart />,
+        linkGroupLabel: SideNavGroupLabel.SideProjects,
+      },
+      {
+        href: '/graph-playground',
+        title: 'Graph Playground',
+        icon: <Triangle />,
         linkGroupLabel: SideNavGroupLabel.SideProjects,
       },
       {
