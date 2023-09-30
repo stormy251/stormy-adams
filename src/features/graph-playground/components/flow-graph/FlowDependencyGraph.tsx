@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useLayoutEffect } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import ReactFlow, {
   addEdge,
   Background,
@@ -7,6 +7,7 @@ import ReactFlow, {
   Controls,
   MiniMap,
   Node,
+  OnSelectionChangeParams,
   Panel,
   ReactFlowProvider,
   useEdgesState,
@@ -17,10 +18,12 @@ import ELK, { ElkExtendedEdge } from 'elkjs/lib/elk.bundled.js';
 import { LayoutOptions } from 'elkjs/lib/elk-api';
 
 import { Button } from '@/features/app/components/ui/button';
+import { useGraphExplorerContext } from '@/features/graph-playground/contexts/GraphExplorerContext';
 import {
   EDGES,
   NODES,
 } from '@/features/graph-playground/data/dummyEdgesAndNodes';
+import { GraphExplorerDirection } from '@/features/graph-playground/utils/graph-config-utils';
 
 import 'reactflow/dist/style.css';
 
@@ -34,7 +37,7 @@ const elk = new ELK();
 // QUICK REFERENCE: elk.algorithm = [ 'layered', 'stress', 'mrtree', 'radial', 'force', 'disco', 'box', 'fixed', 'random' ]
 const elkOptions = {
   'elk.algorithm': 'force',
-  'elk.spacing.nodeNode': '30',
+  'elk.spacing.nodeNode': '20',
 };
 
 const processNodeEdgeLayout = async (
@@ -42,7 +45,8 @@ const processNodeEdgeLayout = async (
   edges: ElkExtendedEdge[],
   options?: LayoutOptions
 ) => {
-  const isHorizontal = options?.['elk.direction'] === 'RIGHT';
+  const isHorizontal =
+    options?.['elk.direction'] === GraphExplorerDirection.Horizontal;
   const graph = {
     id: 'root',
     layoutOptions: options,
@@ -63,7 +67,7 @@ const processNodeEdgeLayout = async (
   try {
     const processedGraph = await elk.layout(graph);
     return {
-      nodes: processedGraph.children!.map((node_1) => ({
+      nodes: processedGraph.children?.map((node_1) => ({
         ...node_1,
         // React Flow expects a position property on the node instead of `x`
         // and `y` fields.
@@ -81,6 +85,8 @@ const FlowDependencyGraph: FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState(EDGES);
   const { fitView } = useReactFlow();
+  const { setSelectedNodeId, graphDirection, setGraphDirection } =
+    useGraphExplorerContext();
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -88,7 +94,7 @@ const FlowDependencyGraph: FC = () => {
   );
 
   type onLayoutProps = {
-    direction: 'DOWN' | 'RIGHT';
+    direction: GraphExplorerDirection;
     useInitialNodes?: boolean;
   };
 
@@ -109,20 +115,35 @@ const FlowDependencyGraph: FC = () => {
         }
       );
     },
-    [nodes, edges]
+    [nodes, edges, graphDirection]
   );
 
+  const handleSelectionChange = useCallback(
+    (selection: OnSelectionChangeParams) => {
+      if (selection?.nodes?.length) {
+        const [selectedNode] = selection.nodes;
+        setSelectedNodeId(selectedNode.id);
+      }
+    },
+    []
+  );
+
+  // Rerender when the graph direction changes.
+  useEffect(() => {
+    onLayout({ direction: graphDirection });
+    fitView();
+  }, [graphDirection, fitView]);
+
   // Calculate the initial layout on mount.
-  // TODO -> Figure out how to get the zoom to be correct on initial load.
-  useLayoutEffect(() => {
-    onLayout({ direction: 'DOWN', useInitialNodes: true });
+  useEffect(() => {
+    onLayout({ direction: graphDirection, useInitialNodes: true });
   }, []);
 
   // TODO -> Build out a header that exposes the a dropdown to select the algorithm, as well as a button to toggle vertical or horizontal orientation.
   // TODO -> Create a react context, and a custom hook to use said context. Then Wrap this component in that context, to consolidate the logic for the graph, and configuration.
   // TODO -> Within the context ^^ we should handle the "generateShareLink", function that will create a queryParam style URL that will drive the initial configuration/filters for the page when the end user loads it.
   return (
-    <div className='flex h-full w-full grow rounded-lg border border-input'>
+    <div className='flex h-full w-full grow rounded-lg'>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -131,20 +152,21 @@ const FlowDependencyGraph: FC = () => {
         onEdgesChange={onEdgesChange}
         maxZoom={50}
         fitView
+        onSelectionChange={handleSelectionChange}
         proOptions={{ hideAttribution: true }}
       >
         <Panel position='top-right'>
           <Button
             variant='outline'
             className='flex'
-            onClick={() => onLayout({ direction: 'DOWN' })}
+            onClick={() => setGraphDirection(GraphExplorerDirection.Vertical)}
           >
             vertical layout
           </Button>
           <Button
             variant='outline'
             className='flex'
-            onClick={() => onLayout({ direction: 'RIGHT' })}
+            onClick={() => setGraphDirection(GraphExplorerDirection.Horizontal)}
           >
             horizontal layout
           </Button>
