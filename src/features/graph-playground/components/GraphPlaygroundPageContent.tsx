@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 
 import FlowDependencyGraph from '@/features/graph-playground/components/flow-graph/FlowDependencyGraph';
 import FlowDependencyGraphDetailsPanel from '@/features/graph-playground/components/flow-graph/FlowDependencyGraphDetailsPanel';
+import FlowDependencyGraphToolbar from '@/features/graph-playground/components/flow-graph/FlowDependencyGraphToolbar';
 import { GraphExplorerContextProvider } from '@/features/graph-playground/contexts/GraphExplorerContext';
 import {
   ANIMATE_VARIANT_BINDINGS,
@@ -28,8 +29,9 @@ const GraphPlaygroundPageContent: FC = () => {
           {/* Graph Explorer section */}
           <Col
             numColSpanLg={4}
-            className='flex h-full w-full grow rounded-lg border border-input'
+            className='flex h-full w-full grow flex-col gap-2 rounded-lg'
           >
+            <FlowDependencyGraphToolbar />
             <FlowDependencyGraph />
           </Col>
 

@@ -8,7 +8,6 @@ import ReactFlow, {
   MiniMap,
   Node,
   OnSelectionChangeParams,
-  Panel,
   ReactFlowProvider,
   useEdgesState,
   useNodesState,
@@ -17,7 +16,6 @@ import ReactFlow, {
 import ELK, { ElkExtendedEdge } from 'elkjs/lib/elk.bundled.js';
 import { LayoutOptions } from 'elkjs/lib/elk-api';
 
-import { Button } from '@/features/app/components/ui/button';
 import { useGraphExplorerContext } from '@/features/graph-playground/contexts/GraphExplorerContext';
 import {
   EDGES,
@@ -143,7 +141,7 @@ const FlowDependencyGraph: FC = () => {
   // TODO -> Create a react context, and a custom hook to use said context. Then Wrap this component in that context, to consolidate the logic for the graph, and configuration.
   // TODO -> Within the context ^^ we should handle the "generateShareLink", function that will create a queryParam style URL that will drive the initial configuration/filters for the page when the end user loads it.
   return (
-    <div className='flex h-full w-full grow rounded-lg'>
+    <div className='flex h-full w-full grow rounded-lg rounded-tl-none rounded-tr-none border border-input'>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -155,22 +153,6 @@ const FlowDependencyGraph: FC = () => {
         onSelectionChange={handleSelectionChange}
         proOptions={{ hideAttribution: true }}
       >
-        <Panel position='top-right'>
-          <Button
-            variant='outline'
-            className='flex'
-            onClick={() => setGraphDirection(GraphExplorerDirection.Vertical)}
-          >
-            vertical layout
-          </Button>
-          <Button
-            variant='outline'
-            className='flex'
-            onClick={() => setGraphDirection(GraphExplorerDirection.Horizontal)}
-          >
-            horizontal layout
-          </Button>
-        </Panel>
         <Controls />
         <MiniMap zoomable pannable />
         <Background variant={BackgroundVariant.Dots} gap={36} size={1} />
