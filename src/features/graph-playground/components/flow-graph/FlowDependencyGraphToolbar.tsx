@@ -5,7 +5,6 @@ import { ArrowLeftRight, ArrowUpDown } from 'lucide-react';
 import { Button } from '@/features/app/components/ui/button';
 import { Input } from '@/features/app/components/ui/input';
 import { useGraphExplorerContext } from '@/features/graph-playground/contexts/GraphExplorerContext';
-import { GraphExplorerDirection } from '@/features/graph-playground/utils/graph-config-utils';
 
 const FlowDependencyGraphToolbar: FC = () => {
   const { setGraphDirection } = useGraphExplorerContext();
@@ -22,7 +21,7 @@ const FlowDependencyGraphToolbar: FC = () => {
           size='icon'
           variant='secondary'
           onClick={() => {
-            setGraphDirection(GraphExplorerDirection.Vertical);
+            setGraphDirection('TB');
           }}
           className={'scale-75'}
         >
@@ -32,7 +31,7 @@ const FlowDependencyGraphToolbar: FC = () => {
           size='icon'
           variant='secondary'
           onClick={() => {
-            setGraphDirection(GraphExplorerDirection.Horizontal);
+            setGraphDirection('LR');
           }}
           className={'scale-75'}
         >

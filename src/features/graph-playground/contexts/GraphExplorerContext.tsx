@@ -9,11 +9,10 @@ import React, {
 } from 'react';
 
 import { ReactSetState } from '@/features/app/types/react-types';
-import { GraphExplorerDirection } from '@/features/graph-playground/utils/graph-config-utils';
 
 type GraphExplorerContext = {
-  graphDirection: GraphExplorerDirection;
-  setGraphDirection: ReactSetState<GraphExplorerDirection>;
+  graphDirection: string;
+  setGraphDirection: ReactSetState<string>;
   selectedNodeId: string | null;
   setSelectedNodeId: ReactSetState<string | null>;
 };
@@ -38,9 +37,8 @@ export const useGraphExplorerContext = () => {
 export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [graphDirection, setGraphDirection] = useState<
-    GraphExplorerContext['graphDirection']
-  >(GraphExplorerDirection.Vertical);
+  const [graphDirection, setGraphDirection] =
+    useState<GraphExplorerContext['graphDirection']>('LR');
   const [selectedNodeId, setSelectedNodeId] =
     useState<GraphExplorerContext['selectedNodeId']>(null);
 

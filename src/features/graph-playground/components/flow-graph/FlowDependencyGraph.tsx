@@ -6,78 +6,21 @@ import ReactFlow, {
   Connection,
   Controls,
   MiniMap,
-  Node,
   OnSelectionChangeParams,
   ReactFlowProvider,
   useEdgesState,
   useNodesState,
   useReactFlow,
 } from 'reactflow';
-import ELK, { ElkExtendedEdge } from 'elkjs/lib/elk.bundled.js';
-import { LayoutOptions } from 'elkjs/lib/elk-api';
 
 import { useGraphExplorerContext } from '@/features/graph-playground/contexts/GraphExplorerContext';
 import {
   EDGES,
   NODES,
 } from '@/features/graph-playground/data/dummyEdgesAndNodes';
-import { GraphExplorerDirection } from '@/features/graph-playground/utils/graph-config-utils';
+import { getDagreProcessedElements } from '@/features/graph-playground/utils/graph-config-utils';
 
 import 'reactflow/dist/style.css';
-
-const elk = new ELK();
-
-// Elk has a *huge* amount of options to configure. To see everything you can
-// tweak check out:
-//
-// - https://www.eclipse.org/elk/reference/algorithms.html
-// - https://www.eclipse.org/elk/reference/options.html
-// QUICK REFERENCE: elk.algorithm = [ 'layered', 'stress', 'mrtree', 'radial', 'force', 'disco', 'box', 'fixed', 'random' ]
-const elkOptions = {
-  'elk.algorithm': 'force',
-  'elk.spacing.nodeNode': '20',
-};
-
-const processNodeEdgeLayout = async (
-  nodes: Node[],
-  edges: ElkExtendedEdge[],
-  options?: LayoutOptions
-) => {
-  const isHorizontal =
-    options?.['elk.direction'] === GraphExplorerDirection.Horizontal;
-  const graph = {
-    id: 'root',
-    layoutOptions: options,
-    children: nodes.map((node) => ({
-      ...node,
-      // Adjust the target and source handle positions based on the layout
-      // direction.
-      targetPosition: isHorizontal ? 'left' : 'top',
-      sourcePosition: isHorizontal ? 'right' : 'bottom',
-
-      // Hardcode a width and height for elk to use when processing the layout.
-      width: 150,
-      height: 50,
-    })),
-    edges: edges,
-  };
-
-  try {
-    const processedGraph = await elk.layout(graph);
-    return {
-      nodes: processedGraph.children?.map((node_1) => ({
-        ...node_1,
-        // React Flow expects a position property on the node instead of `x`
-        // and `y` fields.
-        position: { x: node_1.x, y: node_1.y },
-      })),
-
-      edges: processedGraph.edges,
-    };
-  } catch (message) {
-    return console.error(message);
-  }
-};
 
 const FlowDependencyGraph: FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(NODES);
@@ -86,34 +29,48 @@ const FlowDependencyGraph: FC = () => {
   const { setSelectedNodeId, graphDirection, setGraphDirection } =
     useGraphExplorerContext();
 
+  type onLayoutProps = {
+    direction: string;
+    useInitialNodes?: boolean;
+  };
+
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
     []
   );
 
-  type onLayoutProps = {
-    direction: GraphExplorerDirection;
-    useInitialNodes?: boolean;
-  };
+  // ELK based onLayout function.
+  // const onLayout = useCallback(
+  //   ({ direction, useInitialNodes = false }: onLayoutProps) => {
+  //     const opts = { 'elk.direction': direction, ...elkOptions };
+  //     const ns = useInitialNodes ? NODES : nodes;
+  //     const es = useInitialNodes ? EDGES : edges;
+  //
+  //     // @ts-ignore
+  //     processNodeEdgeLayout(ns, es, opts).then(
+  //       // @ts-ignore
+  //       ({ nodes: processedNodes, edges: processedEdges }) => {
+  //         setNodes(processedNodes);
+  //         setEdges(processedEdges);
+  //
+  //         window.requestAnimationFrame(() => fitView());
+  //       }
+  //     );
+  //   },
+  //   [nodes, edges, graphDirection]
+  // );
 
+  // Dagre based onLayout function.
   const onLayout = useCallback(
-    ({ direction, useInitialNodes = false }: onLayoutProps) => {
-      const opts = { 'elk.direction': direction, ...elkOptions };
-      const ns = useInitialNodes ? NODES : nodes;
-      const es = useInitialNodes ? EDGES : edges;
+    ({ direction }: onLayoutProps) => {
+      const processedElements = getDagreProcessedElements(nodes, edges, {
+        direction,
+      });
 
-      // @ts-ignore
-      processNodeEdgeLayout(ns, es, opts).then(
-        // @ts-ignore
-        ({ nodes: processedNodes, edges: processedEdges }) => {
-          setNodes(processedNodes);
-          setEdges(processedEdges);
-
-          window.requestAnimationFrame(() => fitView());
-        }
-      );
+      setNodes([...processedElements.nodes]);
+      setEdges([...processedElements.edges]);
     },
-    [nodes, edges, graphDirection]
+    [nodes, edges]
   );
 
   const handleSelectionChange = useCallback(
