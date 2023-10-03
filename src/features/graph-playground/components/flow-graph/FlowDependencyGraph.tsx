@@ -94,9 +94,6 @@ const FlowDependencyGraph: FC = () => {
     onLayout({ direction: graphDirection, useInitialNodes: true });
   }, []);
 
-  // TODO -> Build out a header that exposes the a dropdown to select the algorithm, as well as a button to toggle vertical or horizontal orientation.
-  // TODO -> Create a react context, and a custom hook to use said context. Then Wrap this component in that context, to consolidate the logic for the graph, and configuration.
-  // TODO -> Within the context ^^ we should handle the "generateShareLink", function that will create a queryParam style URL that will drive the initial configuration/filters for the page when the end user loads it.
   return (
     <div className='flex h-full w-full grow rounded-lg rounded-tl-none rounded-tr-none border border-input'>
       <ReactFlow

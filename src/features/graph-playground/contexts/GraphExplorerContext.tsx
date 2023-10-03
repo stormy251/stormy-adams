@@ -34,6 +34,7 @@ export const useGraphExplorerContext = () => {
   return context;
 };
 
+// TODO -> Within the context ^^ we should handle the "generateShareLink", function that will create a queryParam style URL that will drive the initial configuration/filters for the page when the end user loads it.
 export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
