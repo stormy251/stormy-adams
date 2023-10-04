@@ -8,13 +8,20 @@ import { useGraphExplorerContext } from '@/features/graph-playground/contexts/Gr
 import {
   ANIMATE_VARIANT_BINDINGS,
   fadeDownVariants,
+  fadeVariants,
+  SLOW_TIMING,
 } from '@/lib/framer-motion/motion-variants';
 
 const FlowDependencyGraphDetailsPanel: FC = () => {
   const { selectedNodeId, setSelectedNodeId } = useGraphExplorerContext();
 
   return (
-    <div className='flex h-full flex-col rounded-lg border border-input'>
+    <motion.div
+      variants={fadeVariants}
+      transition={{ delay: SLOW_TIMING * 4 }}
+      {...ANIMATE_VARIANT_BINDINGS}
+      className='flex h-full flex-col rounded-lg border border-input'
+    >
       <AnimatePresence mode='wait'>
         {selectedNodeId ? (
           <motion.div
@@ -54,7 +61,7 @@ const FlowDependencyGraphDetailsPanel: FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 

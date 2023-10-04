@@ -1,6 +1,6 @@
-export const INITIAL_VARIANT_NAME = "hidden";
-export const ANIMATE_VARIANT_NAME = "visible";
-export const EXIT_VARIANT_NAME = "hidden";
+export const INITIAL_VARIANT_NAME = 'hidden';
+export const ANIMATE_VARIANT_NAME = 'visible';
+export const EXIT_VARIANT_NAME = 'hidden';
 
 export const ANIMATE_VARIANT_BINDINGS = {
   initial: INITIAL_VARIANT_NAME,
@@ -74,8 +74,8 @@ export const fadeUpVariants = {
 export const fadeHeightVariants = {
   [ANIMATE_VARIANT_NAME]: {
     opacity: 1,
-    height: "auto",
-    overflow: "visible",
+    height: 'auto',
+    overflow: 'visible',
     transition: {
       duration: SLOW_TIMING,
     },
@@ -83,7 +83,7 @@ export const fadeHeightVariants = {
   [INITIAL_VARIANT_NAME]: {
     opacity: 0,
     height: 0,
-    overflow: "hidden",
+    overflow: 'hidden',
     transition: {
       duration: SLOW_TIMING,
     },
@@ -93,18 +93,18 @@ export const fadeHeightVariants = {
 export const fadeSectionHeightVariants = {
   [ANIMATE_VARIANT_NAME]: {
     opacity: 1,
-    height: "10rem",
-    minHeight: "10rem",
-    overflow: "visible",
+    height: '10rem',
+    minHeight: '10rem',
+    overflow: 'visible',
     transition: {
       duration: SLOW_TIMING * 2,
     },
   },
   [INITIAL_VARIANT_NAME]: {
     opacity: 0,
-    height: "0",
-    minHeight: "0",
-    overflow: "hidden",
+    height: '0',
+    minHeight: '0',
+    overflow: 'hidden',
     transition: {
       duration: SLOW_TIMING * 2,
     },
@@ -165,7 +165,7 @@ export const fadeMenuUpVariants = {
 
 export const toastCardVariants = {
   [ANIMATE_VARIANT_NAME]: {
-    height: "auto",
+    height: 'auto',
     opacity: 1,
     scale: 1,
     transition: {
@@ -186,8 +186,8 @@ export const toastCardVariants = {
 export const fadeToastHeightAutoVariants = {
   [ANIMATE_VARIANT_NAME]: {
     opacity: 1,
-    height: "auto",
-    overflow: "visible",
+    height: 'auto',
+    overflow: 'visible',
     transition: {
       duration: SLOW_TIMING,
       delay: 2 * SLOW_TIMING,
@@ -196,7 +196,7 @@ export const fadeToastHeightAutoVariants = {
   [INITIAL_VARIANT_NAME]: {
     opacity: 0,
     height: 0,
-    overflow: "hidden",
+    overflow: 'hidden',
     transition: {
       duration: SLOW_TIMING,
       delay: 2 * SLOW_TIMING,

@@ -5,72 +5,131 @@ import ReactFlow, {
   BackgroundVariant,
   Connection,
   Controls,
+  Edge,
   MiniMap,
+  Node,
   OnSelectionChangeParams,
   ReactFlowProvider,
   useEdgesState,
   useNodesState,
   useReactFlow,
 } from 'reactflow';
+import { motion } from 'framer-motion';
 
 import { useGraphExplorerContext } from '@/features/graph-playground/contexts/GraphExplorerContext';
 import {
   EDGES,
   NODES,
 } from '@/features/graph-playground/data/dummyEdgesAndNodes';
-import { getDagreProcessedElements } from '@/features/graph-playground/utils/graph-config-utils';
+import {
+  elkOptions,
+  getElkProcessedElements,
+} from '@/features/graph-playground/utils/graph-config-utils';
+import {
+  ANIMATE_VARIANT_BINDINGS,
+  fadeDownVariants,
+  SLOW_TIMING,
+} from '@/lib/framer-motion/motion-variants';
 
 import 'reactflow/dist/style.css';
 
-const FlowDependencyGraph: FC = () => {
+type FlowDependencyGraphProps = {
+  initialEdges?: Edge[];
+  initialNodes?: Node[];
+};
+
+const FlowDependencyGraph: FC<FlowDependencyGraphProps> = ({
+  initialEdges = EDGES,
+  initialNodes = NODES,
+}) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState(EDGES);
-  const { fitView } = useReactFlow();
-  const { setSelectedNodeId, graphDirection, setGraphDirection } =
-    useGraphExplorerContext();
+  const { fitView, viewportInitialized } = useReactFlow();
+  const {
+    setSelectedNodeId,
+    graphDirection,
+    searchText,
+    shouldShowNodesWithoutDeps,
+  } = useGraphExplorerContext();
 
   type onLayoutProps = {
     direction: string;
-    useInitialNodes?: boolean;
   };
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-    []
+    [setEdges]
   );
 
   // ELK based onLayout function.
-  // const onLayout = useCallback(
-  //   ({ direction, useInitialNodes = false }: onLayoutProps) => {
-  //     const opts = { 'elk.direction': direction, ...elkOptions };
-  //     const ns = useInitialNodes ? NODES : nodes;
-  //     const es = useInitialNodes ? EDGES : edges;
-  //
-  //     // @ts-ignore
-  //     processNodeEdgeLayout(ns, es, opts).then(
-  //       // @ts-ignore
-  //       ({ nodes: processedNodes, edges: processedEdges }) => {
-  //         setNodes(processedNodes);
-  //         setEdges(processedEdges);
-  //
-  //         window.requestAnimationFrame(() => fitView());
-  //       }
-  //     );
-  //   },
-  //   [nodes, edges, graphDirection]
-  // );
-
-  // Dagre based onLayout function.
   const onLayout = useCallback(
     ({ direction }: onLayoutProps) => {
-      const processedElements = getDagreProcessedElements(nodes, edges, {
-        direction,
+      const opts = { 'elk.direction': direction, ...elkOptions };
+
+      // Step 1: Filter out nodes that don't contain a label with a substring of the searchText.
+      // NOTE: If there is no search text, then we can just use the initial nodes.
+      const searchFilteredNodes = !searchText
+        ? initialNodes
+        : initialNodes.filter((node) => {
+            return node.data.label
+              .toLowerCase()
+              .includes(searchText.toLowerCase());
+          });
+
+      const searchFilteredNodesIds = searchFilteredNodes.map((node) => node.id);
+
+      const activeSearchConnectedNodeEdgeIndex = new Map();
+      const filteredEdges = initialEdges.filter((edge) => {
+        // Here we are building out a map index, to keep the time complexity a little lower.
+        const isEdgeConnectingSearchFilteredNodes =
+          searchFilteredNodesIds.includes(edge.source) &&
+          searchFilteredNodesIds.includes(edge.target);
+        if (isEdgeConnectingSearchFilteredNodes) {
+          activeSearchConnectedNodeEdgeIndex.set(edge.source, true);
+        }
+
+        // Likely to be other
+        if (!searchText) {
+          return true;
+        }
+
+        return isEdgeConnectingSearchFilteredNodes;
       });
 
-      setNodes([...processedElements.nodes]);
-      setEdges([...processedElements.edges]);
+      const filteredNodes = searchFilteredNodes.filter((node) => {
+        // Step 2: Filter out nodes that don't have any edges, depending on the shouldShowNodesWithoutDeps flag.
+        if (!shouldShowNodesWithoutDeps) {
+          return activeSearchConnectedNodeEdgeIndex.has(node.id);
+        }
+
+        return true;
+      });
+
+      // @ts-ignore
+      getElkProcessedElements(filteredNodes, filteredEdges, opts).then(
+        // @ts-ignore
+        ({ nodes: processedNodes, edges: processedEdges }) => {
+          setNodes(processedNodes);
+          setEdges(processedEdges);
+
+          window.requestAnimationFrame(() =>
+            fitView({
+              maxZoom: 50,
+              duration: 1000,
+            })
+          );
+        }
+      );
     },
-    [nodes, edges]
+    [
+      initialEdges,
+      initialNodes,
+      setEdges,
+      setNodes,
+      fitView,
+      searchText,
+      shouldShowNodesWithoutDeps,
+    ]
   );
 
   const handleSelectionChange = useCallback(
@@ -80,38 +139,47 @@ const FlowDependencyGraph: FC = () => {
         setSelectedNodeId(selectedNode.id);
       }
     },
-    []
+    [setSelectedNodeId]
   );
 
   // Rerender when the graph direction changes.
   useEffect(() => {
-    onLayout({ direction: graphDirection });
-    fitView();
-  }, [graphDirection, fitView]);
-
-  // Calculate the initial layout on mount.
-  useEffect(() => {
-    onLayout({ direction: graphDirection, useInitialNodes: true });
-  }, []);
+    if (viewportInitialized) {
+      onLayout({ direction: graphDirection });
+      // IMPORTANT NOTE: This is a hack, without this, the onLayout call seems to be unresponsive for initial, and some quick searching workflows.
+      setTimeout(() => {
+        onLayout({ direction: graphDirection });
+      }, 0);
+    }
+  }, [
+    onLayout,
+    graphDirection,
+    searchText,
+    shouldShowNodesWithoutDeps,
+    viewportInitialized,
+  ]);
 
   return (
-    <div className='flex h-full w-full grow rounded-lg rounded-tl-none rounded-tr-none border border-input'>
+    <motion.div
+      variants={fadeDownVariants}
+      transition={{ delay: SLOW_TIMING * 3 }}
+      {...ANIMATE_VARIANT_BINDINGS}
+      className='flex h-full w-full grow rounded-lg rounded-tl-none rounded-tr-none border border-input'
+    >
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onConnect={onConnect}
-        onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        maxZoom={50}
-        fitView
+        onNodesChange={onNodesChange}
+        onConnect={onConnect}
         onSelectionChange={handleSelectionChange}
         proOptions={{ hideAttribution: true }}
       >
         <Controls />
         <MiniMap zoomable pannable />
-        <Background variant={BackgroundVariant.Dots} gap={36} size={1} />
+        <Background variant={BackgroundVariant.Dots} gap={32} size={1} />
       </ReactFlow>
-    </div>
+    </motion.div>
   );
 };
 

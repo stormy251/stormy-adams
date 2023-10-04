@@ -23,7 +23,7 @@ const GraphPlaygroundPageContent: FC = () => {
         transition={{ delay: SLOW_TIMING }}
         {...ANIMATE_VARIANT_BINDINGS}
         data-purpose-id='graph-playground-content'
-        className='flex grow flex-col gap-6 overflow-auto'
+        className='flex grow flex-col gap-6 overflow-hidden'
       >
         <Grid numItemsLg={6} className='h-full gap-6'>
           {/* Graph Explorer section */}
