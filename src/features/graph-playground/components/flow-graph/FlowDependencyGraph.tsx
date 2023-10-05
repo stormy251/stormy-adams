@@ -5,9 +5,7 @@ import ReactFlow, {
   BackgroundVariant,
   Connection,
   Controls,
-  Edge,
   MiniMap,
-  Node,
   OnSelectionChangeParams,
   ReactFlowProvider,
   useEdgesState,
@@ -16,6 +14,8 @@ import ReactFlow, {
 } from 'reactflow';
 import { motion } from 'framer-motion';
 
+import BiDirectionalEdge from '@/features/graph-playground/components/flow-graph/edges/BiDirectionalEdge';
+import BiDirectionalNode from '@/features/graph-playground/components/flow-graph/nodes/BiDirectionalNode';
 import { useGraphExplorerContext } from '@/features/graph-playground/contexts/GraphExplorerContext';
 import {
   EDGES,
@@ -33,15 +33,19 @@ import {
 
 import 'reactflow/dist/style.css';
 
-type FlowDependencyGraphProps = {
-  initialEdges?: Edge[];
-  initialNodes?: Node[];
+const edgeTypes = {
+  bidirectional: BiDirectionalEdge,
 };
 
-const FlowDependencyGraph: FC<FlowDependencyGraphProps> = ({
-  initialEdges = EDGES,
-  initialNodes = NODES,
-}) => {
+const nodeTypes = {
+  bidirectional: BiDirectionalNode,
+};
+
+type onLayoutProps = {
+  direction: string;
+};
+
+const FlowDependencyGraph: FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState(EDGES);
   const { fitView, viewportInitialized } = useReactFlow();
@@ -50,11 +54,9 @@ const FlowDependencyGraph: FC<FlowDependencyGraphProps> = ({
     graphDirection,
     searchText,
     shouldShowNodesWithoutDeps,
+    preProcessedEdges,
+    preProcessedNodes,
   } = useGraphExplorerContext();
-
-  type onLayoutProps = {
-    direction: string;
-  };
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -66,51 +68,12 @@ const FlowDependencyGraph: FC<FlowDependencyGraphProps> = ({
     ({ direction }: onLayoutProps) => {
       const opts = { 'elk.direction': direction, ...elkOptions };
 
-      // Step 1: Filter out nodes that don't contain a label with a substring of the searchText.
-      // NOTE: If there is no search text, then we can just use the initial nodes.
-      const searchFilteredNodes = !searchText
-        ? initialNodes
-        : initialNodes.filter((node) => {
-            return node.data.label
-              .toLowerCase()
-              .includes(searchText.toLowerCase());
-          });
-
-      const searchFilteredNodesIds = searchFilteredNodes.map((node) => node.id);
-
-      const activeSearchConnectedNodeEdgeIndex = new Map();
-      const filteredEdges = initialEdges.filter((edge) => {
-        // Here we are building out a map index, to keep the time complexity a little lower.
-        const isEdgeConnectingSearchFilteredNodes =
-          searchFilteredNodesIds.includes(edge.source) &&
-          searchFilteredNodesIds.includes(edge.target);
-        if (isEdgeConnectingSearchFilteredNodes) {
-          activeSearchConnectedNodeEdgeIndex.set(edge.source, true);
-        }
-
-        // Likely to be other
-        if (!searchText) {
-          return true;
-        }
-
-        return isEdgeConnectingSearchFilteredNodes;
-      });
-
-      const filteredNodes = searchFilteredNodes.filter((node) => {
-        // Step 2: Filter out nodes that don't have any edges, depending on the shouldShowNodesWithoutDeps flag.
-        if (!shouldShowNodesWithoutDeps) {
-          return activeSearchConnectedNodeEdgeIndex.has(node.id);
-        }
-
-        return true;
-      });
-
       // @ts-ignore
-      getElkProcessedElements(filteredNodes, filteredEdges, opts).then(
+      getElkProcessedElements(preProcessedNodes, preProcessedEdges, opts).then(
         // @ts-ignore
-        ({ nodes: processedNodes, edges: processedEdges }) => {
-          setNodes(processedNodes);
-          setEdges(processedEdges);
+        ({ nodes: postProcessedNodes, edges: postProcessedEdges }) => {
+          setNodes(postProcessedNodes);
+          setEdges(postProcessedEdges);
 
           window.requestAnimationFrame(() =>
             fitView({
@@ -121,15 +84,7 @@ const FlowDependencyGraph: FC<FlowDependencyGraphProps> = ({
         }
       );
     },
-    [
-      initialEdges,
-      initialNodes,
-      setEdges,
-      setNodes,
-      fitView,
-      searchText,
-      shouldShowNodesWithoutDeps,
-    ]
+    [preProcessedEdges, preProcessedNodes, setEdges, setNodes, fitView]
   );
 
   const handleSelectionChange = useCallback(
@@ -156,6 +111,8 @@ const FlowDependencyGraph: FC<FlowDependencyGraphProps> = ({
     graphDirection,
     searchText,
     shouldShowNodesWithoutDeps,
+    preProcessedEdges,
+    preProcessedNodes,
     viewportInitialized,
   ]);
 
@@ -169,6 +126,8 @@ const FlowDependencyGraph: FC<FlowDependencyGraphProps> = ({
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        edgeTypes={edgeTypes}
+        nodeTypes={nodeTypes}
         onEdgesChange={onEdgesChange}
         onNodesChange={onNodesChange}
         onConnect={onConnect}
