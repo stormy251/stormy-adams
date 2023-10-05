@@ -63,7 +63,6 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
 
   // NOTE: Today, these nodes and edges are driven by hard coded data, but in the future, we will want to use the data from the API.
   const [preProcessedNodes, preProcessedEdges] = useMemo(() => {
-    console.log('WITHING PREPROCESSING');
     // Step 1: Filter out nodes that don't contain a label with a substring of the searchText.
     // NOTE: If there is no search text, then we can just use the initial nodes.
     const searchFilteredNodes = !searchText
