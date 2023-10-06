@@ -74,8 +74,8 @@ export const getElkProcessedElements = async (
       sourcePosition: isHorizontal ? 'right' : 'bottom',
 
       // Hardcode a width and height for elk to use when processing the layout.
-      width: 150,
-      height: 50,
+      width: 200,
+      height: 100,
     })),
     edges: edges,
   };

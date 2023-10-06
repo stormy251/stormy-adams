@@ -15,7 +15,7 @@ import {
   EDGES,
   NODES,
 } from '@/features/graph-playground/data/dummyEdgesAndNodes';
-import { ElkGraphExplorerDirection } from '@/features/graph-playground/utils/graph-config-utils';
+import { ElkGraphExplorerDirection } from '@/features/graph-playground/utils/graph-layout-utils';
 
 type GraphExplorerContext = {
   graphDirection: string;
@@ -24,6 +24,8 @@ type GraphExplorerContext = {
   setShouldShowNodesWithoutDeps: ReactSetState<boolean>;
   searchText: string;
   setSearchText: ReactSetState<string>;
+  isShowingIcons: boolean;
+  setIsShowingIcons: ReactSetState<boolean>;
   selectedNodeId: string | null;
   setSelectedNodeId: ReactSetState<string | null>;
   generateShareLink: () => string;
@@ -53,6 +55,8 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
 }) => {
   const [shouldShowNodesWithoutDeps, setShouldShowNodesWithoutDeps] =
     useState<GraphExplorerContext['shouldShowNodesWithoutDeps']>(true);
+  const [isShowingIcons, setIsShowingIcons] =
+    useState<GraphExplorerContext['isShowingIcons']>(true);
   const [graphDirection, setGraphDirection] = useState<
     GraphExplorerContext['graphDirection']
   >(ElkGraphExplorerDirection.Vertical);
@@ -142,6 +146,8 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
         setSearchText,
         selectedNodeId,
         setSelectedNodeId,
+        isShowingIcons,
+        setIsShowingIcons,
         generateShareLink,
         preProcessedNodes,
         preProcessedEdges,

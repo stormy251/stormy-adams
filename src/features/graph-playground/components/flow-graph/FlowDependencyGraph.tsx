@@ -13,18 +13,17 @@ import ReactFlow, {
   useReactFlow,
 } from 'reactflow';
 import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes';
 
 import BiDirectionalEdge from '@/features/graph-playground/components/flow-graph/edges/BiDirectionalEdge';
 import BiDirectionalNode from '@/features/graph-playground/components/flow-graph/nodes/BiDirectionalNode';
+import ResourceNode from '@/features/graph-playground/components/flow-graph/nodes/ResourceNode';
+import ServiceNode from '@/features/graph-playground/components/flow-graph/nodes/ServiceNode';
 import { useGraphExplorerContext } from '@/features/graph-playground/contexts/GraphExplorerContext';
-import {
-  EDGES,
-  NODES,
-} from '@/features/graph-playground/data/dummyEdgesAndNodes';
 import {
   elkOptions,
   getElkProcessedElements,
-} from '@/features/graph-playground/utils/graph-config-utils';
+} from '@/features/graph-playground/utils/graph-layout-utils';
 import {
   ANIMATE_VARIANT_BINDINGS,
   fadeDownVariants,
@@ -39,6 +38,8 @@ const edgeTypes = {
 
 const nodeTypes = {
   bidirectional: BiDirectionalNode,
+  service: ServiceNode,
+  resource: ResourceNode,
 };
 
 type onLayoutProps = {
@@ -46,9 +47,7 @@ type onLayoutProps = {
 };
 
 const FlowDependencyGraph: FC = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(NODES);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(EDGES);
-  const { fitView, viewportInitialized } = useReactFlow();
+  const { theme } = useTheme();
   const {
     setSelectedNodeId,
     graphDirection,
@@ -57,6 +56,9 @@ const FlowDependencyGraph: FC = () => {
     preProcessedEdges,
     preProcessedNodes,
   } = useGraphExplorerContext();
+  const [nodes, setNodes, onNodesChange] = useNodesState(preProcessedNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(preProcessedEdges);
+  const { fitView, viewportInitialized } = useReactFlow();
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -133,9 +135,26 @@ const FlowDependencyGraph: FC = () => {
         onConnect={onConnect}
         onSelectionChange={handleSelectionChange}
         proOptions={{ hideAttribution: true }}
+        maxZoom={50}
+        nodesConnectable={false}
       >
         <Controls />
-        <MiniMap zoomable pannable />
+        <MiniMap
+          zoomable
+          pannable
+          nodeBorderRadius={8}
+          nodeStrokeColor={(n) => {
+            if (n.type === 'service') return 'darkblue';
+            if (n.type === 'resource') return 'rgb(147 51 234)';
+            return 'grey';
+          }}
+          nodeColor={(n) => {
+            if (n.type === 'service') return 'lightblue';
+            if (n.type === 'resource') return 'rgb(216 180 254)';
+            return 'lightgrey';
+          }}
+          maskColor='hsl(var(--accent))'
+        />
         <Background variant={BackgroundVariant.Dots} gap={32} size={1} />
       </ReactFlow>
     </motion.div>

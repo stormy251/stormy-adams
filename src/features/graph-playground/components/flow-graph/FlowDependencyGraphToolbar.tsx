@@ -7,7 +7,7 @@ import { Button } from '@/features/app/components/ui/button';
 import { Checkbox } from '@/features/app/components/ui/checkbox';
 import { Input } from '@/features/app/components/ui/input';
 import { useGraphExplorerContext } from '@/features/graph-playground/contexts/GraphExplorerContext';
-import { ElkGraphExplorerDirection } from '@/features/graph-playground/utils/graph-config-utils';
+import { ElkGraphExplorerDirection } from '@/features/graph-playground/utils/graph-layout-utils';
 import {
   ANIMATE_VARIANT_BINDINGS,
   fadeDownVariants,
@@ -23,6 +23,8 @@ const FlowDependencyGraphToolbar: FC = () => {
     setSearchText,
     shouldShowNodesWithoutDeps,
     setShouldShowNodesWithoutDeps,
+    isShowingIcons,
+    setIsShowingIcons,
   } = useGraphExplorerContext();
 
   // NOTE: This allows the UI to feel snappy without triggering requests on every keystroke
@@ -84,6 +86,19 @@ const FlowDependencyGraphToolbar: FC = () => {
             className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
           >
             Show nodes without dependencies
+          </label>
+        </div>
+        <div className='flex items-center space-x-2'>
+          <Checkbox
+            id='show-icons-toggle'
+            checked={isShowingIcons}
+            onCheckedChange={(checked) => setIsShowingIcons(checked as boolean)}
+          />
+          <label
+            htmlFor='show-icons-toggle'
+            className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+          >
+            Show Icons
           </label>
         </div>
       </div>
