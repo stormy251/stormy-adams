@@ -17,14 +17,12 @@ const ResourceNode: FC<NodeProps> = ({ data, selected }) => {
   return (
     <div
       className={`flex items-center gap-2 rounded-lg border ${
-        selected
-          ? 'border-foreground'
-          : 'border-purple-500 dark:border-purple-400'
-      } bg-purple-300 p-2 px-4 dark:bg-purple-500`}
+        selected ? 'border-foreground' : 'border-input'
+      } bg-background p-2 px-4`}
     >
       <Handle type='target' position={Position.Right} />
       {isShowingIcons && (
-        <div className='grid h-10 w-10 place-items-center rounded-lg bg-purple-600 text-background dark:bg-purple-800 dark:text-foreground'>
+        <div className='grid h-10 w-10 place-items-center rounded-lg bg-accent'>
           {selected ? (
             <Star color={'currentColor'} size={32} />
           ) : (

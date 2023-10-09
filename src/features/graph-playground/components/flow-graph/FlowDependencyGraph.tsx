@@ -139,22 +139,7 @@ const FlowDependencyGraph: FC = () => {
         nodesConnectable={false}
       >
         <Controls />
-        <MiniMap
-          zoomable
-          pannable
-          nodeBorderRadius={8}
-          nodeStrokeColor={(n) => {
-            if (n.type === 'service') return 'darkblue';
-            if (n.type === 'resource') return 'rgb(147 51 234)';
-            return 'grey';
-          }}
-          nodeColor={(n) => {
-            if (n.type === 'service') return 'lightblue';
-            if (n.type === 'resource') return 'rgb(216 180 254)';
-            return 'lightgrey';
-          }}
-          maskColor='hsl(var(--accent))'
-        />
+        <MiniMap zoomable pannable nodeBorderRadius={8} />
         <Background variant={BackgroundVariant.Dots} gap={32} size={1} />
       </ReactFlow>
     </motion.div>

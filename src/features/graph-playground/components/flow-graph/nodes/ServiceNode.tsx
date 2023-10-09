@@ -17,13 +17,13 @@ const ServiceNode: FC<NodeProps<ServiceNodeData>> = ({ data, selected }) => {
   return (
     <div
       className={`flex items-center gap-2 rounded-lg border ${
-        selected ? 'border-foreground' : 'border-blue-500 dark:border-blue-400'
-      } bg-blue-300 p-2 px-4 dark:bg-blue-500`}
+        selected ? 'border-foreground' : 'border-input'
+      } bg-background p-2 px-4`}
     >
       <Handle type='target' position={Position.Right} />
       {isShowingIcons && (
         <div
-          className={`grid h-20 w-20 place-items-center rounded-lg bg-blue-600 text-background dark:bg-blue-800 dark:text-foreground`}
+          className={`grid h-12 w-12 place-items-center rounded-lg bg-accent`}
         >
           {selected ? (
             <Star color={'currentColor'} size={32} />
@@ -32,7 +32,6 @@ const ServiceNode: FC<NodeProps<ServiceNodeData>> = ({ data, selected }) => {
           )}
         </div>
       )}
-
       {data?.label}
       <Handle type='source' position={Position.Left} />
     </div>
