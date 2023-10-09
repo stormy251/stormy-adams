@@ -7,14 +7,15 @@ import ReactFlow, {
   Controls,
   MiniMap,
   OnSelectionChangeParams,
+  Panel,
   ReactFlowProvider,
   useEdgesState,
   useNodesState,
   useReactFlow,
 } from 'reactflow';
 import { motion } from 'framer-motion';
-import { useTheme } from 'next-themes';
 
+import { Checkbox } from '@/features/app/components/ui/checkbox';
 import BiDirectionalEdge from '@/features/graph-playground/components/flow-graph/edges/BiDirectionalEdge';
 import BiDirectionalNode from '@/features/graph-playground/components/flow-graph/nodes/BiDirectionalNode';
 import ResourceNode from '@/features/graph-playground/components/flow-graph/nodes/ResourceNode';
@@ -47,14 +48,16 @@ type onLayoutProps = {
 };
 
 const FlowDependencyGraph: FC = () => {
-  const { theme } = useTheme();
   const {
     setSelectedNodeId,
+    isShowingIcons,
     graphDirection,
     searchText,
     shouldShowNodesWithoutDeps,
     preProcessedEdges,
     preProcessedNodes,
+    setShouldShowNodesWithoutDeps,
+    setIsShowingIcons,
   } = useGraphExplorerContext();
   const [nodes, setNodes, onNodesChange] = useNodesState(preProcessedNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(preProcessedEdges);
@@ -141,6 +144,41 @@ const FlowDependencyGraph: FC = () => {
         <Controls />
         <MiniMap zoomable pannable nodeBorderRadius={8} />
         <Background variant={BackgroundVariant.Dots} gap={32} size={1} />
+        <Panel position='top-right'>
+          <div className='flex flex-col gap-2 rounded-lg border border-input bg-background p-2 shadow-md'>
+            <h4 className='text-center'>Graph Options</h4>
+            <div className='flex items-center space-x-2'>
+              <Checkbox
+                id='without-deps-toggle'
+                checked={shouldShowNodesWithoutDeps}
+                onCheckedChange={(checked) =>
+                  setShouldShowNodesWithoutDeps(checked as boolean)
+                }
+              />
+              <label
+                htmlFor='without-deps-toggle'
+                className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+              >
+                Show disconnected
+              </label>
+            </div>
+            <div className='flex items-center space-x-2'>
+              <Checkbox
+                id='show-icons-toggle'
+                checked={isShowingIcons}
+                onCheckedChange={(checked) =>
+                  setIsShowingIcons(checked as boolean)
+                }
+              />
+              <label
+                htmlFor='show-icons-toggle'
+                className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+              >
+                Show icons
+              </label>
+            </div>
+          </div>
+        </Panel>
       </ReactFlow>
     </motion.div>
   );
