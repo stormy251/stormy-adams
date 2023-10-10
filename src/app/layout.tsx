@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 
 import CommandMenu from '@/features/app/components/CommandMenu';
@@ -41,6 +42,7 @@ export default function RootLayout({
             <Toaster />
           </AppContextProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
