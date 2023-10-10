@@ -9,6 +9,7 @@ import React, {
   useState,
 } from 'react';
 import { Edge, Node } from 'reactflow';
+import { useSearchParams } from 'next/navigation';
 
 import { ReactSetState } from '@/features/app/types/react-types';
 import {
@@ -57,21 +58,41 @@ export const useGraphExplorerContext = () => {
 export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [shouldShowNodesWithoutDeps, setShouldShowNodesWithoutDeps] =
-    useState<GraphExplorerContext['shouldShowNodesWithoutDeps']>(true);
-  const [isShowingIcons, setIsShowingIcons] =
-    useState<GraphExplorerContext['isShowingIcons']>(true);
+  // Search Params explained:
+  // We use the search params to store the state of the graph explorer, so that we can share the link with others, and they will see the same state.
+  const searchParams = useSearchParams();
+  const shouldShowNodesWithoutDepsQueryParam = searchParams.get(
+    'shouldShowNodesWithoutDeps'
+  );
+  const sourceTypeFilterValQueryParam = searchParams.get('sourceTypeFilterVal');
+  const resourceTypeFilterValQueryParam = searchParams.get(
+    'resourceTypeFilterVal'
+  );
+  const isShowingIconsQueryParam = searchParams.get('isShowingIcons');
+  const searchTextQueryParam = searchParams.get('searchText');
+  const selectedNodeIdQueryParam = searchParams.get('selectedNodeId');
+
+  const [shouldShowNodesWithoutDeps, setShouldShowNodesWithoutDeps] = useState<
+    GraphExplorerContext['shouldShowNodesWithoutDeps']
+  >(shouldShowNodesWithoutDepsQueryParam !== 'false');
+  const [isShowingIcons, setIsShowingIcons] = useState<
+    GraphExplorerContext['isShowingIcons']
+  >(isShowingIconsQueryParam !== 'false');
   const [graphDirection, setGraphDirection] = useState<
     GraphExplorerContext['graphDirection']
   >(ElkGraphExplorerDirection.Vertical);
-  const [searchText, setSearchText] =
-    useState<GraphExplorerContext['searchText']>('');
-  const [sourceTypeFilterVal, setSourceTypeFilterVal] =
-    useState<GraphExplorerContext['searchText']>('');
-  const [resourceTypeFilterVal, setResourceTypeFilterVal] =
-    useState<GraphExplorerContext['searchText']>('');
-  const [selectedNodeId, setSelectedNodeId] =
-    useState<GraphExplorerContext['selectedNodeId']>(null);
+  const [searchText, setSearchText] = useState<
+    GraphExplorerContext['searchText']
+  >(searchTextQueryParam ?? '');
+  const [sourceTypeFilterVal, setSourceTypeFilterVal] = useState<
+    GraphExplorerContext['searchText']
+  >(sourceTypeFilterValQueryParam ?? '');
+  const [resourceTypeFilterVal, setResourceTypeFilterVal] = useState<
+    GraphExplorerContext['searchText']
+  >(resourceTypeFilterValQueryParam ?? '');
+  const [selectedNodeId, setSelectedNodeId] = useState<
+    GraphExplorerContext['selectedNodeId']
+  >(selectedNodeIdQueryParam);
 
   // NOTE: Today, these nodes and edges are driven by hard coded data, but in the future, we will want to use the data from the API.
   const [preProcessedNodes, preProcessedEdges] = useMemo(() => {
@@ -120,7 +141,7 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
       return isEdgeConnectingSearchFilteredNodes;
     });
 
-    // Step 4: Filter out nodes that don't have any edges, depending on the shouldShowNodesWithoutDeps flag.
+    // Step 5: Filter out nodes that don't have any edges, depending on the shouldShowNodesWithoutDeps flag.
     const filteredNodes = sourceTypeFilteredNodes.filter((node) => {
       if (!shouldShowNodesWithoutDeps) {
         return filteredConnectedNodeEdgeIndex.has(node.id);
@@ -157,9 +178,21 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
     shouldShowNodesWithoutDeps,
   ]);
 
-  // TODO -> Implement this functionality, by using the current context values, to determine the correct link + query params to generate.
+  // generateShareLink should return a string representing the URL with the current baseURL, and a query param for the value of searchText, resourceTypeFilterVal, sourceTypeFilterVal, and shouldShowNodesWithoutDeps.
   const generateShareLink = () => {
-    return 'https://some-url.com';
+    // the baseUrl should be the current base path url from the window object.
+    const baseUrl = window.location.host;
+
+    const queryParams = new URLSearchParams({
+      searchText,
+      resourceTypeFilterVal,
+      sourceTypeFilterVal,
+      shouldShowNodesWithoutDeps: String(shouldShowNodesWithoutDeps),
+      isShowingIcons: String(isShowingIcons),
+      selectedNodeId: selectedNodeId ?? '',
+    });
+
+    return `${window.location.origin}/${window.location.pathname}?${queryParams}`;
   };
 
   return (

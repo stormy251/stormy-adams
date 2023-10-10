@@ -11,19 +11,20 @@ export type ResourceNodeData = {
 
 export type IResourceNode = NodeBase<ResourceNodeData>;
 
-const ResourceNode: FC<NodeProps> = ({ data, selected }) => {
-  const { isShowingIcons } = useGraphExplorerContext();
+const ResourceNode: FC<NodeProps> = ({ data, id }) => {
+  const { isShowingIcons, selectedNodeId } = useGraphExplorerContext();
+  const isSelected = selectedNodeId === id;
 
   return (
     <div
       className={`flex items-center gap-2 rounded-lg border ${
-        selected ? 'border-foreground' : 'border-input'
+        isSelected ? 'border-foreground' : 'border-input'
       } bg-secondary p-2 px-4`}
     >
       <Handle type='target' position={Position.Right} />
       {isShowingIcons && (
         <div className='grid h-10 w-10 place-items-center rounded-lg'>
-          {selected ? (
+          {isSelected ? (
             <Star color={'currentColor'} size={32} />
           ) : (
             <Waves color={'currentColor'} size={32} />
