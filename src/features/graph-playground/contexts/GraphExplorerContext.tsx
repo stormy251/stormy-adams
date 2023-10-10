@@ -209,9 +209,6 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
 
   // generateShareLink should return a string representing the URL with the current baseURL, and a query param for the value of searchText, resourceTypeFilterVal, sourceTypeFilterVal, and shouldShowNodesWithoutDeps.
   const generateShareLink = () => {
-    // the baseUrl should be the current base path url from the window object.
-    const baseUrl = window.location.host;
-
     const queryParams = new URLSearchParams({
       searchText,
       resourceTypeFilterVal,

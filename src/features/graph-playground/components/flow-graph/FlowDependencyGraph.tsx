@@ -48,7 +48,6 @@ type onLayoutProps = {
 
 const FlowDependencyGraph: FC = () => {
   const {
-    setSelectedNodeId,
     isShowingIcons,
     graphDirection,
     searchText,
