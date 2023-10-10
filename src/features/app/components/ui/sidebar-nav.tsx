@@ -51,7 +51,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
         return (
           <React.Fragment key={index}>
             {shouldRenderLabel && item?.linkGroupLabel && (
-              <h4 className='mb-1 mt-2 font-semibold tracking-wide text-muted-foreground'>
+              <h4 className='mb-1 mt-2 font-light tracking-wide text-muted-foreground'>
                 {item.linkGroupLabel}
               </h4>
             )}
