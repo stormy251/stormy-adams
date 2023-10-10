@@ -24,6 +24,10 @@ type GraphExplorerContext = {
   setShouldShowNodesWithoutDeps: ReactSetState<boolean>;
   searchText: string;
   setSearchText: ReactSetState<string>;
+  sourceTypeFilterVal: string;
+  setSourceTypeFilterVal: ReactSetState<string>;
+  resourceTypeFilterVal: string;
+  setResourceTypeFilterVal: ReactSetState<string>;
   isShowingIcons: boolean;
   setIsShowingIcons: ReactSetState<boolean>;
   selectedNodeId: string | null;
@@ -62,6 +66,10 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
   >(ElkGraphExplorerDirection.Vertical);
   const [searchText, setSearchText] =
     useState<GraphExplorerContext['searchText']>('');
+  const [sourceTypeFilterVal, setSourceTypeFilterVal] =
+    useState<GraphExplorerContext['searchText']>('');
+  const [resourceTypeFilterVal, setResourceTypeFilterVal] =
+    useState<GraphExplorerContext['searchText']>('');
   const [selectedNodeId, setSelectedNodeId] =
     useState<GraphExplorerContext['selectedNodeId']>(null);
 
@@ -77,38 +85,52 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
             .includes(searchText.toLowerCase());
         });
 
-    const searchFilteredNodesIds = searchFilteredNodes.map((node) => node.id);
+    // Step 2: Filter out nodes such that the resourceTypeFilterVal is not empty, and the node's resourceType matches the resourceTypeFilterVal.
+    const resourceTypeFilteredNodes = searchFilteredNodes.filter((node) => {
+      if (!resourceTypeFilterVal) {
+        return true;
+      }
 
-    const activeSearchConnectedNodeEdgeIndex = new Map();
+      return node.data.resourceType === resourceTypeFilterVal;
+    });
+
+    // Step 3: Filter out nodes such that the sour is not empty, and the node's resourceType matches the resourceTypeFilterVal.
+    const sourceTypeFilteredNodes = resourceTypeFilteredNodes.filter((node) => {
+      if (!sourceTypeFilterVal) {
+        return true;
+      }
+
+      return node.data.sourceType === sourceTypeFilterVal;
+    });
+
+    // Step 4: Process the edges, and build out a map index of the edges that are connecting the filtered nodes.
+    const filterProcessedNodeIds = sourceTypeFilteredNodes.map(
+      (node) => node.id
+    );
+    const filteredConnectedNodeEdgeIndex = new Map();
     const filteredEdges = EDGES.filter((edge) => {
       // Here we are building out a map index, to keep the time complexity a little lower.
       const isEdgeConnectingSearchFilteredNodes =
-        searchFilteredNodesIds.includes(edge.source) &&
-        searchFilteredNodesIds.includes(edge.target);
+        filterProcessedNodeIds.includes(edge.source) &&
+        filterProcessedNodeIds.includes(edge.target);
       if (isEdgeConnectingSearchFilteredNodes) {
-        activeSearchConnectedNodeEdgeIndex.set(edge.source, true);
-      }
-
-      // If we don't have a search text, then we can just return true, since we want to show all edges.
-      // NOTE: This helps prevent looping over the edges as many times...
-      if (!searchText) {
-        return true;
+        filteredConnectedNodeEdgeIndex.set(edge.source, true);
       }
 
       return isEdgeConnectingSearchFilteredNodes;
     });
 
-    // Step 2: Filter out nodes that don't have any edges, depending on the shouldShowNodesWithoutDeps flag.
-    const filteredNodes = searchFilteredNodes.filter((node) => {
+    // Step 4: Filter out nodes that don't have any edges, depending on the shouldShowNodesWithoutDeps flag.
+    const filteredNodes = sourceTypeFilteredNodes.filter((node) => {
       if (!shouldShowNodesWithoutDeps) {
-        return activeSearchConnectedNodeEdgeIndex.has(node.id);
+        return filteredConnectedNodeEdgeIndex.has(node.id);
       }
 
       return true;
     });
 
     // TODO: Fill in this logic, and update it to also remove the edges associated with the bidirectional nodes, and replace with a bidirectional edge.
-    // Step 3: Set the type of the node, given the nodes/edges filtered context above.
+    // Step #: Set the type of the node, given the nodes/edges filtered context above.
     // const filteredNodes = depsCheckedNodes.map((node) => {
     //   const hasIncomingEdges = filteredEdges.some(
     //     (edge) => edge.target === node.id
@@ -128,7 +150,12 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
     // });
 
     return [filteredNodes, filteredEdges];
-  }, [searchText, shouldShowNodesWithoutDeps]);
+  }, [
+    searchText,
+    resourceTypeFilterVal,
+    sourceTypeFilterVal,
+    shouldShowNodesWithoutDeps,
+  ]);
 
   // TODO -> Implement this functionality, by using the current context values, to determine the correct link + query params to generate.
   const generateShareLink = () => {
@@ -144,6 +171,10 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
         setShouldShowNodesWithoutDeps,
         searchText,
         setSearchText,
+        sourceTypeFilterVal,
+        setSourceTypeFilterVal,
+        resourceTypeFilterVal,
+        setResourceTypeFilterVal,
         selectedNodeId,
         setSelectedNodeId,
         isShowingIcons,
