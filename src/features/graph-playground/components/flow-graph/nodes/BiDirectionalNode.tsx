@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
 
+// TODO -> Implement this node, may need to use a different baseWrapper, to fine tune the Handle positions.
 const BiDirectionalNode: FC<NodeProps> = ({ data }) => {
   return (
     <div className='rounded-lg border border-foreground p-2 px-4'>

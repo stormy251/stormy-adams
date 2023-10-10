@@ -94,7 +94,8 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
     GraphExplorerContext['selectedNodeId']
   >(selectedNodeIdQueryParam);
 
-  // NOTE: Today, these nodes and edges are driven by hard coded data, but in the future, we will want to use the data from the API.
+  // NOTE 1: Today, these nodes and edges are driven by hard coded data, but in the future, we will want to use the data from the API.
+  // TODO(potential-enhancement): We may benefit from using some of the helper functions from this page: https://reactflow.dev/docs/api/graph-util-functions/
   const [preProcessedNodes, preProcessedEdges] = useMemo(() => {
     // Step 1: Filter out nodes that don't contain a label with a substring of the searchText.
     // NOTE: If there is no search text, then we can just use the initial nodes.
@@ -125,24 +126,32 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
     });
 
     // Step 4: Process the edges, and build out a map index of the edges that are connecting the filtered nodes.
-    const filterProcessedNodeIds = sourceTypeFilteredNodes.map(
+    const initialProcessedNodeIds = sourceTypeFilteredNodes.map(
       (node) => node.id
     );
     const filteredConnectedNodeEdgeIndex = new Map();
-    const filteredEdges = EDGES.filter((edge) => {
+    const connectedToSelectedNodeEdgeIndex = new Map();
+    let filteredEdges = EDGES.filter((edge) => {
       // Here we are building out a map index, to keep the time complexity a little lower.
       const isEdgeConnectingSearchFilteredNodes =
-        filterProcessedNodeIds.includes(edge.source) &&
-        filterProcessedNodeIds.includes(edge.target);
+        initialProcessedNodeIds.includes(edge.source) &&
+        initialProcessedNodeIds.includes(edge.target);
       if (isEdgeConnectingSearchFilteredNodes) {
         filteredConnectedNodeEdgeIndex.set(edge.source, true);
+      }
+
+      if (selectedNodeId) {
+        edge.target === selectedNodeId &&
+          connectedToSelectedNodeEdgeIndex.set(edge.source, true);
+        edge.source === selectedNodeId &&
+          connectedToSelectedNodeEdgeIndex.set(edge.target, true);
       }
 
       return isEdgeConnectingSearchFilteredNodes;
     });
 
     // Step 5: Filter out nodes that don't have any edges, depending on the shouldShowNodesWithoutDeps flag.
-    const filteredNodes = sourceTypeFilteredNodes.filter((node) => {
+    const depsFilteredNodes = sourceTypeFilteredNodes.filter((node) => {
       if (!shouldShowNodesWithoutDeps) {
         return filteredConnectedNodeEdgeIndex.has(node.id);
       }
@@ -150,6 +159,25 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
       return true;
     });
 
+    // Step 6: Filter out nodes depending on the currently selected node
+    const filteredNodes = depsFilteredNodes.filter((node) => {
+      if (!selectedNodeId || selectedNodeId === node.id) {
+        return true;
+      }
+      // if the node has an edge that points it to the selected node, then we want to keep it.
+      return connectedToSelectedNodeEdgeIndex.has(node.id);
+    });
+
+    // Step 7: Updated the filtered Edges based on the filteredNodes.
+    const filteredProcessedNodeIds = filteredNodes.map((node) => node.id);
+    filteredEdges = filteredEdges.filter((edge) => {
+      // Here we are building out a map index, to keep the time complexity a little lower.
+      const isEdgeConnectingFilteredNodes =
+        filteredProcessedNodeIds.includes(edge.source) &&
+        filteredProcessedNodeIds.includes(edge.target);
+
+      return isEdgeConnectingFilteredNodes;
+    });
     // TODO: Fill in this logic, and update it to also remove the edges associated with the bidirectional nodes, and replace with a bidirectional edge.
     // Step #: Set the type of the node, given the nodes/edges filtered context above.
     // const filteredNodes = depsCheckedNodes.map((node) => {
@@ -176,6 +204,7 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
     resourceTypeFilterVal,
     sourceTypeFilterVal,
     shouldShowNodesWithoutDeps,
+    selectedNodeId,
   ]);
 
   // generateShareLink should return a string representing the URL with the current baseURL, and a query param for the value of searchText, resourceTypeFilterVal, sourceTypeFilterVal, and shouldShowNodesWithoutDeps.

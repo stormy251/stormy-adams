@@ -1,7 +1,8 @@
 import React, { FC, memo } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { NodeProps } from 'reactflow';
 import { Star, Triangle } from 'lucide-react';
 
+import BaseNodeWrapper from '@/features/graph-playground/components/flow-graph/nodes/BaseNodeWrapper';
 import { useGraphExplorerContext } from '@/features/graph-playground/contexts/GraphExplorerContext';
 import { NodeBase } from '@/features/graph-playground/utils/nodes-and-edges-utils';
 
@@ -16,12 +17,7 @@ const ServiceNode: FC<NodeProps<ServiceNodeData>> = ({ data, id }) => {
   const isSelected = selectedNodeId === id;
 
   return (
-    <div
-      className={`flex items-center gap-2 rounded-lg border ${
-        isSelected ? 'border-foreground' : 'border-input'
-      } bg-secondary p-2 px-4`}
-    >
-      <Handle type='target' position={Position.Right} />
+    <BaseNodeWrapper id={id}>
       {isShowingIcons && (
         <div className={`grid h-10 w-10 place-items-center rounded-lg`}>
           {isSelected ? (
@@ -32,8 +28,7 @@ const ServiceNode: FC<NodeProps<ServiceNodeData>> = ({ data, id }) => {
         </div>
       )}
       {data?.label}
-      <Handle type='source' position={Position.Left} />
-    </div>
+    </BaseNodeWrapper>
   );
 };
 

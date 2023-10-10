@@ -6,7 +6,6 @@ import ReactFlow, {
   Connection,
   Controls,
   MiniMap,
-  OnSelectionChangeParams,
   Panel,
   ReactFlowProvider,
   useEdgesState,
@@ -92,16 +91,6 @@ const FlowDependencyGraph: FC = () => {
     [preProcessedEdges, preProcessedNodes, setEdges, setNodes, fitView]
   );
 
-  const handleSelectionChange = useCallback(
-    (selection: OnSelectionChangeParams) => {
-      if (selection?.nodes?.length) {
-        const [selectedNode] = selection.nodes;
-        setSelectedNodeId(selectedNode.id);
-      }
-    },
-    [setSelectedNodeId]
-  );
-
   // Rerender when the graph direction changes.
   useEffect(() => {
     if (viewportInitialized) {
@@ -136,7 +125,6 @@ const FlowDependencyGraph: FC = () => {
         onEdgesChange={onEdgesChange}
         onNodesChange={onNodesChange}
         onConnect={onConnect}
-        onSelectionChange={handleSelectionChange}
         proOptions={{ hideAttribution: true }}
         maxZoom={50}
         nodesConnectable={false}
