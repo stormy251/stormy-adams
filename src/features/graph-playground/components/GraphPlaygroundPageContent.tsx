@@ -6,7 +6,7 @@ import { Col, Grid } from '@tremor/react';
 import { motion } from 'framer-motion';
 
 import FlowDependencyGraph from '@/features/graph-playground/components/flow-graph/FlowDependencyGraph';
-import FlowDependencyGraphDetailsPanel from '@/features/graph-playground/components/flow-graph/FlowDependencyGraphDetailsPanel';
+import FlowDependencyGraphSidePanel from '@/features/graph-playground/components/flow-graph/FlowDependencyGraphSidePanel';
 import FlowDependencyGraphToolbar from '@/features/graph-playground/components/flow-graph/FlowDependencyGraphToolbar';
 import { GraphExplorerContextProvider } from '@/features/graph-playground/contexts/GraphExplorerContext';
 import {
@@ -37,7 +37,7 @@ const GraphPlaygroundPageContent: FC = () => {
 
           {/* Selected Information Panel */}
           <Col numColSpanLg={2} className='overflow-hidden'>
-            <FlowDependencyGraphDetailsPanel />
+            <FlowDependencyGraphSidePanel />
           </Col>
         </Grid>
       </motion.div>

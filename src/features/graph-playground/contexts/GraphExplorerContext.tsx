@@ -5,6 +5,7 @@ import React, {
   FC,
   PropsWithChildren,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -18,7 +19,14 @@ import {
 } from '@/features/graph-playground/data/dummyEdgesAndNodes';
 import { ElkGraphExplorerDirection } from '@/features/graph-playground/utils/graph-layout-utils';
 
+export enum GraphSideTab {
+  Options = 'options-view',
+  Details = 'details-view',
+}
+
 type GraphExplorerContext = {
+  activeSideTab: GraphSideTab;
+  setActiveSideTab: ReactSetState<GraphSideTab>;
   graphDirection: string;
   setGraphDirection: ReactSetState<string>;
   shouldShowNodesWithoutDeps: boolean;
@@ -71,7 +79,11 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
   const isShowingIconsQueryParam = searchParams.get('isShowingIcons');
   const searchTextQueryParam = searchParams.get('searchText');
   const selectedNodeIdQueryParam = searchParams.get('selectedNodeId');
+  const activeSideTabQueryParam = searchParams.get('activeSideTab');
 
+  const [activeSideTab, setActiveSideTab] = useState<
+    GraphExplorerContext['activeSideTab']
+  >((activeSideTabQueryParam as GraphSideTab) ?? GraphSideTab.Options);
   const [shouldShowNodesWithoutDeps, setShouldShowNodesWithoutDeps] = useState<
     GraphExplorerContext['shouldShowNodesWithoutDeps']
   >(shouldShowNodesWithoutDepsQueryParam !== 'false');
@@ -211,6 +223,7 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
   const generateShareLink = () => {
     const queryParams = new URLSearchParams({
       searchText,
+      activeSideTab,
       resourceTypeFilterVal,
       sourceTypeFilterVal,
       shouldShowNodesWithoutDeps: String(shouldShowNodesWithoutDeps),
@@ -221,9 +234,17 @@ export const GraphExplorerContextProvider: FC<PropsWithChildren> = ({
     return `${window.location.origin}/${window.location.pathname}?${queryParams}`;
   };
 
+  useEffect(() => {
+    if (selectedNodeId) {
+      setActiveSideTab(GraphSideTab.Details);
+    }
+  }, [selectedNodeId]);
+
   return (
     <GraphExplorerContext.Provider
       value={{
+        activeSideTab,
+        setActiveSideTab,
         graphDirection,
         setGraphDirection,
         shouldShowNodesWithoutDeps,
