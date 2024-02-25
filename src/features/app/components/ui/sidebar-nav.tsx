@@ -70,7 +70,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
                 <span
                   className={cn(
                     pathname === item.href || item.alias?.includes(pathname)
-                      ? 'text-primary  opacity-80'
+                      ? 'text-primary opacity-80'
                       : '',
                     'transition-colors'
                   )}
@@ -80,9 +80,9 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
                 <span
                   className={cn(
                     pathname === item.href || item.alias?.includes(pathname)
-                      ? 'text-gray-800 opacity-80 dark:text-gray-300'
-                      : 'text-gray-500',
-                    'font-semibold'
+                      ? 'text-gray-700 dark:text-gray-300'
+                      : 'text-gray-400 dark:text-gray-500',
+                    'font-bold tracking-wide'
                   )}
                 >
                   {item.title}

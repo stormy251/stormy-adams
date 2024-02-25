@@ -18,7 +18,7 @@ const SearchCommandButton: FC = () => {
       )}
       onClick={() => setIsCommandOpen(true)}
     >
-      <span className='inline-flex font-semibold tracking-wide text-gray-500 dark:text-gray-400'>
+      <span className='inline-flex font-bold tracking-wide text-gray-400 dark:text-gray-400'>
         Search
       </span>
       <span
