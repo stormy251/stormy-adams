@@ -9,7 +9,7 @@ const AppSideNav: FC = () => {
   return (
     <aside
       data-purpose-id='side-bar'
-      className='flex w-0 flex-col overflow-hidden border-input bg-primary-foreground opacity-0 transition-all sm:w-[16rem] sm:min-w-[16rem] sm:border-r sm:px-3 sm:py-4 sm:opacity-100'
+      className='flex w-0 flex-col overflow-hidden border-input  opacity-0 transition-all sm:w-[16rem] sm:min-w-[16rem] sm:border-r sm:px-3 sm:py-4 sm:opacity-100'
     >
       <div
         data-purpose-id='side-bar-header'

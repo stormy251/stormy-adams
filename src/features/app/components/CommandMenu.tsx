@@ -30,6 +30,9 @@ const CommandMenu: FC = () => {
       case 'playground':
         router.push('/chart-playground');
         break;
+      case 'graph':
+        router.push('/graph-playground');
+        break;
       case 'light':
         setTheme('light');
         break;
@@ -84,6 +87,13 @@ const CommandMenu: FC = () => {
             }}
           >
             Chart Playground
+          </CommandItem>
+          <CommandItem
+            onSelect={() => {
+              handleCommandSelect('graph');
+            }}
+          >
+            Graph Playground
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading='Set Active Theme'>

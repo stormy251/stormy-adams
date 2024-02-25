@@ -61,14 +61,32 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
               className={cn(
                 buttonVariants({ variant: 'ghost' }),
                 pathname === item.href || item.alias?.includes(pathname)
-                  ? 'bg-gray-200 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-600'
-                  : 'hover:bg-gray-200 hover:underline dark:hover:bg-gray-600',
-                'justify-between'
+                  ? 'bg-gray-200 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-800'
+                  : 'hover:bg-gray-200 dark:hover:bg-gray-800',
+                'justify-between rounded-full'
               )}
             >
               <div className='flex items-center gap-2'>
-                <span>{item.icon}</span>
-                <span>{item.title}</span>
+                <span
+                  className={cn(
+                    pathname === item.href || item.alias?.includes(pathname)
+                      ? 'text-primary  opacity-80'
+                      : '',
+                    'transition-colors'
+                  )}
+                >
+                  {item.icon}
+                </span>
+                <span
+                  className={cn(
+                    pathname === item.href || item.alias?.includes(pathname)
+                      ? 'text-gray-800 opacity-80 dark:text-gray-300'
+                      : 'text-gray-500',
+                    'font-semibold'
+                  )}
+                >
+                  {item.title}
+                </span>
               </div>
               <AnimatePresence mode='wait'>
                 {isPingingLabelGroup &&
